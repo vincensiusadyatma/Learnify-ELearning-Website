@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('content');
+            $table->text('content');
 
             //foreign key for course_id
             $table->unsignedBigInteger('course_id');
