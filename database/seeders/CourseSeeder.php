@@ -24,6 +24,14 @@ class CourseSeeder extends Seeder
                     [
                         'title'=>'HTML',
                         'description'=>'Fundamental part of every web developers toolkit. HTML provides the content that gives web pages structure, by using elements and tags, you can add text, images, videos, forms, and more.'
+                    ],
+                    [
+                        'title'=>'JavaScript',
+                        'description'=>"JavaScript is a powerfull dynamic behavior on websites and plays an important role in many fields, like front- and back-end engineering, game and mobile development, virtual reality, and more. In this course, you'll learn javaScript fundamentals that will be helpful as you dive deeper into more advanced topics."
+                    ],
+                    [
+                        'title'=>'CSS',
+                        'description'=>'CSS, shortfor Cascading Style Sheets, is a style sheet language used to style websites. Colors, fonts, and page layouts for a site can all be managed using CSS. The more comfortable you are with CSS, the better equipped you will be to create an appeling website.'
                     ]
                 ]);
     }
