@@ -3,19 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
-class user extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class user extends  Authenticatable
 {
     protected $primaryKey = 'id';
 
     protected $fillable = [
         'username',
+        'email',
         'phone_number',
         'address',
         'password'
     ];
 
-    public function role(){
-        return $this->hasMany(Role::class,'role_ownerships');
+    public function roles(){
+        return $this->belongsToMany(Role::class, 'role_ownerships');
     }
+
+
 }
