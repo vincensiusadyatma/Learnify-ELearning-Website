@@ -1,12 +1,3 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
-    @vite(['resources/css/app.css','resources/js/app.js'])
-</head>
-<body>
 <nav class="z-50 w-full bg-[#222265]">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
@@ -107,5 +98,3 @@
         </ul>
     </div>
 </aside>
-</body>
-</html>
