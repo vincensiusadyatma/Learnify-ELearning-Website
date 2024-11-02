@@ -7,11 +7,7 @@ export default {
         "./node_modules/flowbite/**/*.js"
     ],
     theme: {
-        extend: {},
-        screens: {
-            'tablet': '768px',
-            'laptop': '1024px'
-        }
+        extend: {}
     },
     darkMode: 'class',
     plugins: [
