@@ -71,7 +71,7 @@
 
 {{-- Side bar --}}
 <aside id="logo-sidebar"
-       class="fixed top-0 left-0 z-40 w-60 h-screen pt-3 transition-transform -translate-x-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 lg:translate-x-0 lg:bg "
+       class="fixed top-0 left-0 z-40 w-60 h-screen pt-3 transition-transform -translate-x-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 lg:translate-x-0 "
        aria-label="Sidebar">
     <div class="relative h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"

@@ -8,7 +8,11 @@ export default {
     ],
     theme: {
         extend: {},
-        colors: {'purple-dark-theme': '#693EA7'}
+        colors: {
+            'purple-dark-theme': '#693EA7',
+            'blue-dark-theme': '#222265',
+            'white-theme': '#FAFBFF'
+        }
     },
     darkMode: 'class',
     plugins: [
