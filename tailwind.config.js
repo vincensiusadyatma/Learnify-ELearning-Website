@@ -7,7 +7,8 @@ export default {
         "./node_modules/flowbite/**/*.js"
     ],
     theme: {
-        extend: {}
+        extend: {},
+        colors: {'purple-dark-theme': '#693EA7'}
     },
     darkMode: 'class',
     plugins: [

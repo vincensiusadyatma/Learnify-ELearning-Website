@@ -1,7 +1,7 @@
 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-        <div class="relative bg-white sm:px-8 w-[320px] h-[450px] rounded-[10px]">
+        <div class="relative bg-white sm:px-8 w-[320px] h-[430px] rounded-[10px]">
             {{-- Close Button --}}
             <button id="closeModalButton border" class="absolute right-5 mt-4 text-end h-5">X</button>
 
@@ -9,7 +9,7 @@
                 <h2 class="text-xl uppercase font-bold leading-9 h-[30px] tracking-tight text-gray-900">Login</h2>
 
                 {{-- TODO: Route to Register page--}}
-                <a href="" class="text-sm">Daftar</a>
+                <a href="" class="text-sm text-purple-dark-theme hover:text-indigo-500">Daftar</a>
             </div>
 
             <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -23,7 +23,7 @@
                             atau email</label>
                         <div class="mt-1">
                             <input id="email" name="email" type="email" required
-                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                   class="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-2 ring-inset ring-purple-dark-theme focus:ring-2 focus:ring-inset focus:ring-purple-dark-theme sm:text-sm sm:leading-6">
                         </div>
                     </div>
 
@@ -32,10 +32,10 @@
                         <label for="password" class="block text-sm text-start font-medium leading-6 text-gray-900">Password</label>
                         <div class="mt-1">
                             <input id="password" name="password" type="password" required
-                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                   class="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-2 ring-inset ring-purple-dark-theme  focus:ring-2 focus:ring-inset focus:ring-purple-dark-theme sm:text-sm sm:leading-6">
                         </div>
                         <div class="text-sm text-end mt-4">
-                            <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot
+                            <a href="#" class="font-normal text-purple-dark-theme hover:text-indigo-500">Forgot
                                 password?</a>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                     {{-- sign in button --}}
                     <div>
                         <button type="submit"
-                                class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                class="flex w-full justify-center rounded-md bg-purple-dark-theme px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                             Sign in
                         </button>
                     </div>
