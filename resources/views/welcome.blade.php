@@ -10,6 +10,6 @@
     @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body>
-<x-dashboard/>
+<x-dashboard.main></x-dashboard.main>
 </body>
 </html>

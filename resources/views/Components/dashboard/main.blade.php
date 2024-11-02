@@ -2,10 +2,12 @@
 <nav class="z-50 w-full bg-[#222265]">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
+
+            {{-- Sidebar--}}
             <div class="flex items-center justify-start">
                 <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
                         type="button"
-                        class="inline-flex items-center p-1.5 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                        class="inline-flex items-center p-1.5 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
                     <span class="sr-only">Open sidebar</span>
 
                     {{-- sidebar toggle logo --}}
@@ -16,6 +18,8 @@
                     </svg>
                 </button>
             </div>
+
+            {{-- User menu --}}
             <div class="flex items-center">
                 <div class="flex items-center ms-3">
                     <div>
@@ -65,13 +69,14 @@
     </div>
 </nav>
 
+{{-- Side bar --}}
 <aside id="logo-sidebar"
-       class="fixed top-0 left-0 z-40 w-64 h-screen pt-3 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+       class="fixed top-0 left-0 z-40 w-60 h-screen pt-3 transition-transform -translate-x-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 lg:translate-x-0 lg:bg "
        aria-label="Sidebar">
     <div class="relative h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
                 type="button"
-                class="absolute right-3 inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                class="absolute right-3 inline-flex items-center p-2 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
             <span class="sr-only">Open sidebar</span>
 
             {{-- sidebar toggle logo --}}
