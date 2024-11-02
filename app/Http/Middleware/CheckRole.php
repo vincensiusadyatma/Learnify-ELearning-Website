@@ -19,7 +19,7 @@ class CheckRole
 {
     if (Auth::check()) {
         $userRoles = Auth::user()->roles->pluck('name')->toArray();
-        Log::info('User Roles: ', $userRoles); 
+        #Log::info('User Roles: ', $userRoles); 
     
         foreach ($roles as $role) {
             if (in_array($role, $userRoles)) {

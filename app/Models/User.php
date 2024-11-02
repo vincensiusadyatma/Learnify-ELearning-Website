@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
 class user extends  Authenticatable
 {
     protected $primaryKey = 'id';
@@ -20,5 +21,8 @@ class user extends  Authenticatable
         return $this->belongsToMany(Role::class, 'role_ownerships');
     }
 
+    public function courses(){
+        return $this->belongsToMany(Course::class, 'usercourses');
+    }
 
 }
