@@ -26,13 +26,15 @@
         </li>
     </ul>
     @guest
+        <!-- Modal Pop-up -->
+        <div class="absolute">
+            <div id="loginModal" class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                <x-auth.login></x-auth.login>
+            </div>
+        </div>
         <a id="openModalButton" href="#"
            class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold rounded-xl transition duration-200">Sign
             In</a>
-        <!-- Modal Pop-up -->
-        <div id="loginModal" class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <x-auth.login></x-auth.login>
-        </div>
         <a href="{{ route('show-register') }}"
            class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200">Sign
             Up</a>
@@ -46,8 +48,10 @@
                 <div class="font-medium truncate">{{ auth()->user()->email ?? 'User' }}</div>
             </div>
             <ul class="py-2 text-sm text-gray-700" aria-labelledby="avatarButton">
-                <li><a href="{{ route('show-dashboard') }}" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a></li>
-                <li><a href="/admin/dashboard" class="block px-4 py-2 hover:bg-gray-100">Admin Dashboard</a></li>
+                <li><a href="{{ route('show-dashboard') }}"
+                       class="block px-4 py-2 hover:bg-gray-100">Dashboard</a></li>
+                <li><a href="/admin/dashboard" class="block px-4 py-2 hover:bg-gray-100">Admin Dashboard</a>
+                </li>
                 <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a></li>
                 <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a></li>
             </ul>
