@@ -2,14 +2,15 @@
 <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
         <div class="relative bg-white sm:px-8 w-[320px] h-[430px] rounded-[10px]">
+
             {{-- Close Button --}}
-            <button id="closeModalButton border" class="absolute right-5 mt-4 text-end h-5">X</button>
+            <button id="closeModalButton" class="absolute right-5 mt-4 text-end h-5">X</button>
 
             <div class="flex justify-between items-end mt-12 sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 class="text-xl uppercase font-bold leading-9 h-[30px] tracking-tight text-gray-900">Login</h2>
 
                 {{-- TODO: Route to Register page--}}
-                <a href="" class="text-sm text-purple-dark-theme hover:text-indigo-500">Daftar</a>
+                <a href="{{ route('show-register') }}" class="text-sm text-purple-dark-theme hover:text-indigo-500">Daftar</a>
             </div>
 
             <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">

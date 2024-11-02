@@ -27,8 +27,9 @@
     </ul>
     @guest
         <!-- Modal Pop-up -->
-        <div class="absolute">
-            <div id="loginModal" class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div id="loginModal" class=" hidden absolute">
+            <div class="relative z-10" aria-labelledby="modal-title" role="dialog"
+                 aria-modal="true">
                 <x-auth.login></x-auth.login>
             </div>
         </div>
