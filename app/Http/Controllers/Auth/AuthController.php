@@ -62,7 +62,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
 
             $request->session()->regenerate();
-            return redirect()->route('show-register')->with('success', 'Login berhasil!');
+            return redirect()->route('show-dashboard')->with('success', 'Login berhasil!');
         }
 
         return redirect()->route('show-register')->with('error', 'Login berhasil!');
