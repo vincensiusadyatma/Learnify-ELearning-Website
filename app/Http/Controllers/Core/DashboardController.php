@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function showDashboard(){
         $user = Auth::user();
-        dd($user);
+
         
         return view('dashboard.main',[
             'user' => $user

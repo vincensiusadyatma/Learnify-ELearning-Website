@@ -21,7 +21,4 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
 });
 
-Route::get('/dashboard', function () {
-    return view('welcome');
-});
 

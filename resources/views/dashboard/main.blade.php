@@ -8,12 +8,6 @@
     @vite('resources/css/app.css')
 </head>
 <body>
-    <h1>Ini Adalah Dashboard</h1>
-
-    <form method="POST" action="{{ route('handle-logout') }}">
-        @csrf
-        <button type="submit" class="btn btn-danger">Logout</button>
-    </form>
-    
+    <x-dashboard.main></x-dashboard.main>
 </body>
 </html>
