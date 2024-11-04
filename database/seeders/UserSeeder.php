@@ -33,5 +33,10 @@ class UserSeeder extends Seeder
             'user_id' => 1,
             'role_id' => 2,
         ]);
+
+        DB::table('user_take_courses')->insert([
+            'user_id' => 1,
+            'course_id' => 1,
+        ]);
     }
 }
