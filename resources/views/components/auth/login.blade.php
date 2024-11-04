@@ -1,6 +1,6 @@
 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0" >
         <div class="relative bg-white sm:px-8 w-[320px] h-[430px] rounded-[10px]">
 
             {{-- Close Button --}}

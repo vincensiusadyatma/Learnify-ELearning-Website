@@ -1,6 +1,19 @@
 @extends('template.main-template')
 
 @section('content')
+
+@guest
+ <!-- Login Modal Pop-up -->
+ <div id="loginModal" class=" hidden absolute">
+  <div class="relative z-50" aria-labelledby="modal-title" role="dialog"
+       aria-modal="true">
+      <x-auth.login></x-auth.login>
+  </div>
+</div>
+@endguest
+
+
+
 {{-- first landing section jumbotron --}}
 <div class="relative h-screen bg-cover bg-center" style="background-image: url('img/assets/jumbotron.png');">
     <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>

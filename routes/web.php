@@ -14,7 +14,7 @@ Route::prefix('auth')->middleware('guest')->group(function () {
     Route::post('/login/handle', [AuthController::class, 'handleLogin'])->name('handle-login');
 });
 
-Route::post('/logout', [AuthController::class, 'handleLogout'])->name('handle-logout');
+Route::get('/logout', [AuthController::class, 'handleLogout'])->name('handle-logout');
 
 
 Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {

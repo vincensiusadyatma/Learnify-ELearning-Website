@@ -16,6 +16,7 @@
 
       html {
         scroll-behavior: smooth;
+        /* scrollbar-width: none; */
       }
        
   
@@ -60,6 +61,10 @@
       });
     });
   </script>
+
+
+<!-- Script tambahan dari stack -->
+@stack('additional-scripts')
   
 
    
