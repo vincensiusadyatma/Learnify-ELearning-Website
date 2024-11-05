@@ -112,7 +112,7 @@
 
             sidebarItem.forEach(icon => {
                 icon.classList.toggle('justify-end');
-                icon.classList.toggle('px-0');
+                icon.classList.toggle('px-1.5');
             })
 
             sidebarContentContainer.forEach(p => {
