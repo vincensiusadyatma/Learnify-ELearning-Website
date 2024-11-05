@@ -1,9 +1,6 @@
 <div class="w-full h-full">
-    {{-- sidebar --}}
-    @php
-        $isClicked = false; // Initial state for demonstration
-    @endphp
 
+    {{-- sidebar --}}
     <div id="sidebarContainer"
          class="fixed left-0 w-60 h-svh flex flex-col bg-blue-dark-theme -translate-x-60 lg:translate-x-0">
         <header id="sidebarHeader" class="flex h-20 border-b-2 mb-4 items-center justify-between px-4">
@@ -47,9 +44,9 @@
     </div>
 
     {{-- content container --}}
-    <div id="contentContainer" class="lg:ml-60 flex flex-col items-center space-y-16">
+    <div id="dashboard" class="lg:ml-60 flex flex-col items-center space-y-16">
         {{-- navbar --}}
-        <nav class="flex justify-between px-8 items-center top-0 h-20 z-9 w-full bg-white border">
+        <nav class="flex justify-between px-8 items-center top-0 h-20 z-9 w-full bg-white-theme border">
 
             {{-- Home Button--}}
             <div class="hidden lg:flex space-x-4 items-center">
@@ -70,6 +67,7 @@
 
         {{-- content --}}
         <div class="max-w-[1300px] w-[calc(100%-8rem)] h-[860px] bg-white">
+
         </div>
     </div>
 
@@ -79,7 +77,7 @@
     const toggleSidebar = document.getElementById('toggleSidebarBtn')
     const toggleSidebarItem = document.getElementById('toggleSidebarItemBtn')
     const sidebarContainer = document.getElementById('sidebarContainer')
-    const contentContainer = document.getElementById('contentContainer')
+    const contentContainer = document.getElementById('dashboard')
     const sidebarItem = document.querySelectorAll('#sidebar-item')
     const sidebarItemTitles = document.querySelectorAll('#sidebar-item-title')
     const sidebarContentContainer = document.querySelectorAll('.sidebar-content-container p')
