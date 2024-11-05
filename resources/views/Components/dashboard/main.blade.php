@@ -8,7 +8,7 @@
          class="fixed left-0 w-60 h-svh flex flex-col bg-blue-dark-theme -translate-x-60 lg:translate-x-0">
         <header class="flex h-20 border-b-2 items-center justify-between px-4">
             <p class="text-2xl text-white">Learnify</p>
-            <button id="toggleSidebarItemBtn">
+            <button id="toggleSidebarItemBtn" class="mr-2.5">
                 <img src="https://placehold.co/30x30" alt="">
             </button>
         </header>
@@ -73,21 +73,22 @@
     const sidebarContainer = document.getElementById('sidebarContainer')
     const contentContainer = document.getElementById('contentContainer')
 
-    toggleSidebarItem.addEventListener('click', () => {
-        if (sidebarContainer.hasAttribute('active')) {
-            sidebarContainer.classList.remove('lg:-translate-x-40', 'translate-x-0')
-            sidebarContainer.classList.add('lg:translate-x-0', '-translate-x-60')
-            contentContainer.classList.add('lg:ml-60')
-            contentContainer.classList.remove('lg:ml-20')
-            sidebarContainer.removeAttribute('active')
-        } else {
-            sidebarContainer.setAttribute('active', 'true')
-            sidebarContainer.classList.remove('lg:translate-x-0')
-            sidebarContainer.classList.add('lg:-translate-x-40')
-            contentContainer.classList.remove('lg:ml-60')
-            contentContainer.classList.add('lg:ml-20')
-        }
-    })
+    toggleSidebarItem
+        .addEventListener('click', () => {
+            if (sidebarContainer.hasAttribute('active')) {
+                sidebarContainer.classList.remove('lg:-translate-x-40', 'translate-x-0')
+                sidebarContainer.classList.add('lg:translate-x-0', '-translate-x-60')
+                contentContainer.classList.add('lg:ml-60')
+                contentContainer.classList.remove('lg:ml-20')
+                sidebarContainer.removeAttribute('active')
+            } else {
+                sidebarContainer.setAttribute('active', 'true')
+                sidebarContainer.classList.remove('lg:translate-x-0')
+                sidebarContainer.classList.add('lg:-translate-x-40')
+                contentContainer.classList.remove('lg:ml-60')
+                contentContainer.classList.add('lg:ml-20')
+            }
+        })
 
     toggleSidebar.addEventListener('click', () => {
         if (!sidebarContainer.hasAttribute('active')) {
