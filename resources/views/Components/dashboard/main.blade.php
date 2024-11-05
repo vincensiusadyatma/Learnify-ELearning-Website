@@ -66,8 +66,29 @@
         </nav>
 
         {{-- content --}}
-        <div class="max-w-[1300px] w-[calc(100%-8rem)] h-[860px] bg-white">
+        <div class="max-w-[1300px] w-[calc(100%-8rem)] h-[860px]">
+            <div class="w-full h-[300px] rounded-2xl bg-white-theme">
 
+            </div>
+            <div class="flex gap-4 w-full h-[200px] mt-[53px]">
+                <div class="w-[70%] h-full bg-white-theme rounded-2xl">
+
+                </div>
+
+                <div class="w-[30%] h-full bg-white-theme rounded-2xl">
+
+                </div>
+            </div>
+
+            <div class="w-full h-full bg-white-theme rounded-2xl mt-4">
+                <div class="py-6 pl-4">
+                    <p class="text-xl font-bold">Course On Progress</p>
+                </div>
+                <div class="flex gap-4 px-4 w-full h-[300px]">
+                    <div class="h-[300px] w-full bg-white"></div>
+                    <div class="h-[300px] w-full bg-white"></div>
+                </div>
+            </div>
         </div>
     </div>
 
