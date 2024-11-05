@@ -65,7 +65,7 @@ class AuthController extends Controller
             return redirect()->route('show-dashboard')->with('success', 'Login berhasil!');
         }
 
-        return redirect()->route('show-register')->with('error', 'Login berhasil!');
+        return redirect()->route('show-register')->with('error', 'Login gagal');
     }
 
     public function handleLogOut(Request $request)
