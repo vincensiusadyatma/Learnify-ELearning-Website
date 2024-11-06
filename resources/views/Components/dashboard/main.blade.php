@@ -60,9 +60,11 @@
             </button>
 
             {{-- User Profile --}}
-            <div>
+            <button id="profile-btn">
                 <img src="https://placehold.co/40x40" alt="">
-            </div>
+            </button>
+
+            <x-profile.main></x-profile.main>
         </nav>
 
         {{-- content --}}
