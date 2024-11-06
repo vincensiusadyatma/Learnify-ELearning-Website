@@ -1,4 +1,5 @@
-<div id="profile-container" class="fixed top-24 right-6 w-[400px] h-[300px] bg-white-theme rounded-xl shadow-2xl">
+<div id="profile-container"
+     class="hidden fixed top-24 right-6 w-[400px] h-[300px] bg-white-theme rounded-xl shadow-2xl">
     <div class="flex pl-4 h-[80px] border-b-2">
         <button>
             <img src="https://placehold.co/50x50" alt="">
