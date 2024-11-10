@@ -15,24 +15,39 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'username' => 'vitovit',
-            'email' => 'adyatmav@gmail.com',
-            'phone_number' => '081234567890',
-            'address' => 'Alamat bebas',
-            'password' => bcrypt('password123'),
-        ],
-        [
-            'username' => 'nicolaus123',
-            'email' => 'reva@gmail.com',
-            'phone_number' => '081234567890',
-            'address' => 'Alamat bebas',
-            'password' => bcrypt('password123'),
+            [
+                'username' => 'vitovit',
+                'email' => 'adyatmav@gmail.com',
+                'phone_number' => '081234567890',
+                'address' => 'Alamat bebas',
+                'password' => bcrypt('password123'),
+            ],
+            [
+                'username' => 'nicolaus123',
+                'email' => 'reva@gmail.com',
+                'phone_number' => '081234567890',
+                'address' => 'Alamat bebas',
+                'password' => bcrypt('password123'),
+            ],
+            [
+                'username' => 'ferly123',
+                'email' => 'reva@gmail.com',
+                'phone_number' => '081234567890',
+                'address' => 'Alamat bebas',
+                'password' => bcrypt('password123'),
+            ]
         ]);
 
         DB::table('role_ownerships')->insert([
+            [
             'user_id' => 1,
             'role_id' => 2,
-        ]);
+            ],
+            [
+            'user_id' => 2,
+            'role_id' => 2,
+            ]
+    ]);
 
         DB::table('user_take_courses')->insert([
             'user_id' => 1,

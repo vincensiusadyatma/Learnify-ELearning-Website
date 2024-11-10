@@ -13,7 +13,7 @@ class DashboardController extends Controller
         // untuk megambil data course yang user ambil saja
         $course = $user->courses->pluck('title')->toArray();
 
-        return view('dashboard.main',[
+        return view('core.dashboard',[
             'user' => $user,
             'course' => $course
         ]);

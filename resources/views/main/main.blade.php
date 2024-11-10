@@ -7,7 +7,7 @@
  <div id="loginModal" class=" hidden absolute">
   <div class="relative z-50" aria-labelledby="modal-title" role="dialog"
        aria-modal="true">
-      <x-auth.login></x-auth.login>
+     @include('auth.login')
   </div>
 </div>
 @endguest
