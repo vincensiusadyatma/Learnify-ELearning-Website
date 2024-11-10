@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function showRegister()
     {
-        return view('components.auth.register');
+        return view('auth.register');
     }
 
 
