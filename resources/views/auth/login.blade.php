@@ -1,6 +1,6 @@
 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0" >
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
         <div class="relative bg-white sm:px-8 w-[320px] h-[430px] rounded-[10px]">
 
             {{-- Close Button --}}
@@ -24,7 +24,7 @@
                             atau email</label>
                         <div class="mt-1">
                             <input id="email" name="email" type="email" required
-                                   class="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-2 ring-inset ring-purple-dark-theme focus:ring-2 focus:ring-inset focus:ring-purple-dark-theme sm:text-sm sm:leading-6">
+                                   class="block w-full rounded-md border-0 py-1 px-2 text-gray-900 shadow-sm ring-2 ring-inset ring-purple-dark-theme focus:ring-2 focus:ring-inset focus:ring-purple-dark-theme sm:text-sm sm:leading-6">
                         </div>
                     </div>
 
@@ -33,7 +33,7 @@
                         <label for="password" class="block text-sm text-start font-medium leading-6 text-gray-900">Password</label>
                         <div class="mt-1">
                             <input id="password" name="password" type="password" required
-                                   class="block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-2 ring-inset ring-purple-dark-theme  focus:ring-2 focus:ring-inset focus:ring-purple-dark-theme sm:text-sm sm:leading-6">
+                                   class="block w-full rounded-md border-0 py-1 px-2 text-gray-900 shadow-sm ring-2 ring-inset ring-purple-dark-theme  focus:ring-2 focus:ring-inset focus:ring-purple-dark-theme sm:text-sm sm:leading-6">
                         </div>
                         <div class="text-sm text-end mt-4">
                             <a href="#" class="font-normal text-purple-dark-theme hover:text-indigo-500">Forgot
