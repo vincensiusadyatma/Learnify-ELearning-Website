@@ -73,6 +73,6 @@
 
     <!-- Script tambahan dari stack -->
     @stack('additional-scripts')
-    
+
 </body>
 </html>

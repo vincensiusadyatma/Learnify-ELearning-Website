@@ -1,9 +1,11 @@
 <div id="sidebarContainer"
      class="fixed left-0 w-60 h-svh flex flex-col bg-blue-dark-theme -translate-x-60 lg:translate-x-0">
-    <header id="sidebarHeader" class="flex h-20 border-b-2 mb-4 items-center justify-between px-4">
+    <header id="sidebarHeader" class="flex h-20 border-b-2 mb-4 items-center justify-between px-5">
         <p class="text-2xl text-white">Learnify</p>
-        <button id="toggleSidebarItemBtn" class="hidden lg:flex items-center justify-center p-2 rounded-md text-white hover:bg-blue-700">
-            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <button id="toggleSidebarItemBtn"
+                class="hidden lg:flex items-center justify-center p-2 rounded-md text-white hover:bg-blue-700">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"/>
             </svg>
         </button>
