@@ -14,7 +14,8 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        // Insert users using insert() to handle multiple records
+        DB::table('users')->insert([
             [
                 'username' => 'vitovit',
                 'email' => 'adyatmav@gmail.com',
@@ -31,24 +32,26 @@ class UserSeeder extends Seeder
             ],
             [
                 'username' => 'ferly123',
-                'email' => 'reva@gmail.com',
+                'email' => 'ferli@gmail.com',
                 'phone_number' => '081234567890',
                 'address' => 'Alamat bebas',
                 'password' => bcrypt('password123'),
             ]
         ]);
 
+        // Insert roles for users
         DB::table('role_ownerships')->insert([
             [
-            'user_id' => 1,
-            'role_id' => 2,
+                'user_id' => 1,
+                'role_id' => 2,
             ],
             [
-            'user_id' => 2,
-            'role_id' => 2,
+                'user_id' => 2,
+                'role_id' => 2,
             ]
-    ]);
+        ]);
 
+        // Insert user course enrollment
         DB::table('user_take_courses')->insert([
             'user_id' => 1,
             'course_id' => 1,

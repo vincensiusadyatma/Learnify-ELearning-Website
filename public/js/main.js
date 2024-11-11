@@ -137,33 +137,25 @@ window.addEventListener('scroll', function() {
   const loginModal = document.getElementById('loginModal');
   const closeModalButton = document.getElementById('closeModalButton');
   
-  // Disable scrolling function
-  const disableScroll = () => {
-      document.body.style.overflow = 'hidden';
-  };
-  
-  // Enable scrolling function
-  const enableScroll = () => {
-      document.body.style.overflow = '';
-  };
+
   
   // Show modal and disable scrolling
   openModalButton.addEventListener('click', () => {
       loginModal.classList.remove('hidden');
-      disableScroll();  // Disable background scrolling
+    
   });
   
   // Hide modal and enable scrolling
   closeModalButton.addEventListener('click', () => {
       loginModal.classList.add('hidden');
-      enableScroll();   // Enable background scrolling
+     
   });
   
   // Optional: Hide modal and enable scrolling when clicking outside the modal
   window.addEventListener('click', (event) => {
       if (event.target === loginModal) {
           loginModal.classList.add('hidden');
-          enableScroll(); // Enable background scrolling
+        
       }
   });
   

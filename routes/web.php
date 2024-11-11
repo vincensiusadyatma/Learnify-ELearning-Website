@@ -19,9 +19,9 @@ Route::get('/logout', [AuthController::class, 'handleLogout'])->name('handle-log
 
 Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
-    Route::get('/course', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
-    Route::get('/course/{id}', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
-    Route::get('/course/{id}/lesson', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
-    Route::get('/course/{id}/lesson/{id}', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
+    // Route::get('/course', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
+    // Route::get('/course/{id}', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
+    // Route::get('/course/{id}/lesson', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
+    // Route::get('/course/{id}/lesson/{id}', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
 });
 

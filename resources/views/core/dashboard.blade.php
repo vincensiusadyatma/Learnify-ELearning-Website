@@ -3,9 +3,6 @@
 @section('content')
     
 <div class="w-full h-full">
-
-    @include('core.layouts.sidebar')
-
     {{-- content container --}}
     <div id="dashboard" class="lg:ml-60 flex flex-col items-center space-y-16">
         {{-- navbar --}}
@@ -22,43 +19,28 @@
                 <img src="https://placehold.co/30x30" alt="">
             </button>
 
-            {{-- User Profile --}}
-            <button id="profile-btn">
-                <img src="https://placehold.co/40x40" alt="">
-            </button>
-
-            <div id="profile-container"
-            class="hidden fixed top-24 right-6 w-[400px] h-[300px] bg-white-theme rounded-xl shadow-2xl">
-           <div class="flex pl-4 h-[80px] border-b-2">
-               <button>
-                   <img src="https://placehold.co/50x50" alt="">
-               </button>
-           </div>
-           <div class="flex flex-col gap-4 mt-4">
-               <div class="flex pl-4 items-center gap-4">
-                   <button>
-                       <img src="https://placehold.co/50x50" alt="">
-                   </button>
-                   <p>Profile</p>
-               </div>
-               <div class="flex pl-4 items-center gap-4">
-                   <button>
-                       <img src="https://placehold.co/50x50" alt="">
-                   </button>
-                   <p>Settings</p>
-               </div>
-           </div>
-       </div>
+            <div class="relative">
+                <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false">
+                    <span class="sr-only">Open user menu</span>
+                    <img class="w-10 h-10 rounded-full" src="./img/assets/profile1.png" alt="user photo">
+                </button>
+                
+                <!-- Dropdown menu -->
+                <div id="user-dropdown" class="absolute right-0 z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
+                    <div class="px-4 py-3">
+                        <span class="block text-sm text-gray-900 dark:text-white">{{ auth()->user()->username ?? 'User' }}</span>
+                        <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ auth()->user()->email ?? 'User' }}</span>
+                    </div>
+                    <ul class="py-2" aria-labelledby="user-menu-button">
+                        <li><a href="{{ route('show-dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a></li>
+                        <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a></li>
+                        <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a></li>
+                        <li><a href="{{ route('handle-logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
        
-       <script>
-           const userProfileBtn = document.querySelector('#profile-btn')
-           const profileContaienr = document.querySelector('#profile-container')
-       
-           userProfileBtn
-               .addEventListener('click', () => {
-                   profileContaienr.classList.toggle('hidden')
-               })
-       </script>
+    
         </nav>
 
         {{-- content --}}
@@ -109,9 +91,15 @@
                     <p class="text-xl font-bold">Course On Progress</p>
                 </div>
                 <div class="flex gap-4 px-4 w-full h-[300px]">
-                    <div class="h-[300px] w-full bg-white"></div>
-                    <div class="h-[300px] w-full bg-white"></div>
+                    @forelse($course as $item)
+                        @include('core.layouts.mini-card', ['title' => $item])
+                    @empty
+                        <div class="flex justify-center items-center w-full h-full bg-gray-100 border border-gray-300 rounded-lg">
+                            <p class="text-2xl text-gray-500 font-semibold">Anda belum mengambil course</p>
+                        </div>
+                    @endforelse
                 </div>
+                
             </div>
         </div>
     </div>
@@ -120,56 +108,19 @@
 
 @push('additional-scripts')
     <script>
-        const toggleSidebar = document.getElementById('toggleSidebarBtn')
-        const toggleSidebarItem = document.getElementById('toggleSidebarItemBtn')
-        const sidebarContainer = document.getElementById('sidebarContainer')
-        const contentContainer = document.getElementById('dashboard')
-        const sidebarItem = document.querySelectorAll('#sidebar-item')
-        const sidebarItemTitles = document.querySelectorAll('#sidebar-item-title')
-        const sidebarContentContainer = document.querySelectorAll('.sidebar-content-container p')
-        const sidebarHeader = document.querySelector('#sidebarHeader')
+        const button = document.getElementById('user-menu-button');
+        const dropdown = document.getElementById('user-dropdown');
 
-        toggleSidebarItem
-            .addEventListener('click', () => {
-                sidebarItemTitles.forEach(title => {
-                    title.classList.toggle('hidden')
-                })
-
-                sidebarItem.forEach(icon => {
-                    icon.classList.toggle('justify-end');
-                    icon.classList.toggle('px-1.5');
-                })
-
-                sidebarContentContainer.forEach(p => {
-                    p.classList.toggle('hidden')
-                })
-            })
-
-        toggleSidebarItem
-            .addEventListener('click', () => {
-                if (sidebarContainer.hasAttribute('active')) {
-                    sidebarContainer.classList.remove('lg:-translate-x-40', 'translate-x-0')
-                    sidebarContainer.classList.add('lg:translate-x-0', '-translate-x-60')
-                    contentContainer.classList.add('lg:ml-60')
-                    contentContainer.classList.remove('lg:ml-20')
-                    sidebarContainer.removeAttribute('active')
-                } else {
-                    sidebarContainer.setAttribute('active', 'true')
-                    sidebarContainer.classList.remove('lg:translate-x-0')
-                    sidebarContainer.classList.add('lg:-translate-x-40')
-                    contentContainer.classList.remove('lg:ml-60')
-                    contentContainer.classList.add('lg:ml-20')
-                }
-            })
-
-        toggleSidebar.addEventListener('click', () => {
-            if (!sidebarContainer.hasAttribute('active')) {
-                sidebarContainer.setAttribute('active', 'true')
-                sidebarContainer.classList.remove('-translate-x-60')
-                sidebarContainer.classList.add('translate-x-0')
+        button.addEventListener('click', () => {
+            dropdown.classList.toggle('hidden');
+        });
+        window.addEventListener('click', (event) => {
+            if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
             }
-        })
+        });
     </script>
 @endpush
+
 
 @endsection
