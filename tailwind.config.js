@@ -20,7 +20,7 @@ export default {
                 'white-theme': '#FAFBFF'
             }
         },
-       
+
     },
     darkMode: 'class',
     plugins: [],
