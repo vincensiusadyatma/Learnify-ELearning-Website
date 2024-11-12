@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Core\DashboardController;
+use App\Http\Controllers\Core\CourseController;
+use App\Http\Controllers\Core\LessonController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,9 +21,10 @@ Route::get('/logout', [AuthController::class, 'handleLogout'])->name('handle-log
 
 Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
-    // Route::get('/course', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
-    // Route::get('/course/{id}', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
-    // Route::get('/course/{id}/lesson', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
+    Route::get('/course', [CourseController::class, 'showCourse'])->name('show-course');
+    Route::get('/course/{id}', [LessonController::class, 'listLesson'])->name('list-lesson');
+    //Route::post('/course/{id}/lesson/{path}', [LessonController::class, 'showMaterial'])->name('show-materials');
+    Route::get('/lesson{filename}', [LessonController::class, 'showMaterial'])->name('show-materials');
     // Route::get('/course/{id}/lesson/{id}', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
 });
 

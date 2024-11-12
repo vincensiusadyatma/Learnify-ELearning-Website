@@ -15,7 +15,7 @@
         <div class="sidebar-content-container mx-8">
             <p class="text-white">Dashboard</p>
             <ul>
-                @include('core.layouts.sidebar-item', ['title' => 'Dashboard'])
+                @include('core.layouts.sidebar-item', ['title' => 'Dashboard', 'link' => route('show-dashboard')])
             </ul>
         </div>
 
@@ -24,9 +24,8 @@
         <div class="sidebar-content-container mx-8">
             <p class="text-white">Course</p>
             <ul>
-                @include('core.layouts.sidebar-item', ['title' => 'Course A'])
-                @include('core.layouts.sidebar-item', ['title' => 'Course B'])
-                @include('core.layouts.sidebar-item', ['title' => 'Course C'])
+                @include('core.layouts.sidebar-item', ['title' => 'Course', 'link' => route('show-course')])
+
             </ul>
         </div>
 
@@ -35,7 +34,7 @@
         <div class="sidebar-content-container mx-8 ">
             <p class="text-white">Learning Path</p>
             <ul>
-                @include('core.layouts.sidebar-item', ['title' => 'Learning Path A'])
+                @include('core.layouts.sidebar-item', ['title' => 'Learning Path A', 'link' => '#'])
             </ul>
         </div>
     </main>

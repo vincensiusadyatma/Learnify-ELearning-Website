@@ -17,9 +17,7 @@ class LessonSeeder extends Seeder
         DB::table('lessons')->insert([
             [
                 'title'=>'Introduction to Java',
-                'content'=>"Ever wondered why Java's logo is a steaming cup of coffee? The creators of Java, while brainstorming a name for their new language, chose 'Java', a slang term for 'coffee'. Just as coffee fuels our day, Java powers the tech world with its robust and versatile features.
-                In this topic, we will explore why java has been a popular choice among developers for over two decades and how it has brewed success in various domains. We will also introduce you to your very first Java program. So, grab your cup of coffee and join us on this exciting journey into the world of java!.
-                Java is a high-level, class-based, object-oriented programming language. James Gosling at Sun Microsystems designed it, it was released in 1995. The language was developed with the 'Write Once, Run Anywhere' (WORA) philosophy. This principle underscore Java's key feature - platform independence, allowing the same Java program to run on multiple platforms without modifications.",
+                'content'=>"introduction_to_java.txt",
                 'course_id'=>1
             ],
             [

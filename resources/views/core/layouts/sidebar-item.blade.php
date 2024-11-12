@@ -1,7 +1,7 @@
-@props(['title'])
+@props(['title', 'link'])
 
 <li>
-    <a id="sidebar-item" href="#"
+    <a id="sidebar-item" href="{{ $link }}"
        class="flex items-center width-[20px] py-1.5 px-1.5 text-white text-opacity-80 font-light">
         <svg
             class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
