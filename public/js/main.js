@@ -132,3 +132,30 @@ window.addEventListener('scroll', function() {
   carousel.addEventListener("scroll", infiniteScroll);
   wrapper.addEventListener("mouseenter", () => clearTimeout(timeoutId));
   wrapper.addEventListener("mouseleave", autoPlay);
+
+  const openModalButton = document.getElementById('openModalButton');
+  const loginModal = document.getElementById('loginModal');
+  const closeModalButton = document.getElementById('closeModalButton');
+  
+
+  
+  // Show modal and disable scrolling
+  openModalButton.addEventListener('click', () => {
+      loginModal.classList.remove('hidden');
+    
+  });
+  
+  // Hide modal and enable scrolling
+  closeModalButton.addEventListener('click', () => {
+      loginModal.classList.add('hidden');
+     
+  });
+  
+  // Optional: Hide modal and enable scrolling when clicking outside the modal
+  window.addEventListener('click', (event) => {
+      if (event.target === loginModal) {
+          loginModal.classList.add('hidden');
+        
+      }
+  });
+  
