@@ -50,6 +50,56 @@
     @endguest
 </nav>
 
+<div class="navbar-menu relative z-50 hidden">
+    <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
+    <nav class="fixed top-0 right-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-l overflow-y-auto">
+        <div class="flex items-center mb-8">
+            <a class="mr-4" href="#">
+                <img src="{{ asset('img/logo/learnify-logo.png') }}" alt="Learnify Logo" class="w-[30px] lg:mr-4">
+            </a>
+            <h1 class="text-xl font-bold text-black">Learnify</h1>
+            <button class="navbar-close ml-auto">
+                <svg class="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div>
+            <ul>
+                <li class="mb-1">
+                    <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="#">Home</a>
+                </li>
+                <li class="mb-1">
+                    <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="#tentang">Tentang Kami</a>
+                </li>
+                <li class="mb-1">
+                    <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="#manfaat">Manfaat</a>
+                </li>
+                <li class="mb-1">
+                    <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="#fitur">Fitur</a>
+                </li>
+                <li class="mb-1">
+                    <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="#faq">FAQ</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mt-auto">
+            <div class="pt-6">
+                @guest
+                <a href="" class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl shadow-sm">Sign in</a>
+                <a href="{{ route('show-register') }}" class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm">Sign Up</a>
+                @else
+                {{-- <a href="{{ route('show-dashboard')}}" class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm">Dashboard</a> --}}
+                @endguest
+            </div>
+            <p class="my-4 text-xs text-center text-gray-400">
+                <span class="text-sm text-gray-500 sm:text-center">© 2024 <a href="#" class="hover:underline">Learnify</a>. All Rights Reserved.</span>
+            </p>
+        </div>
+    </nav>
+</div>
+
+
 
 @push('additional-scripts')
     <script>
