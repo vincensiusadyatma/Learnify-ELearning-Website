@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -81,5 +82,51 @@ class AuthController extends Controller
         notify()->success('You have successfully logged out.');
         return redirect()->route('main')->with('success', 'Anda telah berhasil logout.');
     }
+
+
+    public function googleRedirect(){
+        return Socialite::driver('google')->redirect();
+    }
+
+
+    public function googleCallback(){
+        // Mendapatkan data pengguna dari Google melalui Socialite
+        $googleUser = Socialite::driver('google')->user();
+
+        
+        $user = User::updateOrCreate(
+            [
+                'google_id' => $googleUser->getId()
+            ],
+            [
+                'username' => $googleUser->getName(),
+                'email' => $googleUser->getEmail(),
+                'google_token' => $googleUser->token,
+                'google_refresh_token' => $googleUser->refreshToken,
+            ]
+        );
+
+       
+        $roleExists = DB::table('role_ownerships')
+            ->where('user_id', $user->id)
+            ->where('role_id', 2) 
+            ->exists();
+
+    
+        if (!$roleExists) {
+            DB::table('role_ownerships')->insert([
+                'user_id' => $user->id,
+                'role_id' => 2,
+            ]);
+        }
+
+       
+        Auth::login($user);
+
+        // Redirect ke halaman dashboard dengan notifikasi sukses
+        notify()->success('You have successfully logged in');
+        return redirect('/dashboard');
+    }
+
 
 }

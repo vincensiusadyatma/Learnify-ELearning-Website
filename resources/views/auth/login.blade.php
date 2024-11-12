@@ -65,11 +65,12 @@
 
                     {{-- Google Sign In --}}
                     <div class="text-center mt-4">
-                        <button class="flex items-center justify-center w-full mb-4 hover:scale-110 transform transition duration-200 ease-in-out">
+                        <a href="{{ route('google-redirect') }}" class="flex items-center justify-center w-full mb-4 hover:scale-110 transform transition duration-200 ease-in-out">
                             <img src="img/assets/icons/google.png" alt="Google" class="w-8 h-8 mr-2">
                             <span class="text-sm font-medium text-gray-900">Login with Google</span>
-                        </button>
+                        </a>
                     </div>
+                    
                 </form>
             </div>
         </div>

@@ -14,6 +14,8 @@ Route::prefix('auth')->middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('show-register');
     Route::post('/register/handle', [AuthController::class, 'handleRegister'])->name('handle-register');
     Route::post('/login/handle', [AuthController::class, 'handleLogin'])->name('handle-login');
+    Route::get('/redirect',  [AuthController::class, 'googleRedirect'])->name('google-redirect');
+    Route::get('/google/callback',  [AuthController::class, 'googleCallback']);
 });
 
 Route::get('/logout', [AuthController::class, 'handleLogout'])->name('handle-logout');
