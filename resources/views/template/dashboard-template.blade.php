@@ -8,6 +8,7 @@
     <title>Learnify</title>
 
     @vite('resources/css/app.css')
+    @notifyCss
 </head>
 <body>
 
@@ -15,7 +16,8 @@
 
 @yield('content')
 
-
+<x-notify::notify />
+@notifyJs
 <script>
     const toggleSidebar = document.getElementById('toggleSidebarBtn')
     const toggleSidebarItem = document.getElementById('toggleSidebarItemBtn')
