@@ -65,12 +65,13 @@
 
             {{-- content --}}
             <div class="max-w-[1300px] w-[calc(100%-8rem)] h-[860px]">                
-                <div class="grid grid-cols-3 justify-center space-x-5">
+                <div class="grid grid-cols-3 justify-center space-x-5 space-y-2">
                 @foreach ($courses as $dt)
                     @include('core.layouts.card', [
                         'title' => $dt['title'], 
                         'description' => $dt['description'], 
-                        'link' => route('list-lesson', ['id' => $dt['id']])
+                        'link' => route('list-lesson', ['id' => $dt['id']]),
+                        'icons' => $dt['img']
                         ])
                 @endforeach
 
