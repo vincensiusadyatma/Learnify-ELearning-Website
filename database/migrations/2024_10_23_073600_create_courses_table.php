@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
+            $table->string('img');
 
             //foreign key for user_id
             //$table->unsignedBigId('user_id');

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     menu[j].classList.toggle('hidden');
                 }
             });
-        }
+     }
     }
 
     // close
