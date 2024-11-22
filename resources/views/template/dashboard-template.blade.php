@@ -74,5 +74,19 @@
 <!-- Script tambahan dari stack -->
 @stack('additional-scripts')
 
+<script>
+            const button = document.getElementById('user-menu-button');
+            const dropdown = document.getElementById('user-dropdown');
+
+            button.addEventListener('click', () => {
+                dropdown.classList.toggle('hidden');
+            });
+            window.addEventListener('click', (event) => {
+                if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+        </script>
+
 </body>
 </html>
