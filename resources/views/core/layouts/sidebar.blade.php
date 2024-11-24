@@ -1,5 +1,5 @@
 <div id="sidebarContainer"
-     class="fixed left-0 w-60 h-svh flex flex-col bg-blue-dark-theme transition duration-300 -translate-x-60 lg:translate-x-0">
+     class="fixed z-20 left-0 w-60 h-svh flex flex-col bg-blue-dark-theme transition duration-300 -translate-x-60 lg:translate-x-0">
     <header id="sidebarHeader" class="flex h-20 border-b-2 mb-4 items-center justify-between px-5">
         <p class="text-2xl text-white">Learnify</p>
         <button id="toggleSidebarItemBtn"

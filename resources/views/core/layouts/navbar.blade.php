@@ -1,4 +1,4 @@
-<nav class="sticky flex justify-between z-50 px-8 items-center top-0 h-20 z-9 w-full bg-white-theme border">
+<nav class="sticky flex justify-between z-10 px-8 items-center top-0 h-20 z-9 w-full bg-white-theme border">
 
     {{-- Home Button--}}
     <div class="hidden lg:flex space-x-4 items-center">
