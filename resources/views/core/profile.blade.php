@@ -29,13 +29,23 @@
 
         <div class="flex flex-col w-full h-full gap-4">
             {{-- Personal Info --}}
-            <div class="w-full h-full bg-[#EAECF3]">
+            <div class="w-full h-full bg-[#EAECF3] font-bold">
+                <div class="flex items-center h-[47px] w-full border-b-2 pl-6">
+                    <p>Personal Information</p>
+                </div>
+                <div class="w-full h-full">
 
+                </div>
             </div>
 
             {{-- About Me --}}
-            <div class="w-full h-full bg-[#EAECF3]">
+            <div class="w-full h-full bg-[#EAECF3] font-bold">
+                <div class="flex items-center h-[47px] w-full border-b-2 pl-6">
+                    <p>About Me</p>
+                </div>
+                <div class="w-full h-full">
 
+                </div>
             </div>
         </div>
     </div>
