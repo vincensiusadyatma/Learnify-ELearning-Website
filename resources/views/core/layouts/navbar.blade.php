@@ -1,4 +1,4 @@
-<nav class="flex justify-between px-8 items-center top-0 h-20 z-9 w-full bg-white-theme border">
+<nav class=" flex justify-between px-8 items-center top-0 h-20 z-9 w-full bg-white-theme border">
 
 {{-- Home Button--}}
 <div class="hidden lg:flex space-x-4 items-center">
