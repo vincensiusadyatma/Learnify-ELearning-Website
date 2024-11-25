@@ -13,9 +13,9 @@
 
     <main class="h-80 ">
         <div class="sidebar-content-container mx-8">
-            <p class="text-white">Dashboard</p>
+            <p class="text-white">Profile</p>
             <ul>
-                @include('core.layouts.sidebar-item', ['title' => 'Dashboard', 'link' => route('show-dashboard'), 'active' => request()->routeIs('show-dashboard')])
+                @include('core.layouts.sidebar-item', ['title' => 'Profile', 'link' => route('show-dashboard')])
             </ul>
         </div>
 
