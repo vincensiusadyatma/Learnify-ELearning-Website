@@ -1,7 +1,7 @@
 @extends('core.layouts.index')
 
 @section('core-content')
-                <div class="">
+                <div class="flex flex-wrap">
                 @foreach ($courses as $dt)
                     @include('core.layouts.card', [
                         'title' => $dt['title'], 
