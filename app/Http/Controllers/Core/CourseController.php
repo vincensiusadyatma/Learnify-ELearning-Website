@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Core;
+use App\Models\User;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,12 +10,39 @@ use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
-    public function showCourse(){
+    public function showCourse(Request $request){
         
-        $course = Course::all()->toArray();
-        //dd($course);
+        $user = User::where('id', Auth::user()->id)->first();
+        // Default: Ambil semua kursus
+        $coursesQuery = Course::query();
+    
+        // Cek apakah tombol filter diklik atau tidak ada filter
+        $filter = $request->get('filter', 'all');  // Default filter 'all'
+    
+        if ($filter == 'taken') {
+            // Menampilkan kursus yang diambil (berdasarkan pivot table user_take_courses)
+            $coursesQuery = $user->courses(); 
+        } elseif ($filter == 'not_taken') {
+            // Menampilkan kursus yang belum diambil sama user
+            $coursesQuery = $coursesQuery->whereNotIn('courses.id', function($query) use ($user) {
+                $query->select('course_id')
+                      ->from('user_take_courses')
+                      ->where('user_id', $user->id);
+            });
+        }
+    
+        // Ambil kursus sesuai filter 
+        $courses = $coursesQuery->get();
+    
+        // Menghitung jumlah kursus yang udah diambil user
+        $courseCount = DB::table('user_take_courses')
+            ->where('user_id', $user->id)
+            ->count();
+    
         return view('core.course', [
-            'courses' => $course
+            'courses' => $courses,
+            'courses_count' => $courseCount,
+            'filter' => $filter, // Kirimkan filter yang aktif ke tampilan
         ]);
     }
     public function takeCourse(Course $course){
@@ -42,5 +70,9 @@ class CourseController extends Controller
         emotify('success', 'Your course was successfully added');
         return redirect()->route('show-dashboard')->with('success', 'Course added successfully!');
         
+    }
+
+    public function showCourseDetail(Course $course){
+        dd($course);
     }
 }
