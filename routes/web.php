@@ -24,6 +24,7 @@ Route::get('/logout', [AuthController::class, 'handleLogout'])->name('handle-log
 Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
     Route::get('/course', [CourseController::class, 'showCourse'])->name('show-course');
+    Route::post('/course,{course:uuid}', [CourseController::class, 'takeCourse'])->name('take-course');
     Route::get('/course/{id}', [LessonController::class, 'listLesson'])->name('list-lesson');
     //Route::post('/course/{id}/lesson/{path}', [LessonController::class, 'showMaterial'])->name('show-materials');
     Route::get('/lesson{filename}', [LessonController::class, 'showMaterial'])->name('show-materials');
