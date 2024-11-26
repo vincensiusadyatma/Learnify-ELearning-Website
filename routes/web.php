@@ -26,6 +26,7 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     Route::get('/course', [CourseController::class, 'showCourse'])->name('show-course');
     Route::get('/course/{course:uuid}', [CourseController::class, 'showCourseDetail'])->name('show-course-detail');
     Route::post('/course/{course:uuid}', [CourseController::class, 'takeCourse'])->name('take-course');
+    Route::get('/course/{course:uuid}/lesson/{id}', [LessonController::class, 'showLesson'])->name('show-lesson');
 
     // Route::get('/course/{id}', [LessonController::class, 'listLesson'])->name('list-lesson');
     //Route::post('/course/{id}/lesson/{path}', [LessonController::class, 'showMaterial'])->name('show-materials');

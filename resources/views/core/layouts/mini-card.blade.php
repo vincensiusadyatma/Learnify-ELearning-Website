@@ -29,7 +29,7 @@
     </div>
 
     <!-- Link -->
-    <a href="#" class="inline-flex items-center mt-6 font-medium text-blue-600 hover:no-underline">
+    <a href="{{ route('take-course', $data->uuid) }}" class="inline-flex items-center mt-6 font-medium text-blue-600 hover:no-underline">
         <button class="flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 hover:shadow-lg transition duration-300 focus:ring-4 focus:ring-blue-300 focus:outline-none">
             <i class="bx bx-right-arrow-circle text-2xl"></i>
             Access Course

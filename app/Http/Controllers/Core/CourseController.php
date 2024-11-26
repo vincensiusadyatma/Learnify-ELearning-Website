@@ -73,6 +73,9 @@ class CourseController extends Controller
     }
 
     public function showCourseDetail(Course $course){
-        dd($course);
+        return view('core.course-detail', [
+            'course' => $course,
+           
+        ]);
     }
 }
