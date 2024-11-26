@@ -51,10 +51,6 @@ class UserSeeder extends Seeder
             ]
         ]);
 
-        // Insert user course enrollment
-        DB::table('user_take_courses')->insert([
-            'user_id' => 1,
-            'course_id' => 1,
-        ]);
+      
     }
 }
