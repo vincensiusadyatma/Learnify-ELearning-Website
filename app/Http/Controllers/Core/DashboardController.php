@@ -11,7 +11,7 @@ class DashboardController extends Controller
         // untuk mengambil model user yang sedang login 
         $user = Auth::user();
         // untuk megambil data course yang user ambil saja
-        $course = $user->courses->pluck('title')->toArray();
+        $course = $user->courses;
 
         return view('core.dashboard',[
             'user' => $user,

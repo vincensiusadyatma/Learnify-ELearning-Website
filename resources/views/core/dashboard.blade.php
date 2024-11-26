@@ -99,9 +99,9 @@
         <div class="py-6 pl-4">
             <p class="text-xl font-bold">Course On Progress</p>
         </div>
-        <div class="flex gap-4 px-4 w-full h-[300px]">
+        <div class="flex gap-4 px-4 w-full min-h[300px] ">
             @forelse($course as $item)
-                @include('core.layouts.mini-card', ['title' => $item])
+                @include('core.layouts.mini-card', ['data' => $item])
             @empty
                 <div
                         class="flex justify-center items-center w-full h-full bg-gray-100 border border-gray-300 rounded-lg">
