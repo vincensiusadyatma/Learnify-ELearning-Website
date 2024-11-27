@@ -4,7 +4,7 @@
 
     <div class="flex w-full h-[780px] gap-9">
         {{-- Photo Section --}}
-        <div class="flex flex-col items-center w-[500px] h-[600px] bg-[#EAECF3]">
+        <div class="flex flex-col items-center w-[500px] h-[600px] bg-white-theme/[0.67]">
 
             {{-- Upper Container --}}
             <div class="flex flex-col items-center w-full h-[320px] gap-2">
@@ -27,9 +27,9 @@
             </div>
         </div>
 
-        <div class="flex flex-col w-full h-full gap-4">
+        <div class="flex flex-col w-full h-full gap-4 ">
             {{-- Personal Info --}}
-            <div class="w-full h-full bg-[#EAECF3] font-bold">
+            <div class="w-full h-full bg-[#EAECF3] font-bold bg-white-theme/[0.67]">
                 <div class="flex items-center h-[47px] w-full border border-b-gray-300 pl-6">
                     <p>Personal Information</p>
                 </div>
@@ -67,7 +67,7 @@
             </div>
 
             {{-- About Me --}}
-            <div class="w-full h-full bg-[#EAECF3] font-bold">
+            <div class="w-full h-full bg-[#EAECF3] font-bold bg-white-theme/[0.67]">
                 <div class="flex items-center justify-between h-[47px] w-full border border-b-gray-300 pl-6">
                     <p>About Me</p>
 

@@ -10,7 +10,7 @@
     @vite('resources/css/app.css')
     @notifyCss
 </head>
-<body>
+<body class="bg-[#EAECF3]">
 
 @yield('content')
 

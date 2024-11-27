@@ -3,7 +3,7 @@
 @section('core-content')
     <div class="flex flex-col w-full h-[900px]">
         {{-- title --}}
-        <div class="flex justify-start bg-[#EAECF3] items-center pl-4 w-full py-4">
+        <div class="flex justify-start  items-center pl-4 w-full py-4 bg-white-theme/[0.67]">
             <p>Settings</p>
         </div>
 
