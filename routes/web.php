@@ -1,9 +1,11 @@
 <?php
 
+
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Core\CourseController;
 use App\Http\Controllers\Core\DashboardController;
 use App\Http\Controllers\Core\LessonController;
+use App\Http\Controllers\Admin\DashboardAdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -43,7 +45,11 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
 Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
     Route::get('/pulse', function () {
         return view('vendor.pulse.dashboard');
-    });
-    
+    })->name('healthcheck');
+
+    Route::get('/dashboard', [DashboardAdminController::class, 'showDashboard'])->name('show-dashboard-admin');
+    Route::get('/dashboard/users', [DashboardAdminController::class, 'showUserManagement'])->name('show-users-management');
+    Route::get('/dashboard/users/{user}', [DashboardAdminController::class, 'showUserDetails'])->name('show-user-details');
+    Route::get('/dashboard/users/{user}/setting', [DashboardAdminController::class, 'showUserSetting'])->name('show-user-setting');
 });
 
