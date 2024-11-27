@@ -6,8 +6,8 @@
     <!-- Course Title and Info -->
     <div class="flex items-center mb-6">
         <div class="flex-1">
-            <h1 class="text-3xl font-bold text-gray-900">{{ $course['title'] }}</h1>
-            <p class="text-gray-500 mt-2">{{ $course['description'] }}</p>
+            <h1 class="text-3xl font-bold text-gray-900">{{ $course->title }}</h1>
+            <p class="text-gray-500 mt-2">{{ $course->description }}</p>
         </div>
         <div class="ml-6">
             <img src="/img/assets/course/{{ $course['img'] }}" alt="Course Logo" class="w-24 h-24 object-contain">
@@ -28,10 +28,11 @@
 
     <!-- Continue Lesson Button -->
     <div class="flex justify-center mb-6">
-        <button class="px-6 py-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none">
+        <a href="{{ route('continue-lesson', $course->uuid) }}" class="px-6 py-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none">
             Continue this lesson
-        </button>
+        </a>
     </div>
+
 
     <!-- About Section -->
     <div class="mb-8">
