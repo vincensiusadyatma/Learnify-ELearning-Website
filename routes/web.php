@@ -40,3 +40,10 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     // Route::get('/course/{id}/lesson/{id}', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
 });
 
+Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
+    Route::get('/pulse', function () {
+        return view('vendor.pulse.dashboard');
+    });
+    
+});
+
