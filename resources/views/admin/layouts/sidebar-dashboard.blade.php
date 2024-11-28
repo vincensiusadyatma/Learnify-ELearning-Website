@@ -16,8 +16,8 @@
         <span class="text">Users Management</span>
       </a>
     </li>
-    <li class="{{ request()->routeIs('show-attendance') ? 'active' : '' }}">
-      <a href="">
+    <li class="{{ request()->routeIs('show-course-management') ? 'active' : '' }}">
+      <a href="{{ route('show-course-management') }}">
         <i class='bx bxs-doughnut-chart' ></i>
         <span class="text">Courses Management</span>
       </a>
@@ -25,7 +25,7 @@
     <li>
       <a href="">
         <i class='bx bxs-message-dots' ></i>
-        <span class="text">Support And Feedback</span>
+        <span class="text">Quiz Management</span>
       </a>
     </li>
     <li>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -10,9 +12,13 @@ use Illuminate\Support\Facades\Auth;
 class DashboardAdminController extends Controller
 {
     public function showDashboard(){
-        $user = User::all();
+        $user = User::all()->count();
+        $course = Course::all()->count();
+        $lesson = Lesson::all()->count();
         return view('admin.dashboard',[
-            'user' => $user
+            'user_count' => $user,
+            'course_count'=> $course,
+            'lesson_count' => $lesson
         ]);
     }
 
@@ -24,7 +30,10 @@ class DashboardAdminController extends Controller
     }
 
     public function showCourseManagement(){
-        return view('admin.courseManagement');
+        $courses = Course::all();
+        return view('admin.courseManagement',[
+            'courses' => $courses
+        ]);
     }
 
     public function showUserDetails(User $user){
@@ -40,4 +49,33 @@ class DashboardAdminController extends Controller
             'user' => $user
         ]);
     }
+
+    public function showCourseDetails(Course $course){
+
+            
+        $lessons = $course->lessons;  
+
+       
+        return view('admin.courseDetails', [
+            'course' => $course,
+            'lessons' => $lessons
+        ]);
+    }
+
+    
+    public function showLessonCMS(Course $course){
+        return view('admin.addLessonManagement',[
+            'course' => $course
+        ]);
+    }
+
+
+    public function updateUser(){
+
+    }
+
+    public function deleteUser(){
+        
+    }
+   
 }

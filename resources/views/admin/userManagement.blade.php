@@ -14,6 +14,10 @@
         </li>
       </ul>
     </div>
+    <a href="" class="btn-download">
+      <i class='bx bxs-add-to-queue' ></i>
+      <span class="text">Add User</span>
+    </a>
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

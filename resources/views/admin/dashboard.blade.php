@@ -20,22 +20,22 @@
     <li>
       <i class='bx bx-trending-up'></i>
       <span class="text">
-        <h3>2 %</h3>
-        <p>Percentage</p>
+        <h3>{{ $user_count }}</h3>
+        <p>Users</p>
       </span>
     </li>
     <li>
       <i class='bx bxs-key'></i>
       <span class="text">
-        <h3>2</h3>
-        <p>My Rooms</p>
+        <h3>{{ $lesson_count }}</h3>
+        <p>Lessons</p>
       </span>
     </li>
     <li>
       <i class='bx bxs-home'></i>
       <span class="text">
-        <h3>2</h3>
-        <p>Joined Rooms</p>
+        <h3>{{ $course_count }}</h3>
+        <p>Courses</p>
       </span>
     </li>
   </ul>
@@ -43,7 +43,7 @@
   <div class="table-data">
     <div class="order">
       <div class="head">
-        <h3>Absente Todo</h3>
+        <h3>Sample Table</h3>
         <i class='bx bx-search'></i>
         <i class='bx bx-filter'></i>
       </div>
@@ -51,32 +51,13 @@
       <table>
         <thead>
           <tr>
-            <th>Attendance Name</th>
-            <th>Remaining Time</th>
+            <th>Name</th>
+            <th>Email</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="clickable-row cursor-pointer" data-href="#">
-            <td>
-              <p>Sample Attendance</p>
-            </td>
-            <td class="px-4 py-3 text-sm">
-              <span class="text-red-500">Over 2 days, 3 hours Late</span>
-            </td>
-            <td class="px-4 py-3 text-sm">
-              <span class="w-full block px-4 py-2 font-semibold leading-tight text-white text-center bg-red-500 rounded-full">
-                Late
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="3" class="px-4 py-3">
-              <div class="flex items-center justify-center h-full min-h-[100px] text-gray-500">
-                No attendances data
-              </div>
-            </td>
-          </tr>
+          
         </tbody>
       </table>
     </div>

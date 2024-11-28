@@ -78,4 +78,27 @@ class CourseController extends Controller
            
         ]);
     }
+
+
+    public function update(Request $request, $id){
+   
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+    ]);
+
+  
+    $course = Course::findOrFail($id);
+
+    
+    $course->title = $request->input('title');
+    $course->description = $request->input('description');
+
+
+    $course->save();
+
+   
+    return redirect()->route('show-course-management')->with('success', 'Course updated successfully.');
+    }
+
 }
