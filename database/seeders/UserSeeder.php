@@ -36,6 +36,13 @@ class UserSeeder extends Seeder
                 'phone_number' => '081234567890',
                 'address' => 'Alamat bebas',
                 'password' => bcrypt('password123'),
+            ],
+            [
+                'username' => 'admin',
+                'email' => 'admin@gmail.com',
+                'phone_number' => '081234567890',
+                'address' => 'Alamat bebas',
+                'password' => bcrypt('admin123'),
             ]
         ]);
 
@@ -47,6 +54,14 @@ class UserSeeder extends Seeder
             ],
             [
                 'user_id' => 2,
+                'role_id' => 2,
+            ],
+            [
+                'user_id' => 4,
+                'role_id' => 1,
+            ],
+            [
+                'user_id' => 4,
                 'role_id' => 2,
             ]
         ]);

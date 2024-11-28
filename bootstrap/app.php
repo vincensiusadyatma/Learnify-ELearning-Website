@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'CheckRole' => App\Http\Middleware\CheckRole::class,
+            'PulseCheck' => \App\Http\Middleware\PulseCheckMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
