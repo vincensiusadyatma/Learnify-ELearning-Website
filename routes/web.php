@@ -64,7 +64,7 @@ Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
 
     Route::get('/dashboard/quiz', [DashboardAdminController::class, 'showQuizManagement'])->name('show-quiz-management');
     Route::get('/dashboard/quiz/{course}', [DashboardAdminController::class, 'showQuizDetails'])->name('show-quiz-admin-detail');
-    //Route::get('/dashboard/quiz{quiz}/questions/manage', [DashboardAdminController::class, 'showquizCMS'])->name('show-add-quiz-cms');
+    Route::get('/dashboard/quiz/{lesson}/questions/manage', [DashboardAdminController::class, 'showquizCMS'])->name('show-add-quiz-cms');
     
 });
 

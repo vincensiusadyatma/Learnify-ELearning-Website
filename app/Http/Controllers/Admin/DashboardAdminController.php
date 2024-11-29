@@ -52,7 +52,15 @@ class DashboardAdminController extends Controller
         //dd($quiz);
         return view('admin.quizDetails', [
             'quiz' => $quiz,
-            'course' => $course
+            'course' => $course,
+            'lessons_id' => $lessons
+        ]);
+    }
+
+    public function showquizCMS(Lesson $lessons)  
+    {
+        return view('admin.addQuizManagement',[
+            'lessons' => $lessons
         ]);
     }
 
