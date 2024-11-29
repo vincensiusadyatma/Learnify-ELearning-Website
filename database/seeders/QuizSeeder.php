@@ -13,8 +13,11 @@ class QuizSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('Quizes') -> insert([
-
+        DB::table('quizes') -> insert([
+            [
+                'title' => "Quiz pengenalan Java",
+                'lesson_id' => 1
+            ]
         ]);
     }
 }

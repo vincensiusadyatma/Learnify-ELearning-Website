@@ -61,6 +61,11 @@ Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
     Route::post('/dashboard/course/{course}/lesson/manage', [LessonController::class, 'store'])->name('handle-add-lesson');
     Route::delete('/dashboard/course/{course}/lesson/{lesson}', [LessonController::class, 'delete'])->name('handle-delete-lesson');
     Route::put('/dashboard/course/{course}', [CourseController::class, 'update'])->name('handle-update-course');
+
+    Route::get('/dashboard/quiz', [DashboardAdminController::class, 'showQuizManagement'])->name('show-quiz-management');
+    Route::get('/dashboard/quiz/{course}', [DashboardAdminController::class, 'showQuizDetails'])->name('show-quiz-admin-detail');
+    //Route::get('/dashboard/quiz{quiz}/questions/manage', [DashboardAdminController::class, 'showquizCMS'])->name('show-add-quiz-cms');
+    
 });
 
 Route::post('/upload-image', [LessonController::class, 'uploadImage']);

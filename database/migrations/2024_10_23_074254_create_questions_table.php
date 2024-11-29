@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->boolean('isActive');
             $table->text('title');
+
+            //foreign key for quiz_id
+            $table->unsignedBigInteger('quiz_id');
+            $table->foreign('quiz_id')->references('id')->on('quizes')->onDelete('cascade');
             $table->timestamps();
         });
     }
