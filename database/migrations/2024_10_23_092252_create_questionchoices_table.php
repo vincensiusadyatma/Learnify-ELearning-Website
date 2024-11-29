@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->boolean('is_correct');
             $table->string('choice');
+
+            //foreign key for question_id
+            $table->unsignedBigInteger('question_id');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
             $table->timestamps();
         });
     }

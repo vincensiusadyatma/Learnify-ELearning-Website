@@ -22,8 +22,8 @@
         <span class="text">Courses Management</span>
       </a>
     </li>
-    <li>
-      <a href="">
+    <li class="{{ request()->routeIs('show-quiz-management') ? 'active' : '' }}">
+      <a href="{{ route('show-quiz-management') }}">
         <i class='bx bxs-message-dots' ></i>
         <span class="text">Quiz Management</span>
       </a>
