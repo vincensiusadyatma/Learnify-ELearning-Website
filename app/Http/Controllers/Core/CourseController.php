@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Core;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -73,8 +74,11 @@ class CourseController extends Controller
     }
 
     public function showCourseDetail(Course $course){
+        $lesson = Lesson::where('course_id', $course['id'])->get();
+
         return view('core.course-detail', [
             'course' => $course,
+            'lesson' => $lesson
            
         ]);
     }
