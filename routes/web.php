@@ -52,6 +52,7 @@ Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard/users', [DashboardAdminController::class, 'showUserManagement'])->name('show-users-management');
     Route::get('/dashboard/users/{user}', [DashboardAdminController::class, 'showUserDetails'])->name('show-user-details');
     Route::put('/dashboard/users/{user}', [DashboardAdminController::class, 'updateUser'])->name('handle-update-user');
+    Route::put('/dashboard/users/setting/{user}', [DashboardAdminController::class, 'updateUserSetting'])->name('handle-update-user-setting');
     Route::delete('/dashboard/users/{user}', [DashboardAdminController::class, 'deleteUser'])->name('handle-delete-user');
     Route::get('/dashboard/users/{user}/setting', [DashboardAdminController::class, 'showUserSetting'])->name('show-user-setting');
 

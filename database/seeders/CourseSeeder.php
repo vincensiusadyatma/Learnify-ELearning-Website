@@ -43,6 +43,30 @@ class CourseSeeder extends Seeder
                         'title'=>'CSS',
                         'description'=>'CSS, shortfor Cascading Style Sheets, is a style sheet language used to style websites. Colors, fonts, and page layouts for a site can all be managed using CSS. The more comfortable you are with CSS, the better equipped you will be to create an appeling website.',
                         'img' => 'w3_css-icon.svg'
+                    ],
+                    [
+                        'uuid' => Str::uuid(),
+                        'title'=>'Laravel',
+                        'description'=>'CSS, shortfor Cascading Style Sheets, is a style sheet language used to style websites. Colors, fonts, and page layouts for a site can all be managed using CSS. The more comfortable you are with CSS, the better equipped you will be to create an appeling website.',
+                        'img' => 'w3_css-icon.svg'
+                    ],
+                    [
+                        'uuid' => Str::uuid(),
+                        'title'=>'Node JS',
+                        'description'=>'CSS, shortfor Cascading Style Sheets, is a style sheet language used to style websites. Colors, fonts, and page layouts for a site can all be managed using CSS. The more comfortable you are with CSS, the better equipped you will be to create an appeling website.',
+                        'img' => 'w3_css-icon.svg'
+                    ],
+                    [
+                        'uuid' => Str::uuid(),
+                        'title'=>'Express JS',
+                        'description'=>'CSS, shortfor Cascading Style Sheets, is a style sheet language used to style websites. Colors, fonts, and page layouts for a site can all be managed using CSS. The more comfortable you are with CSS, the better equipped you will be to create an appeling website.',
+                        'img' => 'w3_css-icon.svg'
+                    ],
+                    [
+                        'uuid' => Str::uuid(),
+                        'title'=>'Java Springboot',
+                        'description'=>'CSS, shortfor Cascading Style Sheets, is a style sheet language used to style websites. Colors, fonts, and page layouts for a site can all be managed using CSS. The more comfortable you are with CSS, the better equipped you will be to create an appeling website.',
+                        'img' => 'w3_css-icon.svg'
                     ]
                 ]);
     }
