@@ -52,23 +52,34 @@ class AuthController extends Controller
 
     public function handleLogin(Request $request)
     {
-
-
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string|min:8'
         ]);
-
-
+    
         if (Auth::attempt($credentials)) {
-
             $request->session()->regenerate();
-            notify()->success('You have successfully login');
-            return redirect()->route('show-dashboard')->with('success', 'Login berhasil!');
+    
+          
+            $user = Auth::user();
+            $role = $user->roles->pluck('name')->first(); 
+    
+            notify()->success('You have successfully logged in');
+    
+            if ($role === 'admin') {
+                return redirect()->route('show-dashboard-admin')->with('success', 'Welcome, Admin!');
+            } elseif ($role === 'user') {
+                return redirect()->route('show-dashboard')->with('success', 'Welcome, User!');
+            }
+    
+            // Jika tidak ada role yang cocok, logout pengguna
+            Auth::logout();
+            return redirect()->route('main')->with('error', 'Your account does not have the required access.');
         }
-        
+    
         return redirect()->route('show-register')->with('error', 'Login gagal');
     }
+    
 
     public function handleLogOut(Request $request)
     {

@@ -181,7 +181,23 @@ public function updateUser(Request $request, $id){
     return redirect()->route('show-user-details', $user->id)
                      ->with('success', 'Profile updated successfully.');
 }
-   
+public function deleteUser(User $user)
+{
+    try {
+        // Hapus user
+        $user->delete();
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('show-users-management', $user->id)
+                     ->with('success', 'User has been deleted successfully.');
+       
+    } catch (\Exception $e) {
+        // Redirect dengan pesan error jika terjadi masalah
+        return redirect()->back()->with('error', 'Failed to delete user.');
+    }
 }
+}
+
+
 
 

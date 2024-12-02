@@ -68,18 +68,40 @@
                 <!-- End Form for Updating User -->
 
                 <!-- Start Form for Deleting User -->
-                <form action="{{ route('handle-delete-user', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?')">
+                <form action="{{ route('handle-delete-user', $user->id) }}" method="POST" id="deleteForm">
                     @csrf
                     @method('DELETE')
                     <div class="flex justify-end space-x-4 mt-6">
-                        <button type="submit" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                        <button type="button" onclick="confirmDelete()" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
                             Delete User
                         </button>
                     </div>
                 </form>
+                
                 <!-- End Form for Deleting User -->
             </div>
         </div>
     </main>
 </div>
+
+<script>
+    function confirmDelete() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the form
+                document.getElementById('deleteForm').submit();
+            }
+        });
+    }
+</script>
+
 @endsection
