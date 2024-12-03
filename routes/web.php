@@ -1,12 +1,13 @@
 <?php
 
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Core\CourseController;
-use App\Http\Controllers\Core\DashboardController;
-use App\Http\Controllers\Core\LessonController;
-use App\Http\Controllers\Admin\DashboardAdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Core\QuizController;
+use App\Http\Controllers\Core\CourseController;
+use App\Http\Controllers\Core\LessonController;
+use App\Http\Controllers\Core\DashboardController;
+use App\Http\Controllers\Admin\DashboardAdminController;
 
 Route::get('/', function () {
     return view('main.main');
@@ -52,6 +53,7 @@ Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard/users', [DashboardAdminController::class, 'showUserManagement'])->name('show-users-management');
     Route::get('/dashboard/users/{user}', [DashboardAdminController::class, 'showUserDetails'])->name('show-user-details');
     Route::put('/dashboard/users/{user}', [DashboardAdminController::class, 'updateUser'])->name('handle-update-user');
+    Route::put('/dashboard/users/setting/{user}', [DashboardAdminController::class, 'updateUserSetting'])->name('handle-update-user-setting');
     Route::delete('/dashboard/users/{user}', [DashboardAdminController::class, 'deleteUser'])->name('handle-delete-user');
     Route::get('/dashboard/users/{user}/setting', [DashboardAdminController::class, 'showUserSetting'])->name('show-user-setting');
 
@@ -64,7 +66,8 @@ Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
 
     Route::get('/dashboard/quiz', [DashboardAdminController::class, 'showQuizManagement'])->name('show-quiz-management');
     Route::get('/dashboard/quiz/{course}', [DashboardAdminController::class, 'showQuizDetails'])->name('show-quiz-admin-detail');
-    Route::get('/dashboard/quiz/{lesson}/questions/manage', [DashboardAdminController::class, 'showquizCMS'])->name('show-add-quiz-cms');
+    Route::get('/dashboard/quiz/{course}/questions/manage', [DashboardAdminController::class, 'showquizCMS'])->name('show-add-quiz-cms');
+    Route::post('/dashboard/quiz/{course}/questions/manage', [QuizController::class, 'store'])->name('handle-store-quiz');
     
 });
 
