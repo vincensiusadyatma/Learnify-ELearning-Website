@@ -22,7 +22,7 @@
     <div class="flex space-x-4"> <!-- flex to align the buttons and space-x-4 to add spacing between buttons -->
         
         {{--  --}}
-        <a href="{{ route('show-add-quiz-cms', $lessons_id) }}" class="btn-download flex items-center space-x-2">
+        <a href="{{ route('show-add-quiz-cms', $course->id) }}" class="btn-download flex items-center space-x-2">
             <i class='bx bxs-add-to-queue'></i>
             <span class="text">Add Quiz</span>
         </a>

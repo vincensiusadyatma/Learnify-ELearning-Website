@@ -50,35 +50,43 @@ class AuthController extends Controller
         }
     }
 
-    public function handleLogin(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string|min:8'
+    public function handleLogin(Request $request){
+        $input = $request->input('email'); 
+        $password = $request->input('password');
+
+        // Tentukan apakah input adalah email
+        $fieldType = filter_var($input, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        // Validasi input berdasarkan tipe
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string|min:8',
         ]);
-    
-        if (Auth::attempt($credentials)) {
+
+       
+        if (Auth::attempt([$fieldType => $input, 'password' => $password])) {
             $request->session()->regenerate();
-    
-          
+
             $user = Auth::user();
             $role = $user->roles->pluck('name')->first(); 
-    
+
             notify()->success('You have successfully logged in');
-    
+
+           
             if ($role === 'admin') {
                 return redirect()->route('show-dashboard-admin')->with('success', 'Welcome, Admin!');
             } elseif ($role === 'user') {
                 return redirect()->route('show-dashboard')->with('success', 'Welcome, User!');
             }
-    
-            // Jika tidak ada role yang cocok, logout pengguna
+
+            // Logout jika role tidak valid
             Auth::logout();
             return redirect()->route('main')->with('error', 'Your account does not have the required access.');
         }
-    
+
         return redirect()->route('show-register')->with('error', 'Login gagal');
     }
+
     
 
     public function handleLogOut(Request $request)

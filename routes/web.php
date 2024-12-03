@@ -1,12 +1,13 @@
 <?php
 
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Core\CourseController;
-use App\Http\Controllers\Core\DashboardController;
-use App\Http\Controllers\Core\LessonController;
-use App\Http\Controllers\Admin\DashboardAdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Core\QuizController;
+use App\Http\Controllers\Core\CourseController;
+use App\Http\Controllers\Core\LessonController;
+use App\Http\Controllers\Core\DashboardController;
+use App\Http\Controllers\Admin\DashboardAdminController;
 
 Route::get('/', function () {
     return view('main.main');
@@ -65,7 +66,8 @@ Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
 
     Route::get('/dashboard/quiz', [DashboardAdminController::class, 'showQuizManagement'])->name('show-quiz-management');
     Route::get('/dashboard/quiz/{course}', [DashboardAdminController::class, 'showQuizDetails'])->name('show-quiz-admin-detail');
-    Route::get('/dashboard/quiz/{lesson}/questions/manage', [DashboardAdminController::class, 'showquizCMS'])->name('show-add-quiz-cms');
+    Route::get('/dashboard/quiz/{course}/questions/manage', [DashboardAdminController::class, 'showquizCMS'])->name('show-add-quiz-cms');
+    Route::post('/dashboard/quiz/{course}/questions/manage', [QuizController::class, 'store'])->name('handle-store-quiz');
     
 });
 

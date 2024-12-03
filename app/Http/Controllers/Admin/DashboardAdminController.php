@@ -59,7 +59,7 @@ class DashboardAdminController extends Controller
 
     public function showQuizDetails(Course $course) {
         $lessons = DB::table('lessons')->where('course_id', $course->id)->pluck('id');
-        $quiz = DB::table('quizes')->whereIn('lesson_id', $lessons)->get();
+        $quiz = DB::table('quizzes')->whereIn('course_id', $lessons)->get();
         //dd($quiz);
         return view('admin.quizDetails', [
             'quiz' => $quiz,
@@ -68,10 +68,10 @@ class DashboardAdminController extends Controller
         ]);
     }
 
-    public function showquizCMS(Lesson $lessons)  
+    public function showquizCMS(Course $course)  
     {
         return view('admin.addQuizManagement',[
-            'lessons' => $lessons
+            'course' =>  $course
         ]);
     }
 
@@ -184,15 +184,13 @@ public function updateUser(Request $request, $id){
 public function deleteUser(User $user)
 {
     try {
-        // Hapus user
+       
         $user->delete();
-
-        // Redirect dengan pesan sukses
         return redirect()->route('show-users-management', $user->id)
                      ->with('success', 'User has been deleted successfully.');
        
     } catch (\Exception $e) {
-        // Redirect dengan pesan error jika terjadi masalah
+    
         return redirect()->back()->with('error', 'Failed to delete user.');
     }
 }
