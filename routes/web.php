@@ -66,6 +66,10 @@ Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
 
     Route::get('/dashboard/quiz', [DashboardAdminController::class, 'showQuizManagement'])->name('show-quiz-management');
     Route::get('/dashboard/quiz/{course}', [DashboardAdminController::class, 'showQuizDetails'])->name('show-quiz-admin-detail');
+    Route::get('/dashboard/quiz/{quiz}/details', [QuizController::class, 'showquizDetailsForUpdate'])->name('show-quiz-admin-detail-for-update');
+    Route::put('/dashboard/quiz/{quiz}/details', [QuizController::class, 'update'])->name('handle-quiz-update');
+    Route::delete('/dashboard/quiz/{quiz}', [QuizController::class, 'delete'])->name('handle-delete-quiz');
+    Route::put('/dashboard/quiz/{quiz}', [DashboardAdminController::class, 'showQuizDetails'])->name('handle-update-quiz');
     Route::get('/dashboard/quiz/{course}/questions/manage', [DashboardAdminController::class, 'showquizCMS'])->name('show-add-quiz-cms');
     Route::post('/dashboard/quiz/{course}/questions/manage', [QuizController::class, 'store'])->name('handle-store-quiz');
     

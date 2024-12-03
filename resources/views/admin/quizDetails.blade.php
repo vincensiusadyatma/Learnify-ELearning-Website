@@ -42,14 +42,10 @@
                 {{-- <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{{ Str::limit($lesson->description, 100) }}</p> <!-- Shorten content for preview --> --}}
             </div>
             <div class="flex space-x-2 p-4">
-                <!-- Lihat Button -->
-                <a href="" class="bg-blue-500 text-white rounded-md px-3 py-2 hover:bg-blue-600 flex items-center space-x-1">
-                   
-                    <span>View</span>
-                </a>
+              
 
                 <!-- Edit Button -->
-                <a href="" class="bg-yellow-500 text-white rounded-md px-3 py-2 hover:bg-yellow-600 flex items-center space-x-1">
+                <a href="{{ route('show-quiz-admin-detail-for-update',$qz->id) }}" class="bg-yellow-500 text-white rounded-md px-3 py-2 hover:bg-yellow-600 flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l7 7-7 7M5 13V5h8" />
                     </svg>
@@ -59,7 +55,7 @@
                 <!-- Delete Button -->
 
                 {{-- {{ route('handle-delete-lesson',['course' => $course->id, 'lesson' => $lesson->id]) }} --}}
-                <form action="" method="POST" onsubmit="return confirm('Are you sure you want to delete this lesson?')" class="inline">
+                <form action="{{ route('handle-delete-quiz',$qz->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this lesson?')" class="inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="bg-red-500 text-white rounded-md px-3 py-2 hover:bg-red-600 flex items-center space-x-1">

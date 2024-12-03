@@ -58,7 +58,6 @@
 
         <div id="questions-container">
             <div class="question-section" id="question-1">
-                {{-- format nama input => array[index][key] --}}
                 <div>
                     <label for="question_1" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Question 1</label>
                     <input type="text" id="question_1" name="questions[1][question]" placeholder="Enter Question"
@@ -76,6 +75,16 @@
                         <input type="text" id="answer_1b" name="questions[1][answers][B]" placeholder="Enter Answer B"
                             class="block w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm" required>
                     </div>
+                </div>
+
+                <div class="mt-4">
+                    <label for="correct_answer_1" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Correct Answer</label>
+                    <select id="correct_answer_1" name="questions[1][correct_answer]"
+                        class="block w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
+                        <option value="" disabled selected>Select Correct Answer</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                    </select>
                 </div>
 
                 <button type="button" class="mt-2 text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 rounded-lg px-4 py-2"
@@ -121,6 +130,16 @@
                     </div>
                 </div>
 
+                <div class="mt-4">
+                    <label for="correct_answer_${questionCount}" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Correct Answer</label>
+                    <select id="correct_answer_${questionCount}" name="questions[${questionCount}][correct_answer]"
+                        class="block w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
+                        <option value="" disabled selected>Select Correct Answer</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                    </select>
+                </div>
+
                 <button type="button" class="mt-2 text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 rounded-lg px-4 py-2"
                         id="add-answer-${questionCount}" data-question-id="${questionCount}">Add Answer</button>
             </div>
@@ -143,6 +162,7 @@
                 </div>
             `;
             document.getElementById(`answers-container-${questionId}`).insertAdjacentHTML('beforeend', newAnswerSection);
+            document.getElementById(`correct_answer_${questionId}`).insertAdjacentHTML('beforeend', `<option value="${newAnswerLabel}">${newAnswerLabel}</option>`);
         }
     }
 
