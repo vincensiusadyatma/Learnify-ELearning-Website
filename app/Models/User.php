@@ -14,7 +14,8 @@ class User extends  Authenticatable
         'google_id',
         'phone_number',
         'address',
-        'password'
+        'password',
+        'status'
     ];
 
     public function roles(){

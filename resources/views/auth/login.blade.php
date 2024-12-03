@@ -23,7 +23,7 @@
                     <div>
                         <label for="email" class="block text-sm font-medium leading-6 text-gray-900 text-start">Username atau email</label>
                         <div class="mt-1">
-                            <input id="email" name="email" type="email" required
+                            <input id="email" name="email" type="text" required
                                 class="block w-full rounded-md border-0 py-1 px-2 text-gray-900 shadow-sm ring-2 ring-inset ring-purple-dark-theme focus:ring-2 focus:ring-inset focus:ring-purple-dark-theme sm:text-sm sm:leading-6">
                         </div>
                     </div>
