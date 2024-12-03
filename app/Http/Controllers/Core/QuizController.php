@@ -37,8 +37,8 @@ class QuizController extends Controller
                 DB::table('questions')->insert([
                     'quiz_id' => $quizId,
                     'title' => $questionData['question'],
-                    'isActive' => true, // Menganggap pertanyaan selalu aktif saat dibuat
-                    'choices' => json_encode($questionData['answers']), // Menyimpan pilihan jawaban dalam format JSON
+                    'isActive' => true, 
+                    'choices' => json_encode($questionData['answers']), 
                     'correct_answer' => isset($questionData['correct_answer']) ? $questionData['correct_answer'] : null,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -58,4 +58,99 @@ class QuizController extends Controller
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
     }
+
+
+    public function showquizDetailsForUpdate(Quiz $quiz){
+   
+
+        $questions = $quiz->question()->get();
+
+        return view('admin.quizUpdateDetails',[
+            'quiz' => $quiz,
+            'questions' => $questions
+        ]);
+    }
+
+    public function update(Request $request, Quiz $quiz)
+    {
+        try {
+            // Validasi input
+            $request->validate([
+                'quiz_title' => 'required|string|max:255',
+                'questions' => 'required|array',
+                // 'questions.*.id' => 'nullable|exists:questions,id', 
+                'questions.*.title' => 'required|string|max:255',
+                'questions.*.choices' => 'required|array',
+                'questions.*.correct_answer' => 'string|in:A,B,C,D',
+            ]);
+    
+         
+            DB::beginTransaction();
+    
+            // Update judul kuis
+            $quiz->update([
+                'title' => $request->input('quiz_title'),
+            ]);
+    
+            // Update pertanyaan dan pilihannya
+            foreach ($request->questions as $questionData) {
+                if ($questionData['id'] === 'null') {
+                    // Buat pertanyaan baru
+                    $question = new Question();
+                    $question->quiz_id = $quiz->id; 
+                    $question->title = $questionData['title'];
+                    $question->choices = json_encode($questionData['choices']);
+                    $question->correct_answer = $questionData['correct_answer'] ?? null;
+                    $question->isActive = true; // Set default value true
+                    $question->save();
+                } else {
+                    // Perbarui pertanyaan yang sudah ada
+                    $question = Question::findOrFail($questionData['id']);
+                    $question->update([
+                        'title' => $questionData['title'],
+                        'choices' => json_encode($questionData['choices']),
+                        'correct_answer' => $questionData['correct_answer'],
+                        'isActive' => $question->isActive ?? true, // Set default isActive jika tidak ada
+                    ]);
+                }
+            }
+    
+           
+            DB::commit();
+    
+            return redirect()->route('show-quiz-management')->with('success', 'Quiz updated successfully.');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi error
+            DB::rollBack();
+        
+            // Redirect kembali dengan pesan error
+            return redirect()->route('show-quiz-management')->with('error', 'Failed to update quiz. Please try again.');
+        }
+    }
+    
+
+    
+
+
+
+    
+    
+    public function delete(Quiz $quiz)
+    {
+        try {
+            
+            $quiz->question()->delete(); 
+    
+        
+            $quiz->delete();
+    
+           
+            return redirect()->route('show-quiz-management')->with('success', 'Quiz deleted successfully!');
+        } catch (\Exception $e) {
+            
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+        }
+    }
+    
+
 }
