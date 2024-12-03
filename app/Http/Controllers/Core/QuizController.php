@@ -10,8 +10,7 @@ use Illuminate\Database\QueryException;
 
 class QuizController extends Controller
 {
-    public function store(Request $request, Course $course)
-    {     
+    public function store(Request $request, Course $course){     
         // dd($request->all());
         try {
             // Validasi input
@@ -21,7 +20,7 @@ class QuizController extends Controller
                 'questions.*.question' => 'required|string|max:255',
                 'questions.*.answers' => 'required|array',
                 'questions.*.answers.*' => 'required|string|max:255',
-                // 'questions.*.correct_answer' => 'required|string|in:A,B,C,D', // Validasi jawaban yang benar
+                'questions.*.correct_answer' => 'required|string|in:A,B,C,D', // Validasi jawaban yang benar
             ]);
 
             // Membuat Quiz
@@ -61,7 +60,6 @@ class QuizController extends Controller
 
 
     public function showquizDetailsForUpdate(Quiz $quiz){
-   
 
         $questions = $quiz->question()->get();
 

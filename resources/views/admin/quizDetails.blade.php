@@ -42,11 +42,7 @@
                 {{-- <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{{ Str::limit($lesson->description, 100) }}</p> <!-- Shorten content for preview --> --}}
             </div>
             <div class="flex space-x-2 p-4">
-                <!-- Lihat Button -->
-                <a href="" class="bg-blue-500 text-white rounded-md px-3 py-2 hover:bg-blue-600 flex items-center space-x-1">
-                   
-                    <span>View</span>
-                </a>
+              
 
                 <!-- Edit Button -->
                 <a href="{{ route('show-quiz-admin-detail-for-update',$qz->id) }}" class="bg-yellow-500 text-white rounded-md px-3 py-2 hover:bg-yellow-600 flex items-center space-x-1">

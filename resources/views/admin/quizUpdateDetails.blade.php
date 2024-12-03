@@ -112,20 +112,21 @@
 <script>
     let questionCount = {{ $questions->count() }};
     let answerCount = {};
+    const maxAnswers = 4; // Maksimal pilihan sampai D
+
     @foreach($questions as $question)
         answerCount[{{ $question->id }}] = {{ count(json_decode($question->choices, true)) }};
     @endforeach
 
-    document.getElementById('add-question').addEventListener('click', function() {
+    // Handle add new question
+    document.getElementById('add-question').addEventListener('click', function () {
         questionCount++;
-        answerCount[questionCount] = 2;
+        answerCount[questionCount] = 2; // Default 2 pilihan
 
         const questionSection = `
             <div class="question-section" id="question-${questionCount}">
-                 <!-- Hidden Input for Question ID -->
-            <input type="hidden" name="questions[${questionCount}][id]" value="null">
+                <input type="hidden" name="questions[${questionCount}][id]" value="null">
                 <div>
-                   
                     <label for="question_${questionCount}" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Question ${questionCount}</label>
                     <input type="text" id="question_${questionCount}" name="questions[${questionCount}][title]" placeholder="Enter Question"
                         class="block w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm" required>
@@ -133,17 +134,25 @@
 
                 <div id="answers-container-${questionCount}">
                     <div class="answer-input">
-                        <label for="answer_${questionCount}a" class="inline-flex items-center text-sm text-gray-700 dark:text-gray-400">A</label>
-                        <input type="text" id="answer_${questionCount}a" name="questions[${questionCount}][choices][A]" placeholder="Enter Answer A"
+                        <label for="answer_${questionCount}A" class="inline-flex items-center text-sm text-gray-700 dark:text-gray-400">A</label>
+                        <input type="text" id="answer_${questionCount}A" name="questions[${questionCount}][choices][A]" placeholder="Enter Answer A"
                             class="block w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm" required>
                     </div>
                     <div class="answer-input">
-                        <label for="answer_${questionCount}b" class="inline-flex items-center text-sm text-gray-700 dark:text-gray-400">B</label>
-                        <input type="text" id="answer_${questionCount}b" name="questions[${questionCount}][choices][B]" placeholder="Enter Answer B"
+                        <label for="answer_${questionCount}B" class="inline-flex items-center text-sm text-gray-700 dark:text-gray-400">B</label>
+                        <input type="text" id="answer_${questionCount}B" name="questions[${questionCount}][choices][B]" placeholder="Enter Answer B"
                             class="block w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm" required>
                     </div>
                 </div>
 
+                <div class="mt-2">
+                    <label for="correct_answer_${questionCount}" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Correct Answer</label>
+                    <select id="correct_answer_${questionCount}" name="questions[${questionCount}][correct_answer]" 
+                        class="block w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                    </select>
+                </div>
                 <button type="button" class="mt-2 text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 rounded-lg px-4 py-2"
                         id="add-answer-${questionCount}" data-question-id="${questionCount}">Add Answer</button>
             </div>
@@ -151,21 +160,31 @@
         document.getElementById('questions-container').insertAdjacentHTML('beforeend', questionSection);
     });
 
-    document.querySelectorAll('[id^="add-answer-"]').forEach(button => {
-        button.addEventListener('click', function() {
-            const questionId = this.dataset.questionId;
-            answerCount[questionId]++;
-            const newAnswerLabel = String.fromCharCode(64 + answerCount[questionId]);
+    document.addEventListener('click', function (e) {
+    // Periksa apakah tombol yang diklik adalah tombol "Add Answer"
+    if (e.target && e.target.matches('[id^="add-answer-"]')) {
+        const questionId = e.target.getAttribute('data-question-id');
+        if (!answerCount[questionId]) {
+            answerCount[questionId] = 2; // Default jumlah jawaban untuk pertanyaan baru
+        }
 
-            const newAnswerSection = `
+        if (answerCount[questionId] < maxAnswers) {
+            answerCount[questionId]++;
+            const answerKey = String.fromCharCode(64 + answerCount[questionId]); // A, B, C, D...
+
+            const answerSection = `
                 <div class="answer-input">
-                    <label for="answer_${questionId}${newAnswerLabel}" class="inline-flex items-center text-sm text-gray-700 dark:text-gray-400">${newAnswerLabel}</label>
-                    <input type="text" id="answer_${questionId}${newAnswerLabel}" name="questions[${questionId}][choices][${newAnswerLabel}]" placeholder="Enter Answer ${newAnswerLabel}"
-                        class="block w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm" required>
+                    <label for="answer_${questionId}${answerKey}" class="inline-flex items-center text-sm text-gray-700 dark:text-gray-400">${answerKey}</label>
+                    <input type="text" id="answer_${questionId}${answerKey}" name="questions[${questionId}][choices][${answerKey}]"
+                        placeholder="Enter Answer ${answerKey}" class="block w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm" required>
                 </div>
             `;
-            document.getElementById(`answers-container-${questionId}`).insertAdjacentHTML('beforeend', newAnswerSection);
-        });
-    });
+            document.getElementById(`answers-container-${questionId}`).insertAdjacentHTML('beforeend', answerSection);
+        } else {
+            alert(`Maximum ${maxAnswers} answers allowed.`);
+        }
+    }
+});
+
 </script>
 @endsection
