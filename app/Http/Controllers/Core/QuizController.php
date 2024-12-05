@@ -11,14 +11,17 @@ use Illuminate\Database\QueryException;
 class QuizController extends Controller
 {
 
+    public function showQuiz() {
+        $quiz = DB::table('quizzes')->get();
+        //dd($quiz->toArray());
+        return view('core.quiz', ['quiz' => $quiz]);
+    }
 
-
-
-
-
-
-
-
+    public function showQuizDetail(Quiz $quizId) {
+        $questions = DB::table(('questions'))->where('quiz_id', $quizId->id)->get();
+        //dd($questions->toArray());
+        return view('core.quizDetails', ['questions' => $questions]);
+    }
 
 
 

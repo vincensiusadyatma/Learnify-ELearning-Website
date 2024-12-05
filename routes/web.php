@@ -38,6 +38,11 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     Route::get('/lesson{filename}', [LessonController::class, 'showMaterial'])->name('show-materials');
     Route::get('/setting', [SettingController::class, 'showSetting'])->name('show-setting');
     Route::get('/profile', [SettingController::class, 'showProfile'])->name('show-profile');
+
+    // user access quiz
+    Route::get('/quiz', [QuizController::class, 'showQuiz'])->name('show-quiz');
+    Route::get('/quiz/{quizId}', [QuizController::class, 'showQuizDetail'])->name('show-quiz-detail');
+    Route::get('/quiz/{quiz}/{question}', [QuizController::class, 'showQuestion'])->name('show-question');
 });
 
 

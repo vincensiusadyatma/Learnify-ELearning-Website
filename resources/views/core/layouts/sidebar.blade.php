@@ -32,10 +32,10 @@
         <div class="border border-gray-500 my-4"></div>
 
         <div class="sidebar-content-container mx-8 ">
-            <p class="text-white">Learning Path</p>
+            <p class="text-white">Quiz</p>
             <ul>
                 <li>
-                    @include('core.layouts.sidebar-item', ['title' => 'Learning Path A', 'link' => '#', 'active' => request()->routeIs('#')])
+                    @include('core.layouts.sidebar-item', ['title' => 'Quiz', 'link' => route('show-quiz'), 'active' => request()->routeIs('#')])
                 </li>
             </ul>
         </div>
