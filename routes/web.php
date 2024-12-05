@@ -6,9 +6,12 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Core\QuizController;
 use App\Http\Controllers\Core\CourseController;
 use App\Http\Controllers\Core\LessonController;
+use App\Http\Controllers\Core\SettingController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Core\DashboardController;
 use App\Http\Controllers\Core\UserController;
 use App\Http\Controllers\Admin\DashboardAdminController;
+
 
 Route::get('/', function () {
     return view('main.main');
@@ -33,7 +36,9 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     Route::get('/course/{course:uuid}/lesson/{lesson}', [LessonController::class, 'showLesson'])->name('show-lesson');
     Route::get('/course/{course:uuid}/continues', [LessonController::class, 'continueLesson'])->name('continue-lesson');
     
-
+    Route::get('/lesson{filename}', [LessonController::class, 'showMaterial'])->name('show-materials');
+    Route::get('/setting', [SettingController::class, 'showSetting'])->name('show-setting');
+    Route::get('/profile', [SettingController::class, 'showProfile'])->name('show-profile');
 
 
 
@@ -41,9 +46,11 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
 
     // Route::get('/course/{id}', [LessonController::class, 'listLesson'])->name('list-lesson');
     //Route::post('/course/{id}/lesson/{path}', [LessonController::class, 'showMaterial'])->name('show-materials');
+
+ 
+
     // Route::get('/lesson{filename}', [LessonController::class, 'showMaterial'])->name('show-materials');
-    // Route::get('/course/{id}/lesson/{id}', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
-});
+
 
 Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
     Route::get('/pulse', function () {

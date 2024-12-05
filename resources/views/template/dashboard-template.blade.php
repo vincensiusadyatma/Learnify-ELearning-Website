@@ -21,7 +21,7 @@
 }
     </style>
 </head>
-<body>
+<body class="bg-[#EAECF3]">
 
 @yield('content')
 

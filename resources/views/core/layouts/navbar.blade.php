@@ -1,4 +1,4 @@
-<nav class="sticky flex justify-between z-10 px-8 items-center top-0 h-20 z-9 w-full bg-white-theme border">
+<nav class="flex justify-between px-8 items-center top-0 h-20 z-9 w-full bg-white-theme border">
 
     {{-- Home Button--}}
     <div class="hidden lg:flex space-x-4 items-center">
@@ -17,8 +17,8 @@
     </div>
 
     {{-- Toggle Sidebar--}}
-    <button id="toggleSidebarBtn" class="flex space-x-4 items-center">
-        <img class="lg:hidden" src="https://placehold.co/30x30" alt="">
+    <button id="toggleSidebarBtn" class="flex lg:hidden space-x-4 items-center">
+        <img src="https://placehold.co/30x30" alt="">
     </button>
 
     <div class="relative">
@@ -39,10 +39,10 @@
                     class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ auth()->user()->email ?? 'User' }}</span>
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">
-                <li><a href="{{ route('show-dashboard') }}"
-                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                <li><a href="{{ route('show-profile') }}"
+                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
                 </li>
-                <li><a href="#"
+                <li><a href="{{ route('show-setting') }}"
                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
                 </li>
                 <li><a href="#"
