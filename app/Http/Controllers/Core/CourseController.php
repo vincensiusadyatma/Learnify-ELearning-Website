@@ -101,4 +101,24 @@ class CourseController extends Controller
     return redirect()->route('show-course-management')->with('success', 'Course updated successfully.');
     }
 
+
+    // ====================================Admin Methods Area =============================================================================
+
+
+    public function showCourseManagement(){
+        $courses = Course::all();
+        return view('admin.courseManagement',[
+            'courses' => $courses
+        ]);
+    }
+
+
+    public function showCourseDetails(Course $course){
+        $lessons = $course->lessons;  
+        return view('admin.courseDetails', [
+            'course' => $course,
+            'lessons' => $lessons
+        ]);
+    }
+
 }

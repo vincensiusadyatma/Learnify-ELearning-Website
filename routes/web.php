@@ -7,6 +7,7 @@ use App\Http\Controllers\Core\QuizController;
 use App\Http\Controllers\Core\CourseController;
 use App\Http\Controllers\Core\LessonController;
 use App\Http\Controllers\Core\DashboardController;
+use App\Http\Controllers\Core\UserController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 
 Route::get('/', function () {
@@ -49,28 +50,28 @@ Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
         return view('vendor.pulse.dashboard');
     })->name('healthcheck');
 
-    Route::get('/dashboard', [DashboardAdminController::class, 'showDashboard'])->name('show-dashboard-admin');
-    Route::get('/dashboard/users', [DashboardAdminController::class, 'showUserManagement'])->name('show-users-management');
-    Route::get('/dashboard/users/{user}', [DashboardAdminController::class, 'showUserDetails'])->name('show-user-details');
-    Route::put('/dashboard/users/{user}', [DashboardAdminController::class, 'updateUser'])->name('handle-update-user');
-    Route::put('/dashboard/users/setting/{user}', [DashboardAdminController::class, 'updateUserSetting'])->name('handle-update-user-setting');
-    Route::delete('/dashboard/users/{user}', [DashboardAdminController::class, 'deleteUser'])->name('handle-delete-user');
-    Route::get('/dashboard/users/{user}/setting', [DashboardAdminController::class, 'showUserSetting'])->name('show-user-setting');
+    Route::get('/dashboard', [DashboardController::class, 'showAdminDashboard'])->name('show-dashboard-admin');
+    Route::get('/dashboard/users', [UserController::class, 'showUserManagement'])->name('show-users-management');
+    Route::get('/dashboard/users/{user}', [UserController::class, 'showUserDetails'])->name('show-user-details');
+    Route::put('/dashboard/users/{user}', [UserController::class, 'updateUser'])->name('handle-update-user');
+    Route::put('/dashboard/users/setting/{user}', [UserController::class, 'updateUserSetting'])->name('handle-update-user-setting');
+    Route::delete('/dashboard/users/{user}', [UserController::class, 'deleteUser'])->name('handle-delete-user');
+    Route::get('/dashboard/users/{user}/setting', [UserController::class, 'showUserSetting'])->name('show-user-setting');
 
-    Route::get('/dashboard/course', [DashboardAdminController::class, 'showCourseManagement'])->name('show-course-management');
-    Route::get('/dashboard/course/{course}', [DashboardAdminController::class, 'showCourseDetails'])->name('show-course-admin-detail');
-    Route::get('/dashboard/course/{course}/lesson/manage', [DashboardAdminController::class, 'showLessonCMS'])->name('show-add-lesson-cms');
+    Route::get('/dashboard/course', [CourseController::class, 'showCourseManagement'])->name('show-course-management');
+    Route::get('/dashboard/course/{course}', [CourseController::class, 'showCourseDetails'])->name('show-course-admin-detail');
+    Route::get('/dashboard/course/{course}/lesson/manage', [LessonController::class, 'showLessonCMS'])->name('show-add-lesson-cms');
     Route::post('/dashboard/course/{course}/lesson/manage', [LessonController::class, 'store'])->name('handle-add-lesson');
     Route::delete('/dashboard/course/{course}/lesson/{lesson}', [LessonController::class, 'delete'])->name('handle-delete-lesson');
     Route::put('/dashboard/course/{course}', [CourseController::class, 'update'])->name('handle-update-course');
 
-    Route::get('/dashboard/quiz', [DashboardAdminController::class, 'showQuizManagement'])->name('show-quiz-management');
-    Route::get('/dashboard/quiz/{course}', [DashboardAdminController::class, 'showQuizDetails'])->name('show-quiz-admin-detail');
+    Route::get('/dashboard/quiz', [QuizController::class, 'showQuizManagement'])->name('show-quiz-management');
+    Route::get('/dashboard/quiz/{course}', [QuizController::class, 'showQuizDetails'])->name('show-quiz-admin-detail');
     Route::get('/dashboard/quiz/{quiz}/details', [QuizController::class, 'showquizDetailsForUpdate'])->name('show-quiz-admin-detail-for-update');
     Route::put('/dashboard/quiz/{quiz}/details', [QuizController::class, 'update'])->name('handle-quiz-update');
     Route::delete('/dashboard/quiz/{quiz}', [QuizController::class, 'delete'])->name('handle-delete-quiz');
-    Route::put('/dashboard/quiz/{quiz}', [DashboardAdminController::class, 'showQuizDetails'])->name('handle-update-quiz');
-    Route::get('/dashboard/quiz/{course}/questions/manage', [DashboardAdminController::class, 'showquizCMS'])->name('show-add-quiz-cms');
+    Route::put('/dashboard/quiz/{quiz}', [QuizController::class, 'showQuizDetails'])->name('handle-update-quiz');
+    Route::get('/dashboard/quiz/{course}/questions/manage', [QuizController::class, 'showquizCMS'])->name('show-add-quiz-cms');
     Route::post('/dashboard/quiz/{course}/questions/manage', [QuizController::class, 'store'])->name('handle-store-quiz');
     
 });

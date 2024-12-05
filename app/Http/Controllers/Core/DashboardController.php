@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Core;
+use App\Models\User;
+use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+
 class DashboardController extends Controller
 {
     public function showDashboard(){
@@ -18,4 +21,17 @@ class DashboardController extends Controller
             'course' => $course
         ]);
     }
+
+
+    public function showAdminDashboard(){
+        $user = User::all()->count();
+        $course = Course::all()->count();
+        $lesson = Lesson::all()->count();
+        return view('admin.dashboard',[
+            'user_count' => $user,
+            'course_count'=> $course,
+            'lesson_count' => $lesson
+        ]);
+    }
+
 }
