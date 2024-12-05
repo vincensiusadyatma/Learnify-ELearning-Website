@@ -10,7 +10,7 @@ class Question extends Model
     use HasFactory;
 
     protected $fillable = [
-        'isActive', 'title', 'quiz_id'
+         'quiz_id', 'title', 'choices', 'correct_answer', 'isActive'
     ];
 
     public function questionchoices()
