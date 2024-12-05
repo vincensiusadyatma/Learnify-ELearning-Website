@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('password123'),
             ],
             [
-                'username' => 'nicolaus123',
+                'username' => 'reva',
                 'email' => 'reva@gmail.com',
                 'phone_number' => '081234567890',
                 'address' => 'Alamat bebas',
@@ -51,6 +51,10 @@ class UserSeeder extends Seeder
             [
                 'user_id' => 1,
                 'role_id' => 2,
+            ],
+            [
+                'user_id' => 2,
+                'role_id' => 1,
             ],
             [
                 'user_id' => 2,

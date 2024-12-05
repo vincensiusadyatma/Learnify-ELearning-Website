@@ -7,7 +7,6 @@ use App\Http\Controllers\Core\QuizController;
 use App\Http\Controllers\Core\CourseController;
 use App\Http\Controllers\Core\LessonController;
 use App\Http\Controllers\Core\SettingController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Core\DashboardController;
 use App\Http\Controllers\Core\UserController;
 use App\Http\Controllers\Admin\DashboardAdminController;
@@ -39,7 +38,7 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     Route::get('/lesson{filename}', [LessonController::class, 'showMaterial'])->name('show-materials');
     Route::get('/setting', [SettingController::class, 'showSetting'])->name('show-setting');
     Route::get('/profile', [SettingController::class, 'showProfile'])->name('show-profile');
-
+});
 
 
 
