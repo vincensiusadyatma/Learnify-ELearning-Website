@@ -27,6 +27,7 @@ class CheckRole
             }
         }
     }
+    notify()->error('Anda tidak memiliki izin atau belum login');
     return redirect()->route('main')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
 }
 

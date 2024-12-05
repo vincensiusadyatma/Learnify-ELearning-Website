@@ -11,11 +11,16 @@ class Lesson extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'content', 'course_id'
+        'title','description', 'content', 'course_id'
     ];
 
     public function course() : BelongsTo
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function quizes()
+    {
+        return $this->hasMany(Quiz::class);
     }
 }

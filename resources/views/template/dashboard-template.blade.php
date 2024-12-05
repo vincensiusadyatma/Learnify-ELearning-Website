@@ -5,10 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
     <title>Learnify</title>
 
     @vite('resources/css/app.css')
     @notifyCss
+
+    <style>
+           .notify {
+    position: fixed !important;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+    </style>
 </head>
 <body class="bg-[#EAECF3]">
 
