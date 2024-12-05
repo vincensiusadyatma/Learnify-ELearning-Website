@@ -10,6 +10,19 @@ use Illuminate\Database\QueryException;
 
 class QuizController extends Controller
 {
+
+
+
+
+
+
+
+
+
+
+
+
+    // =================================================== Admin Methods Ares
     public function store(Request $request, Course $course){     
         // dd($request->all());
         try {
@@ -125,14 +138,6 @@ class QuizController extends Controller
             return redirect()->route('show-quiz-management')->with('error', 'Failed to update quiz. Please try again.');
         }
     }
-    
-
-    
-
-
-
-    
-    
     public function delete(Quiz $quiz)
     {
         try {
@@ -150,5 +155,38 @@ class QuizController extends Controller
         }
     }
     
+    public function showQuizManagement(Request $request)
+    {
+       
+        $search = $request->get('search');
+    
+     
+        $courses = Course::when($search, function ($query, $search) {
+            return $query->whereRaw('LOWER(title) LIKE ?', [strtolower($search) . '%']);
+        })->paginate(8); 
+   
+        return view('admin.quizManagement', [
+            'courses' => $courses,
+            'search' => $search
+        ]);
+    }
 
+
+    public function showQuizDetails(Course $course) {
+        $lessons = DB::table('lessons')->where('course_id', $course->id)->pluck('id');
+        $quiz = DB::table('quizzes')->whereIn('course_id', $lessons)->get();
+        //dd($quiz);
+        return view('admin.quizDetails', [
+            'quiz' => $quiz,
+            'course' => $course,
+            'lessons_id' => $lessons
+        ]);
+    }
+
+    public function showquizCMS(Course $course)  
+    {
+        return view('admin.addQuizManagement',[
+            'course' =>  $course
+        ]);
+    }
 }

@@ -163,5 +163,14 @@ class LessonController extends Controller
         return response()->json(['error' => 'File upload failed'], 400);
     }
 
+
+
+    // ================================= Admin Methods Area ===========================
+    public function showLessonCMS(Course $course){
+        return view('admin.addLessonManagement',[
+            'course' => $course
+        ]);
+    }
+
    
 }
