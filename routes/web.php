@@ -40,9 +40,11 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     Route::get('/profile', [SettingController::class, 'showProfile'])->name('show-profile');
 
     // user access quiz
-    Route::get('/quiz', [QuizController::class, 'showQuiz'])->name('show-quiz');
-    Route::get('/quiz/{quizId}', [QuizController::class, 'showQuizDetail'])->name('show-quiz-detail');
-    Route::get('/quiz/{quiz}/{question}', [QuizController::class, 'showQuestion'])->name('show-question');
+    Route::get('/quiz', [QuizController::class, 'showQuiz'])->name('show-quiz'); 
+    Route::get('/quiz/{quiz}', [QuizController::class, 'showQuizDetail'])->name('show-quiz-detail'); //nampilin web sebelum masuk ke soal
+    Route::get('/quiz/{quiz}/question/{question}', [QuizController::class, 'showQuestion'])->name('show-question'); //buka soal
+    Route::post('/quiz/{quiz}/question/{question}/answer', [QuizController::class, 'storeAnswer'])->name('store-answer'); //nyimpen jawaban user lewat tombol next / submit
+    // Route::get('/quiz/{quiz}/question/{question}', [QuizController::class, 'showQuestion'])->name('show-question');
 });
 
 

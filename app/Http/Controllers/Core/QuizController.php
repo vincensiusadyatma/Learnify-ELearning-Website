@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Core;
 use App\Models\Quiz;
 use App\Models\Course;
+use App\Models\Answer;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,13 +18,52 @@ class QuizController extends Controller
         return view('core.quiz', ['quiz' => $quiz]);
     }
 
-    public function showQuizDetail(Quiz $quizId) {
-        $questions = DB::table(('questions'))->where('quiz_id', $quizId->id)->get();
-        //dd($questions->toArray());
-        return view('core.quizDetails', ['questions' => $questions]);
+    public function showQuizDetail(Quiz $quiz) {
+        $question = DB::table('questions')->where('quiz_id', $quiz->id)->orderBy('id', 'asc')->get();
+        //dd($quiz->toArray(), $question->toArray());
+        return view('core.quizDetails', ['questions' => $question, 'quiz' => $quiz]);
     }
 
+    public function showQuestion(Questins $question, Quiz $quiz) {
+        $curr = $question->first();
+        $userAnswer = Answer::where('user_id', auth()->id())->where('quiz_id', $quiz->id)->where('question_id', $curr->id)->first();
+        return view('core.question', ['questions' => $question, 'quiz' => $quiz, 'currentQuestion' => $curr, 'userAnswer' => $userAnswer]);
+    }
 
+//     // Ambil soal saat ini
+//     $currentQuestion = $id
+//         ? Question::where('quiz_id', $quizId)->findOrFail($id)
+//         : Question::where('quiz_id', $quizId)->orderBy('id', 'asc')->first();
+
+
+    public function storeAnswer(Request $request, $quizId, $questionId)
+    {
+        try {
+            $request->validate([
+                'answer' => 'required|string|max:255'
+            ]);
+
+            Answer::updateOrCreate([
+                'user_id' => auth()->id(),
+                'quiz_id' => $quizId,
+                'question_id' => $questionId
+            ],
+            [
+                'answer' => json_encode($request->input('answer'))        
+            ]
+        );
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+        }
+    }
+
+    // public function showQuestion(Quiz $quiz, Question $question) {
+    //     return view('core.question', [
+    //         'quiz' => $quiz,
+    //         'question' => $question
+    //     ]);
+    // }
 
     // =================================================== Admin Methods Ares
     public function store(Request $request, Course $course){     
