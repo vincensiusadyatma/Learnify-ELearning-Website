@@ -24,11 +24,25 @@ class QuizController extends Controller
         return view('core.quizDetails', ['questions' => $question, 'quiz' => $quiz]);
     }
 
-    public function showQuestion(Questins $question, Quiz $quiz) {
-        $curr = $question->first();
-        $userAnswer = Answer::where('user_id', auth()->id())->where('quiz_id', $quiz->id)->where('question_id', $curr->id)->first();
-        return view('core.question', ['questions' => $question, 'quiz' => $quiz, 'currentQuestion' => $curr, 'userAnswer' => $userAnswer]);
+    public function showQuestion(Quiz $quiz, Question $question)
+    {
+        // Ambil soal saat ini
+        $curr = $question;
+    
+        // Ambil jawaban user (jika ada)
+        $userAnswer = Answer::where('user_id', auth()->id())
+            ->where('quiz_id', $quiz->id)
+            ->where('question_id', $curr->id)
+            ->first();
+    
+        return view('core.question', [
+            'questions' => Question::where('quiz_id', $quiz->id)->get(), // Semua soal terkait kuis
+            'quiz' => $quiz,
+            'currentQuestion' => $curr,
+            'userAnswer' => $userAnswer,
+        ]);
     }
+    
 
 //     // Ambil soal saat ini
 //     $currentQuestion = $id
