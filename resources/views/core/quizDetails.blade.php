@@ -25,7 +25,7 @@
         <div class="mb-6">
             
         <div class="mt-4">
-    <p>{{$question->title}}</p>
+    <p class="dark:text-white">{{$question->title}}</p>
     
     @php
         // Mendecode JSON choices menjadi array
