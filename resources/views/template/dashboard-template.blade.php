@@ -21,7 +21,7 @@
 }
     </style>
 </head>
-<body class="bg-[#EAECF3]">
+<body class="bg-[#EAECF3] dark:bg-[#121212]">
 
 @yield('content')
 
@@ -95,6 +95,52 @@
             dropdown.classList.add('hidden');
         }
     });
+
+    document.getElementById('switch-mode').addEventListener('change', function () {
+    if (this.checked) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+});
+
+</script>
+
+<script>
+    // Ambil elemen switch dan body
+const switchMode = document.getElementById('switch-mode');
+const html = document.documentElement;
+
+// Fungsi untuk mengaktifkan dark mode
+function enableDarkMode() {
+    html.classList.add('dark'); // Tambahkan kelas 'dark' ke <html>
+    localStorage.setItem('darkMode', 'enabled'); // Simpan status di localStorage
+}
+
+// Fungsi untuk menonaktifkan dark mode
+function disableDarkMode() {
+    html.classList.remove('dark'); // Hapus kelas 'dark' dari <html>
+    localStorage.setItem('darkMode', 'disabled'); // Simpan status di localStorage
+}
+
+// Saat halaman dimuat, baca status dark mode dari localStorage
+if (localStorage.getItem('darkMode') === 'enabled') {
+    enableDarkMode();
+    switchMode.checked = true; // Pastikan switch aktif
+} else {
+    disableDarkMode();
+    switchMode.checked = false; // Pastikan switch tidak aktif
+}
+
+// Event listener untuk tombol switch
+switchMode.addEventListener('change', () => {
+    if (switchMode.checked) {
+        enableDarkMode();
+    } else {
+        disableDarkMode();
+    }
+});
+
 </script>
 
 </body>
