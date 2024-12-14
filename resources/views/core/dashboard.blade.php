@@ -4,9 +4,9 @@
 
     {{-- Jumbutron --}}
 
-    <div class="flex justify-between w-full h-[300px] rounded-2xl bg-[#5271FF24]">
+    <div class="flex justify-between w-full h-[300px] rounded-2xl bg-[#5271FF24] dark:bg-[#1f2937]">
         <div class="flex flex-col justify-center gap-3 w-[500px] pl-[72px]">
-            <p class="font-bold text-3xl">
+            <p class="font-bold text-3xl dark:text-white">
                 Hi,
                 @if(Auth::user()->username)
                     {{ Auth::user()->username }}
@@ -14,7 +14,7 @@
                     {{ substr(Auth::user()->email, 0, strpos(Auth::user()->email, '@')) }}
                 @endif
             </p>
-            <p class="font-light text-2xl">Sharpen Your Skills with Professional Online Course</p>
+            <p class="font-light text-2xl dark:text-white">Sharpen Your Skills with Professional Online Course</p>
         </div>
         <img src="{{asset('img/assets/boy-study.png')}}" alt="" class="h-[300px]">
     </div>
@@ -22,7 +22,8 @@
     {{-- Statistics --}}
     <div class="flex gap-4 w-full mt-[53px]">
         <!-- Last Accessed Course Section -->
-        <div class="flex flex-col flex-1 bg-white-theme/[0.67] rounded-2xl p-6 shadow-md">
+        <div class="flex flex-col flex-1 bg-white-theme/[0.67] rounded-2xl p-6 shadow-md dark:bg-[#1f2937]">
+            <!-- Header -->
             <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Last Accessed Course</h2>
             @if($lastAccessedCourse)
                 <div class="flex items-center justify-between">
@@ -58,7 +59,7 @@
         
 
         <!-- Points Section -->
-        <div class="flex flex-col w-[30%] bg-white-theme/[0.67] rounded-2xl p-6 shadow-md">
+        <div class="flex flex-col w-[30%] bg-white-theme/[0.67] rounded-2xl p-6 shadow-md dark:bg-[#1f2937]">
             <!-- Header -->
             <p class="text-xl font-bold text-gray-800 dark:text-white border-b pb-4 mb-4">Points</p>
             <!-- Points Content -->
@@ -76,16 +77,17 @@
     </div>
 
     {{-- Course Progress --}}
-    <div class="w-full h-full bg-white-theme/[.67] rounded-2xl mt-4">
-        <div class="py-6 pl-4">
-            <p class="text-xl font-bold">Course On Progress</p>
+    <div class="w-full h-full bg-white-theme/[.67]  rounded-2xl mt-4 dark:bg-[#1f2937]">
+        <div class="py-6 pl-4 ">
+            <p class="text-xl font-bold dark:text-white">Course On Progress</p>
         </div>
         <div class="flex gap-4 px-4 w-full min-h-[300px] ">
             @forelse($course as $progress)
                 @include('core.layouts.mini-card', ['data' => $progress->course, 'progress' => $progress->progress_percentage])
             @empty
-                <div class="flex justify-center items-center w-full h-full bg-gray-100 border border-gray-300 rounded-lg">
-                    <p class="text-2xl text-gray-500 font-semibold">Anda belum mengambil course</p>
+
+                <div class="flex justify-center items-center w-full h-full bg-gray-100 border border-gray-300 rounded-lg dark:bg-[#343039]">
+                    <p class="text-2xl text-gray-500 font-semibold dark:text-white">Anda belum mengambil course</p>
                 </div>
             @endforelse
         </div>
