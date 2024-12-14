@@ -47,6 +47,10 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     Route::get('/dashboard/quiz/{quiz}/question/{question}', [QuizController::class, 'showQuestion'])->name('show-question');
     Route::get('/quiz/{quiz}', [QuizController::class, 'showFirstQuestion'])->name('show-first-question');
     Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submitQuiz'])->name('quiz.submit');
+    Route::post('/lessons/{lesson}/complete', [LessonController::class, 'completeLesson'])->name('complete-lesson');
+    Route::post('/course/{course}/update-progress', [CourseController::class, 'updateProgress'])->name('course.updateProgress');
+
+
 
 });
 

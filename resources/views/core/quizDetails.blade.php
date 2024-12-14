@@ -29,7 +29,6 @@
             </h2>
 
          
-            
              <!-- Pilihan -->
              <div class="grid grid-cols-1 gap-4">
                 @foreach($choices as $key => $text)
