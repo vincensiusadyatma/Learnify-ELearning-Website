@@ -1,4 +1,4 @@
-@props(['data'])
+@props(['data', 'progress'])
 
 <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <!-- Gambar Course -->
@@ -18,14 +18,13 @@
     <div class="mt-4">
         <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-semibold text-teal-600 bg-teal-100 py-1 px-2 rounded-full">
-                In Progress
+                {{ $progress === 100 ? 'Completed' : 'In Progress' }}
             </span>
-            <span class="text-xs font-semibold text-teal-600">70%</span>
+            <span class="text-xs font-semibold text-teal-600">{{ $progress }}%</span>
         </div>
         <div class="w-full h-2 rounded-full bg-gray-200">
-            <div class="h-2 rounded-full bg-teal-500" style="width: 70%;"></div>
+            <div class="h-2 rounded-full bg-teal-500" style="width: {{ $progress }}%;"></div>
         </div>
-        
     </div>
 
     <!-- Link -->

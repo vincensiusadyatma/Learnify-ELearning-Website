@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Core;
 
+use App\Models\User;
+
 use App\Models\Course;
-
 use App\Models\Lesson;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
+use App\Models\CourseProgress;
+use App\Models\LessonProgress;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -22,31 +25,115 @@ class LessonController extends Controller
         ]);
     }
 
-    public function showLesson(Course $course, Lesson $lesson){
-        // Cek apakah file konten lesson ada di storage
-        $filePath = $lesson->content; // Path file dari database atau model lesson
-    
-        if (Storage::disk('local')->exists($filePath)) {
-            // Jika file ada, ambil kontennya
-            $content = Storage::disk('local')->get($filePath);
-            
-            // Gunakan regex untuk mengekstrak bagian Content
-            preg_match('/Content:\s*(.*)/s', $content, $matches);
-            
-            // Jika ditemukan, ambil bagian content
-            $lessonContent = isset($matches[1]) ? $matches[1] : 'Materi belum ada';
-        } else {
-            // Jika file tidak ada, tampilkan pesan materi belum ada :V
-            $lessonContent = 'Materi belum ada';
-        }
-    
-        return view('core.lesson', [
-            'lessons' => $course->lessons,
-            'course' => $course,
-            'selectedLesson' => $lesson,
-            'lessonContent' => $lessonContent, 
-        ]);
+    public function showLesson(Course $course, Lesson $lesson)
+{
+    $filePath = $lesson->content;
+
+    // Cek apakah file konten lesson ada di storage
+    if (Storage::disk('local')->exists($filePath)) {
+        $content = Storage::disk('local')->get($filePath);
+        preg_match('/Content:\s*(.*)/s', $content, $matches);
+        $lessonContent = isset($matches[1]) ? $matches[1] : 'Materi belum ada';
+    } else {
+        $lessonContent = 'Materi belum ada';
     }
+
+    $user = Auth::user();
+
+    // Perbarui nilai `last_accessed_at` di `course_progress`
+    $courseProgress = CourseProgress::updateOrCreate(
+        [
+            'user_id' => $user->id,
+            'course_id' => $course->id,
+        ],
+        [
+            'last_accessed_at' => now(), // Tetapkan waktu terakhir diakses
+        ]
+    );
+
+    // Ambil semua lessons untuk ditampilkan di sidebar
+    $lessons = $course->lessons->map(function ($lesson) use ($user) {
+        $lesson->is_completed = LessonProgress::where('user_id', $user->id)
+            ->where('lesson_id', $lesson->id)
+            ->value('is_completed') ?? false;
+        return $lesson;
+    });
+
+    // Hitung progress
+    $totalLessons = $lessons->count();
+    $completedLessons = $lessons->where('is_completed', true)->count();
+    $progressPercentage = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
+
+    // Perbarui progress di `course_progress` dengan nilai terbaru
+    $courseProgress->update([
+        'progress_percentage' => $progressPercentage,
+        'is_completed' => $progressPercentage === 100, // Tandai selesai jika 100%
+    ]);
+
+    return view('core.lesson', [
+        'lessons' => $lessons,
+        'course' => $course,
+        'selectedLesson' => $lesson,
+        'lessonContent' => $lessonContent,
+        'progressPercentage' => $progressPercentage,
+    ]);
+}
+
+
+    
+
+public function completeLesson(Lesson $lesson)
+{
+
+    $user = User::where('id', Auth::id())->first();
+
+
+    // Tandai lesson sebagai selesai
+    LessonProgress::updateOrCreate(
+        [
+            'user_id' => $user->id,
+            'lesson_id' => $lesson->id,
+        ],
+        [
+            'is_completed' => true,
+        ]
+    );
+
+    // Tambahkan poin ke pengguna
+    $currentPoints = $user->points; // Ambil nilai points saat ini
+    $user->update(['points' => $currentPoints + 10]); // Tambahkan 10 poin dan perbarui
+
+    // Hitung progress
+    $totalLessons = Lesson::where('course_id', $lesson->course_id)->count(); // Total lesson dalam course
+    $completedLessons = LessonProgress::where('user_id', $user->id)
+        ->whereIn('lesson_id', Lesson::where('course_id', $lesson->course_id)->pluck('id'))
+        ->where('is_completed', true)
+        ->count(); // Total lesson yang selesai oleh user
+
+    $progressPercentage = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
+
+    // Perbarui progres di tabel `course_progress`
+    CourseProgress::updateOrCreate(
+        [
+            'user_id' => $user->id,
+            'course_id' => $lesson->course_id,
+        ],
+        [
+            'progress_percentage' => $progressPercentage,
+            'last_accessed_at' => now(),
+        ]
+    );
+
+    // Kembalikan JSON untuk AJAX
+    return response()->json([
+        'message' => 'Lesson marked as complete!',
+        'lesson_id' => $lesson->id,
+        'progressPercentage' => $progressPercentage,
+        'points' => $user->refresh()->points, // Refresh user untuk memastikan poin terkini
+    ]);
+}
+
+    
     
 
 

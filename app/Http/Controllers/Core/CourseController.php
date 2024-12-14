@@ -5,6 +5,8 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
+use App\Models\CourseProgress;
+use App\Models\LessonProgress;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -46,32 +48,42 @@ class CourseController extends Controller
             'filter' => $filter, // Kirimkan filter yang aktif ke tampilan
         ]);
     }
-    public function takeCourse(Course $course){
+    public function takeCourse(Course $course)
+    {
+        $userId = Auth::id();
     
-         $existingRecord = DB::table('user_take_courses')
-            ->where('user_id', Auth::user()->id)
+        // Cek apakah pengguna sudah mengambil kursus
+        $existingRecord = DB::table('user_take_courses')
+            ->where('user_id', $userId)
             ->where('course_id', $course->id)
             ->first();
-
-      
+    
         if ($existingRecord) {
-            notify()->error('Login failed. Please check your credentials and try again.');
-
-        return redirect()->route('show-dashboard')->with('info', 'You have already taken this course.');
+            return redirect()->route('show-dashboard')->with('info', 'You have already taken this course.');
         }
-
-      
+    
+        // Tambahkan kursus ke tabel `user_take_courses`
         DB::table('user_take_courses')->insert([
-        'user_id' => Auth::user()->id,
-        'course_id' => $course->id,
-        'created_at' => now(),
+            'user_id' => $userId,
+            'course_id' => $course->id,
+            'created_at' => now(),
         ]);
-
-     
-        emotify('success', 'Your course was successfully added');
+    
+        // Tambahkan progress kursus ke `course_progress`
+        CourseProgress::updateOrCreate(
+            [
+                'user_id' => $userId,
+                'course_id' => $course->id,
+            ],
+            [
+                'progress_percentage' => 0, // Progress awal adalah 0%
+                'last_accessed_at' => now(), // Tanggal terakhir diakses adalah sekarang
+            ]
+        );
+    
         return redirect()->route('show-dashboard')->with('success', 'Course added successfully!');
-        
     }
+    
 
     public function showCourseDetail(Course $course){
         $lesson = Lesson::where('course_id', $course['id'])->get();
@@ -104,6 +116,36 @@ class CourseController extends Controller
    
     return redirect()->route('show-course-management')->with('success', 'Course updated successfully.');
     }
+
+
+    public function updateProgress(Course $course)
+{
+    $user = Auth::user();
+
+    $totalLessons = $course->lessons()->count();
+    $completedLessons = LessonProgress::where('user_id', $user->id)
+        ->whereIn('lesson_id', $course->lessons->pluck('id'))
+        ->where('is_completed', true)
+        ->count();
+
+    $progressPercentage = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
+
+    // Update progress di tabel course_progress
+    CourseProgress::updateOrCreate(
+        [
+            'user_id' => $user->id,
+            'course_id' => $course->id,
+        ],
+        [
+            'progress_percentage' => $progressPercentage,
+            'is_completed' => $progressPercentage === 100,
+        ]
+    );
+
+    return response()->json([
+        'progressPercentage' => $progressPercentage,
+    ]);
+}
 
 
     // ====================================Admin Methods Area =============================================================================

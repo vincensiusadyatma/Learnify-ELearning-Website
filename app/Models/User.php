@@ -15,7 +15,8 @@ class User extends  Authenticatable
         'phone_number',
         'address',
         'password',
-        'status'
+        'status',
+        'points'
     ];
 
     public function roles(){

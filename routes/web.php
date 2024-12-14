@@ -41,8 +41,17 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
 
     // user access quiz
     Route::get('/quiz', [QuizController::class, 'showQuiz'])->name('show-quiz');
-    Route::get('/quiz/{quizId}', [QuizController::class, 'showQuizDetail'])->name('show-quiz-detail');
-    Route::get('/quiz/{quiz}/{question}', [QuizController::class, 'showQuestion'])->name('show-question');
+    // Route::get('/quiz/{quizId}', [QuizController::class, 'showQuizDetail'])->name('show-quiz-detail');
+    // Route::get('/quiz/{quiz}/{question}', [QuizController::class, 'showQuestion'])->name('show-question');
+    // Route untuk langsung ke pertanyaan pertama dari kuis
+    Route::get('/dashboard/quiz/{quiz}/question/{question}', [QuizController::class, 'showQuestion'])->name('show-question');
+    Route::get('/quiz/{quiz}', [QuizController::class, 'showFirstQuestion'])->name('show-first-question');
+    Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submitQuiz'])->name('quiz.submit');
+    Route::post('/lessons/{lesson}/complete', [LessonController::class, 'completeLesson'])->name('complete-lesson');
+    Route::post('/course/{course}/update-progress', [CourseController::class, 'updateProgress'])->name('course.updateProgress');
+
+
+
 });
 
 
