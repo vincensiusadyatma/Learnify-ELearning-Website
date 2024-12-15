@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width">
     <title>Learnify</title>
     @vite('resources/css/app.css')
+    @notifyCss
+
 </head>
 <body>
 <div class="lg:flex">
@@ -61,5 +63,9 @@
         </div>
     </div>
 </div>
+
+<x-notify::notify />
+@notifyJs
+  
 </body>
 </html>

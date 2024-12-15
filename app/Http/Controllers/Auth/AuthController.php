@@ -50,42 +50,58 @@ class AuthController extends Controller
         }
     }
 
-    public function handleLogin(Request $request){
-        $input = $request->input('email'); 
-        $password = $request->input('password');
-
-        // Tentukan apakah input adalah email
-        $fieldType = filter_var($input, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
-        // Validasi input berdasarkan tipe
-        $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string|min:8',
-        ]);
-
-       
-        if (Auth::attempt([$fieldType => $input, 'password' => $password])) {
-            $request->session()->regenerate();
-
-            $user = Auth::user();
-            $role = $user->roles->pluck('name')->first(); 
-
-            notify()->success('You have successfully logged in');
-
-           
-            if ($role === 'admin') {
-                return redirect()->route('show-dashboard-admin')->with('success', 'Welcome, Admin!');
-            } elseif ($role === 'user') {
-                return redirect()->route('show-dashboard')->with('success', 'Welcome, User!');
+    public function handleLogin(Request $request)
+    {
+        try {
+            $input = $request->input('email'); 
+            $password = $request->input('password');
+    
+            // Tentukan apakah input adalah email atau username
+            $fieldType = filter_var($input, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+    
+            // Validasi input
+            $validated = $request->validate([
+                'email' => 'required|string', // Bisa username atau email
+                'password' => 'required|string|min:8',
+            ]);
+    
+            // Cek apakah autentikasi berhasil
+            if (Auth::attempt([$fieldType => $input, 'password' => $password])) {
+                $request->session()->regenerate();
+    
+                $user = Auth::user();
+                $role = $user->roles->pluck('name')->first(); // Ambil role user
+    
+                notify()->success('You have successfully logged in', 'Success');
+    
+                // Redirect berdasarkan role
+                if ($role === 'admin') {
+                    return redirect()->route('show-dashboard-admin')->with('success', 'Welcome, Admin!');
+                } elseif ($role === 'user') {
+                    return redirect()->route('show-dashboard')->with('success', 'Welcome, User!');
+                }
+    
+                // Logout jika role tidak valid
+                Auth::logout();
+                notify()->error('Your account does not have the required access.', 'Access Denied');
+                return redirect()->route('main')->with('error', 'Your account does not have the required access.');
             }
-
-            // Logout jika role tidak valid
-            Auth::logout();
-            return redirect()->route('main')->with('error', 'Your account does not have the required access.');
+    
+            // Jika login gagal
+            notify()->error('Invalid credentials. Please check your email/username and password.', 'Login Failed');
+            return redirect()->route('main')->with('error', 'Login failed. Please try again.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Jika validasi gagal, tangkap error validasi
+            notify()->error('Validation error: ' . $e->getMessage(), 'Validation Failed');
+            return redirect()->back()->withErrors($e->errors());
+        } catch (\Exception $e) {
+            // Tangani error tak terduga lainnya
+            notify()->error('Something went wrong. Please try again later.', 'Error');
+            return redirect()->route('main')->with('error', 'An unexpected error occurred. Please try again.');
         }
-
-        return redirect()->route('show-register')->with('error', 'Login gagal');
     }
+    
+    
 
     
 
