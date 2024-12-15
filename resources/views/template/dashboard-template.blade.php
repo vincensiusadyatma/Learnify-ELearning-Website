@@ -17,8 +17,7 @@
 
     <style>
 
-        
-           .notify {
+    .notify {
     position: fixed !important;
     top: 20px;
     right: 20px;
