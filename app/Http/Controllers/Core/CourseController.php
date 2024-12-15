@@ -48,8 +48,9 @@ class CourseController extends Controller
             'filter' => $filter, // Kirimkan filter yang aktif ke tampilan
         ]);
     }
-    public function takeCourse(Course $course)
-    {
+
+
+    public function takeCourse(Course $course){
         $userId = Auth::id();
     
         // Cek apakah pengguna sudah mengambil kursus
@@ -118,34 +119,33 @@ class CourseController extends Controller
     }
 
 
-    public function updateProgress(Course $course)
-{
-    $user = Auth::user();
+    public function updateProgress(Course $course){
+        $user = Auth::user();
 
-    $totalLessons = $course->lessons()->count();
-    $completedLessons = LessonProgress::where('user_id', $user->id)
-        ->whereIn('lesson_id', $course->lessons->pluck('id'))
-        ->where('is_completed', true)
-        ->count();
+        $totalLessons = $course->lessons()->count();
+        $completedLessons = LessonProgress::where('user_id', $user->id)
+            ->whereIn('lesson_id', $course->lessons->pluck('id'))
+            ->where('is_completed', true)
+            ->count();
 
-    $progressPercentage = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
+        $progressPercentage = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
 
-    // Update progress di tabel course_progress
-    CourseProgress::updateOrCreate(
-        [
-            'user_id' => $user->id,
-            'course_id' => $course->id,
-        ],
-        [
-            'progress_percentage' => $progressPercentage,
-            'is_completed' => $progressPercentage === 100,
-        ]
-    );
+        // Update progress di tabel course_progress
+        CourseProgress::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'course_id' => $course->id,
+            ],
+            [
+                'progress_percentage' => $progressPercentage,
+                'is_completed' => $progressPercentage === 100,
+            ]
+        );
 
-    return response()->json([
-        'progressPercentage' => $progressPercentage,
-    ]);
-}
+        return response()->json([
+            'progressPercentage' => $progressPercentage,
+        ]);
+    }
 
 
     // ====================================Admin Methods Area =============================================================================

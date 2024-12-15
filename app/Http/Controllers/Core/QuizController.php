@@ -19,12 +19,14 @@ class QuizController extends Controller
         return view('core.quiz', ['quiz' => $quiz]);
     }
 
+
     public function showQuizDetail(Quiz $quizId) {
         $questions = DB::table(('questions'))->where('quiz_id', $quizId->id)->get();
        
         //dd($questions->toArray());
         return view('core.quizDetails', ['questions' => $questions]);
     }
+
 
     // Menampilkan kuis dengan pertanyaan pertama
     public function showFirstQuestion(Quiz $quiz) {
@@ -46,89 +48,87 @@ class QuizController extends Controller
     }
     
 
-    public function showQuestion(Quiz $quiz, Question $question)
-{
-    // Mengambil kuis berdasarkan ID
-    $quiz = Quiz::findOrFail($quiz->id);
+    public function showQuestion(Quiz $quiz, Question $question){
+        // Mengambil kuis berdasarkan ID
+        $quiz = Quiz::findOrFail($quiz->id);
 
-    // Mengambil semua pertanyaan terkait kuis dan mengurutkan berdasarkan ID
-    $questions = Question::where('quiz_id', $quiz->id)->orderBy('id')->get();
+        // Mengambil semua pertanyaan terkait kuis dan mengurutkan berdasarkan ID
+        $questions = Question::where('quiz_id', $quiz->id)->orderBy('id')->get();
 
-    // Cari indeks pertanyaan saat ini dalam daftar pertanyaan
-    $currentIndex = $questions->search(function ($q) use ($question) {
-        return $q->id == $question->id;
-    });
+        // Cari indeks pertanyaan saat ini dalam daftar pertanyaan
+        $currentIndex = $questions->search(function ($q) use ($question) {
+            return $q->id == $question->id;
+        });
 
-    // Tentukan pertanyaan sebelumnya dan berikutnya
-    $previousQuestion = $currentIndex > 0 ? $questions[$currentIndex - 1] : null;
-    $nextQuestion = $currentIndex < $questions->count() - 1 ? $questions[$currentIndex + 1] : null;
+        // Tentukan pertanyaan sebelumnya dan berikutnya
+        $previousQuestion = $currentIndex > 0 ? $questions[$currentIndex - 1] : null;
+        $nextQuestion = $currentIndex < $questions->count() - 1 ? $questions[$currentIndex + 1] : null;
 
-    // Decode JSON untuk pilihan jawaban pada pertanyaan saat ini
-    $choices = json_decode($question->choices, true);
+        // Decode JSON untuk pilihan jawaban pada pertanyaan saat ini
+        $choices = json_decode($question->choices, true);
 
-    // Kirimkan data ke tampilan
-    return view('core.quizDetails', [
-        'quiz' => $quiz,
-        'question' => $question,
-        'choices' => $choices, // Kirimkan pilihan jawaban ke tampilan
-        'questions' => $questions, // Semua pertanyaan untuk sidebar atau navigasi
-        'previousQuestion' => $previousQuestion, // Pertanyaan sebelumnya
-        'nextQuestion' => $nextQuestion, // Pertanyaan berikutnya
-        'currentQuestionId' => $question->id // ID pertanyaan yang aktif
-    ]);
-}
-
-
-public function submitQuiz(Request $request, $quizId)
-{
-    $validated = $request->validate([
-        'answers' => 'required|array', // Format: ['question_id' => 'selected_choice']
-    ]);
-
-    $user = Auth::user(); 
-    $answers = $validated['answers'];
-
-    // Ambil semua pertanyaan terkait quiz
-    $questions = Question::where('quiz_id', $quizId)->get();
-    $totalQuestions = $questions->count();
-
-    if ($totalQuestions === 0) {
-        return response()->json([
-            'message' => 'No questions found for this quiz.',
-            'score' => 0,
-            'correctAnswers' => [],
-            'submission' => null,
-        ], 400);
+        // Kirimkan data ke tampilan
+        return view('core.quizDetails', [
+            'quiz' => $quiz,
+            'question' => $question,
+            'choices' => $choices, 
+            'questions' => $questions, 
+            'previousQuestion' => $previousQuestion,
+            'nextQuestion' => $nextQuestion, 
+            'currentQuestionId' => $question->id 
+        ]);
     }
 
-    // Hitung skor
-    $correctCount = 0;
-    $correctAnswers = [];
-    foreach ($questions as $question) {
-        if (isset($answers[$question->id]) && $answers[$question->id] === $question->correct_answer) {
-            $correctCount++;
-            $correctAnswers[$question->id] = true;
-        } else {
-            $correctAnswers[$question->id] = false;
+
+    public function submitQuiz(Request $request, $quizId){
+        $validated = $request->validate([
+            'answers' => 'required|array', // Format: ['question_id' => 'selected_choice']
+        ]);
+
+        $user = Auth::user(); 
+        $answers = $validated['answers'];
+
+        // Ambil semua pertanyaan terkait quiz
+        $questions = Question::where('quiz_id', $quizId)->get();
+        $totalQuestions = $questions->count();
+
+        if ($totalQuestions === 0) {
+            return response()->json([
+                'message' => 'No questions found for this quiz.',
+                'score' => 0,
+                'correctAnswers' => [],
+                'submission' => null,
+            ], 400);
         }
+
+        // Hitung skor
+        $correctCount = 0;
+        $correctAnswers = [];
+        foreach ($questions as $question) {
+            if (isset($answers[$question->id]) && $answers[$question->id] === $question->correct_answer) {
+                $correctCount++;
+                $correctAnswers[$question->id] = true;
+            } else {
+                $correctAnswers[$question->id] = false;
+            }
+        }
+
+        // Hitung skor dalam rentang 0-100
+        $score = round(($correctCount / $totalQuestions) * 100, 2); // 2 desimal untuk presisi
+
+        // Simpan hasil quiz ke tabel `quiz_submissions`
+        $submission = QuizSubmission::updateOrCreate(
+            ['user_id' => $user->id, 'quiz_id' => $quizId],
+            ['answers' => $answers, 'score' => $score]
+        );
+
+        return response()->json([
+            'message' => 'Quiz submitted successfully!',
+            'score' => $score,
+            'correctAnswers' => $correctAnswers,
+            'submission' => $submission,
+        ]);
     }
-
-    // Hitung skor dalam rentang 0-100
-    $score = round(($correctCount / $totalQuestions) * 100, 2); // 2 desimal untuk presisi
-
-    // Simpan hasil quiz ke tabel `quiz_submissions`
-    $submission = QuizSubmission::updateOrCreate(
-        ['user_id' => $user->id, 'quiz_id' => $quizId],
-        ['answers' => $answers, 'score' => $score]
-    );
-
-    return response()->json([
-        'message' => 'Quiz submitted successfully!',
-        'score' => $score,
-        'correctAnswers' => $correctAnswers,
-        'submission' => $submission,
-    ]);
-}
 
 
 
@@ -194,6 +194,8 @@ public function submitQuiz(Request $request, $quizId)
         ]);
     }
 
+
+
     public function update(Request $request, Quiz $quiz)
     {
         try {
@@ -250,16 +252,15 @@ public function submitQuiz(Request $request, $quizId)
             return redirect()->route('show-quiz-management')->with('error', 'Failed to update quiz. Please try again.');
         }
     }
+
+
+
     public function delete(Quiz $quiz)
     {
         try {
-            
             $quiz->question()->delete(); 
-    
-        
             $quiz->delete();
     
-           
             return redirect()->route('show-quiz-management')->with('success', 'Quiz deleted successfully!');
         } catch (\Exception $e) {
             
@@ -267,6 +268,7 @@ public function submitQuiz(Request $request, $quizId)
         }
     }
     
+
     public function showQuizManagement(Request $request)
     {
        

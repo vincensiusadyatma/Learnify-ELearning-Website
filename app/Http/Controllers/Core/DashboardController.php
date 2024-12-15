@@ -11,10 +11,9 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function showDashboard()
-    {
+    public function showDashboard(){
         $user = Auth::user();
-    
+
         // Ambil kursus terakhir yang diakses
         $lastAccessedCourse = CourseProgress::where('user_id', $user->id)
             ->with('course')

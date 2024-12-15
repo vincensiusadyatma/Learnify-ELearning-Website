@@ -13,23 +13,9 @@
     </div>
 
     <!-- Toggle Sidebar -->
-    <button id="toggleSidebarBtn" class="flex lg:hidden space-x-4 items-center">
-        <img src="https://placehold.co/30x30" alt="Toggle Sidebar">
-    </button>
+   
 
-    <!-- Dark Mode Switch -->
-    <div class="flex items-center space-x-4">
-    <!-- Dark Mode Switch -->
-    <input type="checkbox" id="switch-mode" class="peer hidden">
-    <label for="switch-mode" class="flex items-center cursor-pointer">
-        <div class="relative">
-            <div class="w-10 h-5 bg-gray-300 rounded-full peer-checked:bg-blue-600 transition"></div>
-            <div
-                class="dot absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-md transition peer-checked:left-5"></div>
-        </div>
-        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Dark Mode</span>
-    </label>
-</div>
+   
 
     <!-- User Profile -->
     <div class="relative">
@@ -50,20 +36,43 @@
                     class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ auth()->user()->email ?? 'User' }}</span>
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">
+                @if(auth()->user()->roles->contains('name', 'user'))
+                <!-- Tautan ke Dashboard Admin -->
+                <li><a href="{{ route('show-dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a></li>
+                @endif
+                @if(auth()->user()->roles->contains('name', 'admin'))
+                    <!-- Tautan ke Dashboard User -->
+                    <li><a href="{{ route('show-dashboard-admin') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard Admin</a></li>
+                @endif
                 <li><a href="{{ route('show-profile') }}"
                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
                 </li>
-                <li><a href="{{ route('show-setting') }}"
-                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-                </li>
-                <li><a href="#"
-                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-                </li>
+               
                 <li><a href="{{ route('handle-logout') }}"
                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
                         out</a></li>
+
+                        <li>
+                            <!-- Dark Mode Switch -->
+                            <div class="flex items-center px-4 py-2">
+                                <input type="checkbox" id="switch-mode" class="peer hidden">
+                                <label for="switch-mode" class="flex items-center cursor-pointer">
+                                    <div class="relative">
+                                        <div class="w-10 h-5 bg-gray-300 rounded-full peer-checked:bg-blue-600 transition"></div>
+                                        <div
+                                            id="switch-toggle"
+                                            class="dot absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-md transition peer-checked:left-5 peer-checked:bg-green-500">
+                                        </div>
+                                    </div>
+                                    <span id="dark-mode-label" class="ml-2 text-sm text-gray-700 dark:text-gray-300">Dark Mode</span>
+                                </label>
+                            </div>
+                        </li>
+                        
+                        
             </ul>
         </div>
     </div>
 
 </nav>
+
