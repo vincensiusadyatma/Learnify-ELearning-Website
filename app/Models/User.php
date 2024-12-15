@@ -15,7 +15,8 @@ class User extends  Authenticatable
         'phone_number',
         'address',
         'password',
-        'status'
+        'status',
+        'points'
     ];
 
     public function roles(){
@@ -26,7 +27,7 @@ class User extends  Authenticatable
         return $this->belongsToMany(Course::class, 'user_take_courses');
     }
 
-    
-
-
+    public function course_progress(){
+        return $this->hasMany(CourseProgress::class);
+    }
 }

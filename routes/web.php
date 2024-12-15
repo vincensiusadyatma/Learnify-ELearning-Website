@@ -6,9 +6,11 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Core\QuizController;
 use App\Http\Controllers\Core\CourseController;
 use App\Http\Controllers\Core\LessonController;
+use App\Http\Controllers\Core\SettingController;
 use App\Http\Controllers\Core\DashboardController;
 use App\Http\Controllers\Core\UserController;
 use App\Http\Controllers\Admin\DashboardAdminController;
+
 
 Route::get('/', function () {
     return view('main.main');
@@ -33,17 +35,37 @@ Route::middleware(['CheckRole:user'])->prefix('dashboard')->group(function () {
     Route::get('/course/{course:uuid}/lesson/{lesson}', [LessonController::class, 'showLesson'])->name('show-lesson');
     Route::get('/course/{course:uuid}/continues', [LessonController::class, 'continueLesson'])->name('continue-lesson');
     
+    Route::get('/lesson{filename}', [LessonController::class, 'showMaterial'])->name('show-materials');
+    Route::get('/setting', [SettingController::class, 'showSetting'])->name('show-setting');
+    Route::get('/profile', [SettingController::class, 'showProfile'])->name('show-profile');
+    Route::post('/profile/update', [SettingController::class, 'updateProfile'])->name('update-profile');
+    
+
+    // user access quiz
+    Route::get('/quiz', [QuizController::class, 'showQuiz'])->name('show-quiz');
+    // Route::get('/quiz/{quizId}', [QuizController::class, 'showQuizDetail'])->name('show-quiz-detail');
+    // Route::get('/quiz/{quiz}/{question}', [QuizController::class, 'showQuestion'])->name('show-question');
+    // Route untuk langsung ke pertanyaan pertama dari kuis
+    Route::get('/dashboard/quiz/{quiz}/question/{question}', [QuizController::class, 'showQuestion'])->name('show-question');
+    Route::get('/quiz/{quiz}', [QuizController::class, 'showFirstQuestion'])->name('show-first-question');
+    Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submitQuiz'])->name('quiz.submit');
+    Route::post('/lessons/{lesson}/complete', [LessonController::class, 'completeLesson'])->name('complete-lesson');
+    Route::post('/course/{course}/update-progress', [CourseController::class, 'updateProgress'])->name('course.updateProgress');
 
 
+
+});
 
 
 
 
     // Route::get('/course/{id}', [LessonController::class, 'listLesson'])->name('list-lesson');
     //Route::post('/course/{id}/lesson/{path}', [LessonController::class, 'showMaterial'])->name('show-materials');
+
+ 
+
     // Route::get('/lesson{filename}', [LessonController::class, 'showMaterial'])->name('show-materials');
-    // Route::get('/course/{id}/lesson/{id}', [DashboardController::class, 'showDashboard'])->name('show-dashboard');
-});
+
 
 Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
     Route::get('/pulse', function () {

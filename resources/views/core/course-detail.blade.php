@@ -33,22 +33,22 @@
         </a>
     </div>
 
-
+{{-- 
     <!-- About Section -->
     <div class="mb-8">
         <h2 class="text-2xl font-semibold text-gray-900 mb-4">About</h2>
         <p class="text-gray-700">{{ $course['about'] }}</p>
-    </div>
+    </div> --}}
 
     <!-- What You'll Learn Section -->
-    <div>
+    {{-- <div>
         <h2 class="text-2xl font-semibold text-gray-900 mb-4">What You'll Learn</h2>
         <ul class="list-disc pl-6 space-y-2">
-            {{-- @foreach ($course['learn'] as $item)
+            @foreach ($course['learn'] as $item)
                 <li class="text-gray-700">{{ $item }}</li>
-            @endforeach --}}
+            @endforeach
         </ul>
-    </div>
+    </div> --}}
 
     <div class="py-5">
     <h2 class="text-2xl font-semibold text-gray-900 mb-4">Learning Path</h2>    

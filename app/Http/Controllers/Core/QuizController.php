@@ -4,25 +4,137 @@ use App\Models\Quiz;
 use App\Models\Course;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use App\Models\QuizSubmission;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 
 class QuizController extends Controller
 {
 
+    public function showQuiz() {
+        $quiz = DB::table('quizzes')->get();
+        //dd($quiz->toArray());
+        return view('core.quiz', ['quiz' => $quiz]);
+    }
+
+
+    public function showQuizDetail(Quiz $quizId) {
+        $questions = DB::table(('questions'))->where('quiz_id', $quizId->id)->get();
+       
+        //dd($questions->toArray());
+        return view('core.quizDetails', ['questions' => $questions]);
+    }
+
+
+    // Menampilkan kuis dengan pertanyaan pertama
+    public function showFirstQuestion(Quiz $quiz) {
+        // Mengambil pertanyaan pertama
+        $firstQuestion = $quiz->question()->first();
+        $questions = DB::table('questions')->where('quiz_id', $quiz->id)->get();
+
+        
+        if ($firstQuestion) {
+            // Jika ada pertanyaan pertama, arahkan ke route 'show-question' dengan quiz ID dan firstQuestion ID
+            return redirect()->route('show-question', [
+                'quiz' => $quiz->id,
+                'question' => $firstQuestion->id
+            ]);
+        } else {
+            // Jika tidak ada pertanyaan, kembali ke halaman kuis dengan pesan error
+            return redirect()->route('show-quiz')->with('error', 'No questions available for this quiz.');
+        }
+    }
+    
+
+    public function showQuestion(Quiz $quiz, Question $question){
+        // Mengambil kuis berdasarkan ID
+        $quiz = Quiz::findOrFail($quiz->id);
+
+        // Mengambil semua pertanyaan terkait kuis dan mengurutkan berdasarkan ID
+        $questions = Question::where('quiz_id', $quiz->id)->orderBy('id')->get();
+
+        // Cari indeks pertanyaan saat ini dalam daftar pertanyaan
+        $currentIndex = $questions->search(function ($q) use ($question) {
+            return $q->id == $question->id;
+        });
+
+        // Tentukan pertanyaan sebelumnya dan berikutnya
+        $previousQuestion = $currentIndex > 0 ? $questions[$currentIndex - 1] : null;
+        $nextQuestion = $currentIndex < $questions->count() - 1 ? $questions[$currentIndex + 1] : null;
+
+        // Decode JSON untuk pilihan jawaban pada pertanyaan saat ini
+        $choices = json_decode($question->choices, true);
+
+        // Kirimkan data ke tampilan
+        return view('core.quizDetails', [
+            'quiz' => $quiz,
+            'question' => $question,
+            'choices' => $choices, 
+            'questions' => $questions, 
+            'previousQuestion' => $previousQuestion,
+            'nextQuestion' => $nextQuestion, 
+            'currentQuestionId' => $question->id 
+        ]);
+    }
+
+
+    public function submitQuiz(Request $request, $quizId){
+        $validated = $request->validate([
+            'answers' => 'required|array', // Format: ['question_id' => 'selected_choice']
+        ]);
+
+        $user = Auth::user(); 
+        $answers = $validated['answers'];
+
+        // Ambil semua pertanyaan terkait quiz
+        $questions = Question::where('quiz_id', $quizId)->get();
+        $totalQuestions = $questions->count();
+
+        if ($totalQuestions === 0) {
+            return response()->json([
+                'message' => 'No questions found for this quiz.',
+                'score' => 0,
+                'correctAnswers' => [],
+                'submission' => null,
+            ], 400);
+        }
+
+        // Hitung skor
+        $correctCount = 0;
+        $correctAnswers = [];
+        foreach ($questions as $question) {
+            if (isset($answers[$question->id]) && $answers[$question->id] === $question->correct_answer) {
+                $correctCount++;
+                $correctAnswers[$question->id] = true;
+            } else {
+                $correctAnswers[$question->id] = false;
+            }
+        }
+
+        // Hitung skor dalam rentang 0-100
+        $score = round(($correctCount / $totalQuestions) * 100, 2); // 2 desimal untuk presisi
+
+        // Simpan hasil quiz ke tabel `quiz_submissions`
+        $submission = QuizSubmission::updateOrCreate(
+            ['user_id' => $user->id, 'quiz_id' => $quizId],
+            ['answers' => $answers, 'score' => $score]
+        );
+
+        return response()->json([
+            'message' => 'Quiz submitted successfully!',
+            'score' => $score,
+            'correctAnswers' => $correctAnswers,
+            'submission' => $submission,
+        ]);
+    }
 
 
 
 
 
-
-
-
-
-
-
-    // =================================================== Admin Methods Ares
+    // =================================================== Admin Methods Ares==============================
     public function store(Request $request, Course $course){     
         // dd($request->all());
         try {
@@ -82,6 +194,8 @@ class QuizController extends Controller
         ]);
     }
 
+
+
     public function update(Request $request, Quiz $quiz)
     {
         try {
@@ -138,16 +252,15 @@ class QuizController extends Controller
             return redirect()->route('show-quiz-management')->with('error', 'Failed to update quiz. Please try again.');
         }
     }
+
+
+
     public function delete(Quiz $quiz)
     {
         try {
-            
             $quiz->question()->delete(); 
-    
-        
             $quiz->delete();
     
-           
             return redirect()->route('show-quiz-management')->with('success', 'Quiz deleted successfully!');
         } catch (\Exception $e) {
             
@@ -155,6 +268,7 @@ class QuizController extends Controller
         }
     }
     
+
     public function showQuizManagement(Request $request)
     {
        
