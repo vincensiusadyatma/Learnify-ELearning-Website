@@ -16,13 +16,125 @@
     @notifyCss
 
     <style>
+
+        
            .notify {
     position: fixed !important;
     top: 20px;
     right: 20px;
     z-index: 9999;
 }
+
+    .no-transition * {
+        transition: none !important;
+    }
+
+    /* Sidebar Container */
+    #sidebarContainer {
+        width: 240px;
+        transition: width 0.3s ease-in-out;
+    }
+
+    #sidebarContainer.minimized {
+        width: 75px; /* Ukuran sidebar minimized */
+    }
+
+    /* Sidebar Item */
+    #sidebar-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease-in-out;
+    }
+
+    #sidebarContainer.minimized #sidebar-item {
+        justify-content: center;
+        padding: 1rem; /* Konsisten padding */
+        width: 100%; /* Lebar penuh */
+    }
+
+    /* Hover Effect */
+    #sidebar-item:hover {
+        background-color: #3333AA; /* Warna hover */
+        color: #ffffff;
+    }
+
+    #sidebarContainer.minimized #sidebar-item:hover {
+        background-color: #3333AA; /* Warna hover saat minimized */
+        border-radius: 0.5rem;
+    }
+
+    /* Sidebar Title */
+    #sidebar-item-title {
+        opacity: 1;
+        white-space: nowrap;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    #sidebarContainer.minimized #sidebar-item-title {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Sidebar Logo */
+    #sidebarLogo {
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    #sidebarContainer.minimized #sidebarLogo {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Sidebar Label */
+    .sidebar-label {
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    #sidebarContainer.minimized .sidebar-label {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Ikon Efek Hover */
+    #sidebar-item i {
+        font-size: 1.25rem;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    #sidebar-item:hover i {
+        transform: scale(1.1); /* Perbesar ikon saat hover */
+    }
+
+    /* Konten Shift */
+    #dashboard {
+        margin-left: 240px;
+        transition: margin-left 0.3s ease-in-out;
+    }
+
+    #sidebarContainer.minimized ~ #dashboard {
+        margin-left: 60px; /* Konten bergeser saat sidebar minimized */
+    }
+
+
     </style>
+
+<script>
+    // Terapkan state minimized sebelum render
+    const savedSidebarState = localStorage.getItem('sidebarState');
+    if (savedSidebarState === 'minimized') {
+        document.documentElement.classList.add('no-transition');
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('sidebarContainer').classList.add('minimized');
+            document.documentElement.classList.remove('no-transition');
+        });
+    }
+</script>
+
 </head>
 <body class="bg-[#EAECF3] dark:bg-[#121212]">
 
@@ -31,55 +143,54 @@
 <x-notify::notify/>
 @notifyJs
 <script>
-    const toggleSidebar = document.getElementById('toggleSidebarBtn')
-    const toggleSidebarItem = document.getElementById('toggleSidebarItemBtn')
-    const sidebarContainer = document.getElementById('sidebarContainer')
-    const contentContainer = document.getElementById('dashboard')
-    const sidebarItem = document.querySelectorAll('#sidebar-item')
-    const sidebarItemTitles = document.querySelectorAll('#sidebar-item-title')
-    const sidebarContentContainer = document.querySelectorAll('.sidebar-content-container p')
-    const sidebarHeader = document.querySelector('#sidebarHeader')
+document.addEventListener('DOMContentLoaded', function () {
+    const body = document.body;
+    const sidebarContainer = document.getElementById('sidebarContainer');
+    const toggleSidebarItemBtn = document.getElementById('toggleSidebarItemBtn');
+    const sidebarItemTitles = document.querySelectorAll('#sidebar-item-title');
+    const sidebarLabels = document.querySelectorAll('.sidebar-label');
+    const sidebarLogo = document.getElementById('sidebarLogo');
 
-    toggleSidebarItem
-        .addEventListener('click', () => {
-            sidebarItemTitles.forEach(title => {
-                title.classList.toggle('hidden')
-            })
+    // Hapus kelas 'no-transition' setelah halaman dimuat
+    setTimeout(() => {
+        body.classList.remove('no-transition');
+    }, 50);
 
-            sidebarItem.forEach(icon => {
-                icon.classList.toggle('justify-end');
-                icon.classList.toggle('px-1.5');
-            })
-
-            sidebarContentContainer.forEach(p => {
-                p.classList.toggle('hidden')
-            })
-        })
-
-    toggleSidebarItem
-        .addEventListener('click', () => {
-            if (sidebarContainer.hasAttribute('active')) {
-                sidebarContainer.classList.remove('lg:-translate-x-40', 'translate-x-0')
-                sidebarContainer.classList.add('lg:translate-x-0', '-translate-x-60')
-                contentContainer.classList.add('lg:ml-60')
-                contentContainer.classList.remove('lg:ml-20')
-                sidebarContainer.removeAttribute('active')
-            } else {
-                sidebarContainer.setAttribute('active', 'true')
-                sidebarContainer.classList.remove('lg:translate-x-0')
-                sidebarContainer.classList.add('lg:-translate-x-40')
-                contentContainer.classList.remove('lg:ml-60')
-                contentContainer.classList.add('lg:ml-20')
-            }
-        })
-
-    toggleSidebar.addEventListener('click', () => {
-        if (!sidebarContainer.hasAttribute('active')) {
-            sidebarContainer.setAttribute('active', 'true')
-            sidebarContainer.classList.remove('-translate-x-60')
-            sidebarContainer.classList.add('translate-x-0')
+    // Fungsi untuk mengatur state sidebar
+    function setSidebarState(minimized) {
+        if (minimized) {
+            sidebarContainer.classList.add('minimized');
+            sidebarItemTitles.forEach(title => title.classList.add('hidden'));
+            sidebarLabels.forEach(label => label.classList.add('hidden'));
+            sidebarLogo.classList.add('hidden');
+            localStorage.setItem('sidebarState', 'minimized');
+        } else {
+            sidebarContainer.classList.remove('minimized');
+            sidebarItemTitles.forEach(title => title.classList.remove('hidden'));
+            sidebarLabels.forEach(label => label.classList.remove('hidden'));
+            sidebarLogo.classList.remove('hidden');
+            localStorage.setItem('sidebarState', 'maximized');
         }
-    })
+    }
+
+    // Event listener untuk toggle sidebar
+    toggleSidebarItemBtn.addEventListener('click', () => {
+        const isMinimized = sidebarContainer.classList.contains('minimized');
+        setSidebarState(!isMinimized);
+    });
+
+    // Muat state sidebar dari localStorage
+    const savedSidebarState = localStorage.getItem('sidebarState');
+    if (savedSidebarState === 'minimized') {
+        body.classList.add('no-transition'); // Tambahkan no-transition saat pertama kali load
+        setSidebarState(true);
+    } else {
+        body.classList.add('no-transition');
+        setSidebarState(false);
+    }
+});
+
+
 </script>
 
 
@@ -109,42 +220,7 @@
 
 </script>
 
-<script>
-    // Ambil elemen switch dan body
-const switchMode = document.getElementById('switch-mode');
-const html = document.documentElement;
 
-// Fungsi untuk mengaktifkan dark mode
-function enableDarkMode() {
-    html.classList.add('dark'); // Tambahkan kelas 'dark' ke <html>
-    localStorage.setItem('darkMode', 'enabled'); // Simpan status di localStorage
-}
-
-// Fungsi untuk menonaktifkan dark mode
-function disableDarkMode() {
-    html.classList.remove('dark'); // Hapus kelas 'dark' dari <html>
-    localStorage.setItem('darkMode', 'disabled'); // Simpan status di localStorage
-}
-
-// Saat halaman dimuat, baca status dark mode dari localStorage
-if (localStorage.getItem('darkMode') === 'enabled') {
-    enableDarkMode();
-    switchMode.checked = true; // Pastikan switch aktif
-} else {
-    disableDarkMode();
-    switchMode.checked = false; // Pastikan switch tidak aktif
-}
-
-// Event listener untuk tombol switch
-switchMode.addEventListener('change', () => {
-    if (switchMode.checked) {
-        enableDarkMode();
-    } else {
-        disableDarkMode();
-    }
-});
-
-</script>
 
 </body>
 </html>
