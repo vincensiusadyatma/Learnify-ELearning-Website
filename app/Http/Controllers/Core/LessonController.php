@@ -131,19 +131,23 @@ class LessonController extends Controller
 
 
    // Melanjutkan ke lesson terakhir dikunjungi :)
-   public function continueLesson(Course $course){
+   public function continueLesson(Course $course)
+   {
        // Ambil lesson pertama dari course berdasarkan urutan ID
        $firstLesson = $course->lessons()->orderBy('id', 'asc')->first();
    
-  
        // Jika ada lesson pertama, arahkan ke halaman lesson tersebut
        if ($firstLesson) {
-           return redirect()->route('show-lesson', ['course' => $course->uuid, 'lesson' => $firstLesson->id]);
+           return redirect()->route('show-lesson', [
+               'course' => $course->uuid,
+               'lesson' => $firstLesson->id,
+           ]);
        }
    
        // Jika tidak ada lesson yang ditemukan, beri notifikasi ke pengguna
        return redirect()->back()->with('error', 'No lessons available for this course.');
    }
+   
    
 
    public function showMaterial($filename){
