@@ -24,7 +24,11 @@
                 class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                 id="user-menu-button" aria-expanded="false">
             <span class="sr-only">Open user menu</span>
-            <img class="w-10 h-10 rounded-full" src="/img/assets/profile1.png" alt="user photo">
+            <img 
+            class="w-10 h-10 rounded-full" 
+            src="{{ auth()->user()->photo_path ? asset('storage/users/photo-profile/' . auth()->user()->photo_path) : asset('img/assets/profile1.png') }}" 
+            alt="User Photo">
+        
         </button>
 
         <!-- Dropdown menu -->

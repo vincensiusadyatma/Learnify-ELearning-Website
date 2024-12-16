@@ -40,7 +40,7 @@ class AuthController extends Controller
             ]);
 
             DB::commit();
-
+            notify()->success('You have successfully register', 'Success');
             return redirect()->route('main')->with('success', 'Registration successful. You can now log in.');
         } catch (\Throwable $th) {
             DB::rollback();

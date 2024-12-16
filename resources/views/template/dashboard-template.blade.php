@@ -14,7 +14,7 @@
 
     @vite('resources/css/app.css')
     @notifyCss
-
+ 
     <style>
 
     .notify {
@@ -27,6 +27,20 @@
     .no-transition * {
         transition: none !important;
     }
+
+
+    .swal-custom-confirm {
+            background-color: #1D4ED8 !important; /* Warna biru */
+            color: #fff !important; /* Warna teks putih */
+            font-weight: bold !important; /* Teks tebal */
+            border-radius: 5px !important; /* Membuat tombol lebih membulat */
+            padding: 10px 20px !important; /* Ukuran tombol */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important; /* Shadow untuk tombol */
+        }
+    
+        .swal-custom-confirm:hover {
+            background-color: #2563EB !important; /* Warna biru lebih gelap saat hover */
+        }
 
     /* Sidebar Container */
     #sidebarContainer {
@@ -141,6 +155,44 @@
 
 <x-notify::notify/>
 @notifyJs
+
+
+
+@if (session('success'))
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'swal-custom-confirm'
+                },
+            });
+        });
+    </script>
+@endif
+
+@if (session('error'))
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'swal-custom-confirm'
+                },
+            });
+        });
+    </script>
+@endif
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const body = document.body;
