@@ -27,6 +27,38 @@
     .answer-input {
         margin-bottom: 10px;
     }
+
+    .remove-btn {
+        background-color: #f44336 !important;
+        color: white !important;
+        border: none !important;
+        padding: 5px 10px !important;
+        margin-top: 10px !important;
+        cursor: pointer !important;
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        display: inline-block !important;
+    }
+
+    .remove-btn:hover {
+        background-color: #d32f2f !important;
+    }
+
+    .add-btn {
+    background-color: #2196F3 !important;
+    color: white !important;
+    border: none !important;
+    padding: 5px 10px !important;
+    margin-top: 10px !important;
+    cursor: pointer !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+}
+
+.add-btn:hover {
+    background-color: #1976D2 !important;
+}
+
 </style>
 
 @section('content')
@@ -87,8 +119,10 @@
                     </select>
                 </div>
 
-                <button type="button" class="mt-2 text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 rounded-lg px-4 py-2"
-                        id="add-answer-1" data-question-id="1">Add Answer</button>
+                <button type="button" class="add-btn" id="add-answer-1" data-question-id="1">Add Answer</button>
+
+                <!-- Remove Question Button -->
+                <button type="button" class="remove-btn" data-question-id="1">Remove Question</button>
             </div>
         </div>
 
@@ -105,6 +139,7 @@
     let questionCount = 1;
     let answerCount = { 1: 2 };
 
+    // Add Question Button
     document.getElementById('add-question').addEventListener('click', function() {
         questionCount++;
         answerCount[questionCount] = 2;
@@ -140,34 +175,39 @@
                     </select>
                 </div>
 
-                <button type="button" class="mt-2 text-blue-500 hover:text-white border border-blue-500 hover:bg-blue-500 rounded-lg px-4 py-2"
-                        id="add-answer-${questionCount}" data-question-id="${questionCount}">Add Answer</button>
+                <button type="button" class="add-btn" id="add-answer-${questionCount}" data-question-id="${questionCount}">Add Answer</button>
+
+                <button type="button" class="remove-btn" data-question-id="${questionCount}">Remove Question</button>
             </div>
         `;
         document.getElementById('questions-container').insertAdjacentHTML('beforeend', questionSection);
-        document.getElementById(`add-answer-${questionCount}`).addEventListener('click', function() {
-            addAnswer(questionCount);
-        });
     });
 
-    function addAnswer(questionId) {
-        if (answerCount[questionId] < 4) {
+    // Add Answer Button
+    document.getElementById('questions-container').addEventListener('click', function(e) {
+        if (e.target.classList.contains('add-btn')) {
+            const questionId = e.target.getAttribute('data-question-id');
             answerCount[questionId]++;
-            const newAnswerLabel = String.fromCharCode(64 + answerCount[questionId]); 
+            
             const newAnswerSection = `
                 <div class="answer-input">
-                    <label for="answer_${questionId}${newAnswerLabel}" class="inline-flex items-center text-sm text-gray-700 dark:text-gray-400">${newAnswerLabel}</label>
-                    <input type="text" id="answer_${questionId}${newAnswerLabel}" name="questions[${questionId}][answers][${newAnswerLabel}]" placeholder="Enter Answer ${newAnswerLabel}"
+                    <label for="answer_${questionId}${String.fromCharCode(64 + answerCount[questionId])}" class="inline-flex items-center text-sm text-gray-700 dark:text-gray-400">${String.fromCharCode(64 + answerCount[questionId])}</label>
+                    <input type="text" id="answer_${questionId}${String.fromCharCode(64 + answerCount[questionId])}" name="questions[${questionId}][answers][${String.fromCharCode(64 + answerCount[questionId])}]"
+                        placeholder="Enter Answer ${String.fromCharCode(64 + answerCount[questionId])}"
                         class="block w-full mt-1 px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm" required>
                 </div>
             `;
             document.getElementById(`answers-container-${questionId}`).insertAdjacentHTML('beforeend', newAnswerSection);
-            document.getElementById(`correct_answer_${questionId}`).insertAdjacentHTML('beforeend', `<option value="${newAnswerLabel}">${newAnswerLabel}</option>`);
         }
-    }
+    });
 
-    document.getElementById('add-answer-1').addEventListener('click', function() {
-        addAnswer(1);
+    // Remove Question Button
+    document.getElementById('questions-container').addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-btn')) {
+            const questionId = e.target.getAttribute('data-question-id');
+            document.getElementById(`question-${questionId}`).remove();
+            delete answerCount[questionId]; // Remove answers count tracking
+        }
     });
 </script>
 @endsection
