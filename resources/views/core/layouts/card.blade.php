@@ -1,11 +1,15 @@
 
 @if ($isTaken)
-<div class="mx-5 my-5 pt-10 max-w-sm bg-white border border-blue-700 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div class="mx-5 my-5 pt-10 max-w-sm bg-white border border-blue-700 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:shadow-xl hover:scale-102 transition:all duration-300">
 @else
-<div class="mx-5 my-5 pt-10 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div class="mx-5 my-5 pt-10 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:shadow-xl hover:scale-102 transition:all duration-300">
 @endif
     <a href="">
-    <img class="m-auto" src="{{ asset('./img/assets/course/' . $icons) }}" alt="{{$icons}}">
+    <img class="w-20 h-20 mx-auto" src="{{ asset('./img/assets/course/' . $icons) }}" alt="{{$icons}}">
+
+    <!-- <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
+    </svg> -->
     </a>
     <div class="p-5">
         <a href="#">
