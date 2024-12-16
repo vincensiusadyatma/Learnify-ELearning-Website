@@ -81,6 +81,11 @@ Route::middleware(['CheckRole:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard/users/{user}/setting', [UserController::class, 'showUserSetting'])->name('show-user-setting');
 
     Route::get('/dashboard/course', [CourseController::class, 'showCourseManagement'])->name('show-course-management');
+     // Route to handle the form submission
+     Route::get('/dashboard/course/create', [CourseController::class, 'create'])->name('create-course');
+     Route::post('/dashboard/course', [CourseController::class, 'store'])->name('handle-add-course');
+     Route::delete('/dashboard/course/{course}', [CourseController::class, 'delete'])->name('handle-delete-course');
+
     Route::get('/dashboard/course/{course}', [CourseController::class, 'showCourseDetails'])->name('show-course-admin-detail');
     Route::get('/dashboard/course/{course}/lesson/manage', [LessonController::class, 'showLessonCMS'])->name('show-add-lesson-cms');
     Route::post('/dashboard/course/{course}/lesson/manage', [LessonController::class, 'store'])->name('handle-add-lesson');
