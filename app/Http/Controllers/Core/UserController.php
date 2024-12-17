@@ -94,7 +94,7 @@ class UserController extends Controller
     
        
         $user->save();
-    
+        session()->flash('success', 'Profile updated successfully.');
         return redirect()->route('show-user-details', $user->id)->with('success', 'Profile updated successfully.');
     }
 

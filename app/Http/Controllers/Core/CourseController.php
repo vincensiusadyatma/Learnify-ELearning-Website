@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Core;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Lesson;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\CourseProgress;
 use App\Models\LessonProgress;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\File;
 class CourseController extends Controller
 {
     public function showCourse(Request $request){
@@ -150,6 +151,10 @@ class CourseController extends Controller
 
     // ====================================Admin Methods Area =============================================================================
 
+    public function create()
+    {
+        return view('admin.addCourseManagement'); // Pastikan file view sudah ada
+    }
 
     public function showCourseManagement(){
         $courses = Course::all();
@@ -167,4 +172,48 @@ class CourseController extends Controller
         ]);
     }
 
+    // Handle create course
+    public function store(Request $request){
+        // Validate the request
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'img' => 'required|image|mimes:jpg,jpeg,png|max:2048', // Validate image
+        ]);
+
+        // Handle image upload
+        $imagePath = $request->file('img')->store('course/img', 'public');
+
+        // Create new course
+        $course = Course::create([
+            'uuid' => Str::uuid(),
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'img' => $imagePath,
+        ]);
+
+        // Redirect or show success message
+        return redirect()->route('show-course-management')->with('success', 'Course added successfully!');
+    }
+
+    public function delete($id){
+        // Ambil data course
+        $course = Course::findOrFail($id);
+
+        // Cek apakah gambar ada di public/img/assets/course
+        $defaultPath = public_path("img/assets/course/{$course->img}");
+        $storagePath = public_path("storage/{$course->img}");
+
+        // Hapus file gambar jika ada
+        if (File::exists($defaultPath)) {
+            File::delete($defaultPath);
+        } elseif (File::exists($storagePath)) {
+            File::delete($storagePath);
+        }
+
+        // Hapus course dari database
+        $course->delete();
+
+        return redirect()->route('show-course-management')->with('success', 'Course deleted successfully!');
+    }
 }
