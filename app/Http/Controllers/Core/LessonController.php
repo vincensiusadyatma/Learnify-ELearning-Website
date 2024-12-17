@@ -55,6 +55,11 @@ class LessonController extends Controller
             return $lesson;
         });
 
+        // Dapatkan previous dan next lesson
+        $previousLesson = $lessons->where('id', '<', $lesson->id)->last();
+        $nextLesson = $lessons->where('id', '>', $lesson->id)->first();
+
+
         // Hitung progress
         $totalLessons = $lessons->count();
         $completedLessons = $lessons->where('is_completed', true)->count();
@@ -66,12 +71,15 @@ class LessonController extends Controller
             'is_completed' => $progressPercentage === 100, // Tandai selesai jika 100%
         ]);
 
+  
         return view('core.lesson', [
             'lessons' => $lessons,
             'course' => $course,
             'selectedLesson' => $lesson,
             'lessonContent' => $lessonContent,
             'progressPercentage' => $progressPercentage,
+            'previousLesson' => $previousLesson,
+            'nextLesson' => $nextLesson
         ]);
     }
 

@@ -98,6 +98,35 @@
                 @endforelse
             </div>
         </div>
+
+        {{-- Quiz History Section --}}
+        <div class="w-full bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h3 class="font-semibold text-lg text-gray-800 dark:text-white mb-4">Quiz History</h3>
+            @if($quizHistory->isEmpty())
+                <p class="text-gray-600 dark:text-gray-300">No quizzes taken yet.</p>
+            @else
+                <table class="w-full table-auto border-collapse">
+                    <thead>
+                        <tr class="text-gray-600 dark:text-gray-300 text-left">
+                            <th class="px-4 py-2 border-b">Quiz Title</th>
+                            <th class="px-4 py-2 border-b">Course</th>
+                            <th class="px-4 py-2 border-b">Score</th>
+                            <th class="px-4 py-2 border-b">Taken At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($quizHistory as $quiz)
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                                <td class="px-4 py-2 border-b text-gray-800 dark:text-gray-300">{{ $quiz->quiz_title }}</td>
+                                <td class="px-4 py-2 border-b text-gray-800 dark:text-gray-300">{{ $quiz->course_title }}</td>
+                                <td class="px-4 py-2 border-b text-gray-800 dark:text-gray-300">{{ $quiz->score }}</td>
+                                <td class="px-4 py-2 border-b text-gray-800 dark:text-gray-300">{{ \Carbon\Carbon::parse($quiz->taken_at)->format('d M Y H:i') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+        </div>
     </div>
 </div>
 

@@ -15,11 +15,11 @@ class SettingController extends Controller
         return view('core.setting');
     }
 
-    public function showProfile(){
-
+    public function showProfile()
+{
     $user = Auth::user();
 
-    // Query untuk mengambil progress 
+    // Query untuk mengambil progress courses
     $courseProgress = DB::table('course_progress')
         ->join('courses', 'course_progress.course_id', '=', 'courses.id')
         ->where('course_progress.user_id', $user->id)
@@ -33,8 +33,22 @@ class SettingController extends Controller
         )
         ->get();
 
-        return view('core.profile', compact('user', 'courseProgress'));
-    }
+    // Query untuk mengambil history quiz user
+    $quizHistory = DB::table('quiz_submissions')
+        ->join('quizzes', 'quiz_submissions.quiz_id', '=', 'quizzes.id')
+        ->join('courses', 'quizzes.course_id', '=', 'courses.id')
+        ->where('quiz_submissions.user_id', $user->id)
+        ->select(
+            'quizzes.title as quiz_title',
+            'courses.title as course_title',
+            'quiz_submissions.score',
+            'quiz_submissions.created_at as taken_at'
+        )
+        ->orderBy('quiz_submissions.created_at', 'desc')
+        ->get();
+
+    return view('core.profile', compact('user', 'courseProgress', 'quizHistory'));
+}
 
 
   public function updateProfile(Request $request)
