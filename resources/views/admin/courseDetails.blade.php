@@ -46,11 +46,11 @@
             </div>
             <div class="flex space-x-2 p-4">
                 <!-- View Button -->
-                <a href="" class="bg-blue-500 text-white rounded-md px-3 py-2 hover:bg-blue-600 flex items-center space-x-1">
+                <!-- <a href="" class="bg-blue-500 text-white rounded-md px-3 py-2 hover:bg-blue-600 flex items-center space-x-1">
                     <span>View</span>
-                </a>
+                </a> -->
                 <!-- Edit Button -->
-                <a href="" class="bg-yellow-500 text-white rounded-md px-3 py-2 hover:bg-yellow-600 flex items-center space-x-1">
+                <a href="{{ route('edit-lesson', ['course' => $course->id, 'lesson' => $lesson->id]) }}" class="bg-yellow-500 text-white rounded-md px-3 py-2 hover:bg-yellow-600 flex items-center space-x-1">
                     <span>Edit</span>
                 </a>
                 <!-- Delete Button -->
