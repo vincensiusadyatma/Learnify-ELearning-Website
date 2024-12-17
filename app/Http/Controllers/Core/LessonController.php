@@ -168,49 +168,54 @@ class LessonController extends Controller
     }
 
 
-    public function store(Request $request, Course $course){
-        // Validasi data yang dikirim
-        $request->validate([
-            'lesson_title' => 'required|string|max:255',
-            'lesson_description' => 'required|string|max:255',
-            'lesson_content' => 'required|string',
-        ]);
+    public function store(Request $request, Course $course)
+{
+    // Validasi data yang dikirim
+    $request->validate([
+        'lesson_title' => 'required|string|max:255',
+        'lesson_description' => 'required|string|max:255',
+        'lesson_content' => 'required|string',
+    ]);
 
-        // Format data pelajaran
-        $lessonData = [
-            'Title' => $request->lesson_title,
-            'Course ID' => $course->id,
-        ];
+    // Format data pelajaran
+    $lessonData = [
+        'Title' => $request->lesson_title,
+        'Course ID' => $course->id,
+    ];
 
-        // Format data konten
-        $lessonContent = $request->lesson_content;
+    // Format data konten
+    $lessonContent = $request->lesson_content;
 
-        // Format ke string yang rapi sesuai dengan format yang diinginkan
-        $formattedData = "Lesson Details:\n";
-        $formattedData .= "--------------------\n";
-        foreach ($lessonData as $key => $value) {
-            $formattedData .= "{$key}: {$value}\n";
-        }
-        $formattedData .= "--------------------\n";
-        $formattedData .= "Content: {$lessonContent}\n"; // Content di bagian bawah
-
-        // Tentukan path file di dalam public
-        $filePath = "course/materials/lessons/lesson_" . uniqid() . ".txt";
-
-        // Simpan ke disk 'public'
-        Storage::disk('public')->put($filePath, $formattedData);
-
-        // Simpan path file ke database
-        $lesson = Lesson::create([
-            'title' => $request->lesson_title,
-            'description' => $request->lesson_description,
-            'content' => 'public/' . $filePath, 
-            'course_id' => $course->id,
-        ]);
-
-        // Berikan respons sukses
-        return redirect()->route('show-course-management')->with('success', 'Lesson created successfully. File path saved in the database.');
+    // Format ke string yang rapi sesuai dengan format yang diinginkan
+    $formattedData = "Lesson Details:\n";
+    $formattedData .= "--------------------\n";
+    foreach ($lessonData as $key => $value) {
+        $formattedData .= "{$key}: {$value}\n";
     }
+    $formattedData .= "--------------------\n";
+    $formattedData .= "Content: {$lessonContent}\n";
+
+    // Tentukan nama file unik
+    $fileName = "lesson_" . uniqid() . ".txt";
+
+    // Tentukan path file di dalam public
+    $filePath = "course/materials/lessons/" . $fileName;
+
+    // Simpan file ke disk 'public'
+    Storage::disk('public')->put($filePath, $formattedData);
+
+    // Simpan hanya nama file ke database
+    $lesson = Lesson::create([
+        'title' => $request->lesson_title,
+        'description' => $request->lesson_description,
+        'content' => $fileName, 
+        'course_id' => $course->id,
+    ]);
+
+    // Berikan respons sukses
+    return redirect()->route('show-course-management')->with('success', 'Lesson created successfully. File name saved in the database.');
+}
+
 
     public function editLesson(Course $course, Lesson $lesson){
         $filePath = $lesson->content;
