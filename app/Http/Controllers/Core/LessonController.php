@@ -25,12 +25,11 @@ class LessonController extends Controller
     public function showLesson(Course $course, Lesson $lesson){
         $filePath = $lesson->content;
 
-        // Cek apakah file konten lesson ada di storage
-        if (Storage::disk('local')->exists($filePath)) {
-            $content = Storage::disk('local')->get($filePath);
+        try {
+            $content = file_get_contents(storage_path('app/public/course/materials/lessons/' . $filePath));
             preg_match('/Content:\s*(.*)/s', $content, $matches);
-            $lessonContent = isset($matches[1]) ? $matches[1] : 'Materi belum ada';
-        } else {
+            $lessonContent = $matches[1] ?? 'Materi belum ada';
+        } catch (\Exception $e) {
             $lessonContent = 'Materi belum ada';
         }
 
@@ -71,7 +70,6 @@ class LessonController extends Controller
             'is_completed' => $progressPercentage === 100, // Tandai selesai jika 100%
         ]);
 
-  
         return view('core.lesson', [
             'lessons' => $lessons,
             'course' => $course,
@@ -134,10 +132,6 @@ class LessonController extends Controller
         ]);
     }
 
-    
-    
-
-
    // Melanjutkan ke lesson terakhir dikunjungi :)
    public function continueLesson(Course $course)
    {
@@ -155,7 +149,6 @@ class LessonController extends Controller
        // Jika tidak ada lesson yang ditemukan, beri notifikasi ke pengguna
        return redirect()->back()->with('error', 'No lessons available for this course.');
    }
-   
    
 
    public function showMaterial($filename){
@@ -217,6 +210,46 @@ class LessonController extends Controller
 
         // Berikan respons sukses
         return redirect()->route('show-course-management')->with('success', 'Lesson created successfully. File path saved in the database.');
+    }
+
+    public function editLesson(Course $course, Lesson $lesson){
+        $filePath = $lesson->content;
+
+        try {
+            $content = file_get_contents(storage_path('app/public/course/materials/lessons/' . $filePath));
+            preg_match('/Content:\s*(.*)/s', $content, $matches);
+            $lessonContent = $matches[1] ?? 'Materi belum ada';
+        } catch (\Exception $e) {
+            $lessonContent = 'Materi belum ada';
+        }
+
+        return view('admin.editLessonManagement', [
+            'course' => $course,
+            'lesson' => $lesson,
+            'content' =>$lessonContent
+        ]);
+    }
+
+    public function updateLessonContent(Request $request, Course $course, Lesson $lesson){
+
+        $request->validate([
+            'lesson_content' => 'required|string',
+        ]);
+
+        $lessonContent = $request->lesson_content;
+        
+
+        $formattedData = "Lesson Details:\n";
+        $formattedData .= "--------------------\n";
+        $formattedData .= "Title: {$lesson->title}\n";
+        $formattedData .= "Course ID: {$course->id}\n";
+        $formattedData .= "--------------------\n";
+        $formattedData .= "Content: {$lessonContent}\n";
+
+        // Simpan ke disk 'public'
+        Storage::disk('public')->put('course/materials/lessons/' . $lesson->content, $formattedData);
+
+        return redirect()->route('show-course-management')->with('success', 'Lesson content updated successfully.');
     }
 
     public function delete(Request $request, Course $course, Lesson $lesson){
