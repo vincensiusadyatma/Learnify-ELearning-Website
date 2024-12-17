@@ -18,31 +18,31 @@ class LessonSeeder extends Seeder
             // Learning Path untuk Course Java (course_id = 1)
             [
                 'title' => 'Perkenalan Java',
-                'content' => 'perkenalan_java.txt',
+                'content' => 'lesson_674de2df61903.txt',
                 'course_id' => 1,
                 'description' => 'Mengenalkan dasar-dasar bahasa pemrograman Java.'
             ],
             [
                 'title' => 'Tipe Data dan Variabel di Java',
-                'content' => 'tipe_data_dan_variabel.txt',
+                'content' => 'lesson_674de37457784.txt',
                 'course_id' => 1,
                 'description' => 'Memahami tipe data dasar dan bagaimana mendeklarasikan variabel di Java.'
             ],
             [
                 'title' => 'Kontrol Alur Program di Java',
-                'content' => 'kontrol_alur_java.txt',
+                'content' => 'lesson_674de5305f157.txt',
                 'course_id' => 1,
                 'description' => 'Menjelaskan bagaimana cara mengontrol alur program dengan menggunakan percabangan dan perulangan di Java.'
             ],
             [
                 'title' => 'Objek dan Kelas di Java',
-                'content' => 'objek_dan_klas_java.txt',
+                'content' => 'lesson_674de6b4eee7b.txt',
                 'course_id' => 1,
                 'description' => 'Mengenalkan konsep Object-Oriented Programming (OOP) dalam Java.'
             ],
             [
                 'title' => 'Pengolahan Exception di Java',
-                'content' => 'exception_java.txt',
+                'content' => 'lesson_674de8999bf53.txt',
                 'course_id' => 1,
                 'description' => 'Memahami cara menangani kesalahan (exception) dalam program Java.'
             ],
@@ -80,13 +80,13 @@ class LessonSeeder extends Seeder
             // Learning Path untuk Course Python (course_id = 2)
             [
                 'title' => 'Introduction to Python',
-                'content' => 'introduction_python.txt',
+                'content' => 'lesson_674def2454eb1.txt',
                 'course_id' => 2,
                 'description' => 'Pengenalan dasar bahasa pemrograman Python dan cara menulis kode pertama.'
             ],
             [
                 'title' => 'Tipe Data dan Variabel di Python',
-                'content' => 'tipe_data_python.txt',
+                'content' => 'lesson_674df01d62053.txt',
                 'course_id' => 2,
                 'description' => 'Mempelajari tipe data dasar seperti string, integer, float, dan bagaimana menggunakan variabel di Python.'
             ],

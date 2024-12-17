@@ -25,12 +25,11 @@ class LessonController extends Controller
     public function showLesson(Course $course, Lesson $lesson){
         $filePath = $lesson->content;
 
-        // Cek apakah file konten lesson ada di storage
-        if (Storage::disk('local')->exists($filePath)) {
-            $content = Storage::disk('local')->get($filePath);
+        try {
+            $content = file_get_contents(storage_path('app/public/course/materials/lessons/' . $filePath));
             preg_match('/Content:\s*(.*)/s', $content, $matches);
-            $lessonContent = isset($matches[1]) ? $matches[1] : 'Materi belum ada';
-        } else {
+            $lessonContent = $matches[1] ?? 'Materi belum ada';
+        } catch (\Exception $e) {
             $lessonContent = 'Materi belum ada';
         }
 
@@ -71,7 +70,6 @@ class LessonController extends Controller
             'is_completed' => $progressPercentage === 100, // Tandai selesai jika 100%
         ]);
 
-  
         return view('core.lesson', [
             'lessons' => $lessons,
             'course' => $course,
@@ -134,10 +132,6 @@ class LessonController extends Controller
         ]);
     }
 
-    
-    
-
-
    // Melanjutkan ke lesson terakhir dikunjungi :)
    public function continueLesson(Course $course)
    {
@@ -155,7 +149,6 @@ class LessonController extends Controller
        // Jika tidak ada lesson yang ditemukan, beri notifikasi ke pengguna
        return redirect()->back()->with('error', 'No lessons available for this course.');
    }
-   
    
 
    public function showMaterial($filename){
@@ -175,48 +168,93 @@ class LessonController extends Controller
     }
 
 
-    public function store(Request $request, Course $course){
-        // Validasi data yang dikirim
+    public function store(Request $request, Course $course)
+{
+    // Validasi data yang dikirim
+    $request->validate([
+        'lesson_title' => 'required|string|max:255',
+        'lesson_description' => 'required|string|max:255',
+        'lesson_content' => 'required|string',
+    ]);
+
+    // Format data pelajaran
+    $lessonData = [
+        'Title' => $request->lesson_title,
+        'Course ID' => $course->id,
+    ];
+
+    // Format data konten
+    $lessonContent = $request->lesson_content;
+
+    // Format ke string yang rapi sesuai dengan format yang diinginkan
+    $formattedData = "Lesson Details:\n";
+    $formattedData .= "--------------------\n";
+    foreach ($lessonData as $key => $value) {
+        $formattedData .= "{$key}: {$value}\n";
+    }
+    $formattedData .= "--------------------\n";
+    $formattedData .= "Content: {$lessonContent}\n";
+
+    // Tentukan nama file unik
+    $fileName = "lesson_" . uniqid() . ".txt";
+
+    // Tentukan path file di dalam public
+    $filePath = "course/materials/lessons/" . $fileName;
+
+    // Simpan file ke disk 'public'
+    Storage::disk('public')->put($filePath, $formattedData);
+
+    // Simpan hanya nama file ke database
+    $lesson = Lesson::create([
+        'title' => $request->lesson_title,
+        'description' => $request->lesson_description,
+        'content' => $fileName, 
+        'course_id' => $course->id,
+    ]);
+
+    // Berikan respons sukses
+    return redirect()->route('show-course-management')->with('success', 'Lesson created successfully. File name saved in the database.');
+}
+
+
+    public function editLesson(Course $course, Lesson $lesson){
+        $filePath = $lesson->content;
+
+        try {
+            $content = file_get_contents(storage_path('app/public/course/materials/lessons/' . $filePath));
+            preg_match('/Content:\s*(.*)/s', $content, $matches);
+            $lessonContent = $matches[1] ?? 'Materi belum ada';
+        } catch (\Exception $e) {
+            $lessonContent = 'Materi belum ada';
+        }
+
+        return view('admin.editLessonManagement', [
+            'course' => $course,
+            'lesson' => $lesson,
+            'content' =>$lessonContent
+        ]);
+    }
+
+    public function updateLessonContent(Request $request, Course $course, Lesson $lesson){
+
         $request->validate([
-            'lesson_title' => 'required|string|max:255',
-            'lesson_description' => 'required|string|max:255',
             'lesson_content' => 'required|string',
         ]);
 
-        // Format data pelajaran
-        $lessonData = [
-            'Title' => $request->lesson_title,
-            'Course ID' => $course->id,
-        ];
-
-        // Format data konten
         $lessonContent = $request->lesson_content;
+        
 
-        // Format ke string yang rapi sesuai dengan format yang diinginkan
         $formattedData = "Lesson Details:\n";
         $formattedData .= "--------------------\n";
-        foreach ($lessonData as $key => $value) {
-            $formattedData .= "{$key}: {$value}\n";
-        }
+        $formattedData .= "Title: {$lesson->title}\n";
+        $formattedData .= "Course ID: {$course->id}\n";
         $formattedData .= "--------------------\n";
-        $formattedData .= "Content: {$lessonContent}\n"; // Content di bagian bawah
-
-        // Tentukan path file di dalam public
-        $filePath = "course/materials/lessons/lesson_" . uniqid() . ".txt";
+        $formattedData .= "Content: {$lessonContent}\n";
 
         // Simpan ke disk 'public'
-        Storage::disk('public')->put($filePath, $formattedData);
+        Storage::disk('public')->put('course/materials/lessons/' . $lesson->content, $formattedData);
 
-        // Simpan path file ke database
-        $lesson = Lesson::create([
-            'title' => $request->lesson_title,
-            'description' => $request->lesson_description,
-            'content' => 'public/' . $filePath, 
-            'course_id' => $course->id,
-        ]);
-
-        // Berikan respons sukses
-        return redirect()->route('show-course-management')->with('success', 'Lesson created successfully. File path saved in the database.');
+        return redirect()->route('show-course-management')->with('success', 'Lesson content updated successfully.');
     }
 
     public function delete(Request $request, Course $course, Lesson $lesson){
