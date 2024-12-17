@@ -55,6 +55,11 @@ class LessonController extends Controller
             return $lesson;
         });
 
+        // Dapatkan previous dan next lesson
+        $previousLesson = $lessons->where('id', '<', $lesson->id)->last();
+        $nextLesson = $lessons->where('id', '>', $lesson->id)->first();
+
+
         // Hitung progress
         $totalLessons = $lessons->count();
         $completedLessons = $lessons->where('is_completed', true)->count();
@@ -66,12 +71,15 @@ class LessonController extends Controller
             'is_completed' => $progressPercentage === 100, // Tandai selesai jika 100%
         ]);
 
+  
         return view('core.lesson', [
             'lessons' => $lessons,
             'course' => $course,
             'selectedLesson' => $lesson,
             'lessonContent' => $lessonContent,
             'progressPercentage' => $progressPercentage,
+            'previousLesson' => $previousLesson,
+            'nextLesson' => $nextLesson
         ]);
     }
 
@@ -131,19 +139,23 @@ class LessonController extends Controller
 
 
    // Melanjutkan ke lesson terakhir dikunjungi :)
-   public function continueLesson(Course $course){
+   public function continueLesson(Course $course)
+   {
        // Ambil lesson pertama dari course berdasarkan urutan ID
        $firstLesson = $course->lessons()->orderBy('id', 'asc')->first();
    
-  
        // Jika ada lesson pertama, arahkan ke halaman lesson tersebut
        if ($firstLesson) {
-           return redirect()->route('show-lesson', ['course' => $course->uuid, 'lesson' => $firstLesson->id]);
+           return redirect()->route('show-lesson', [
+               'course' => $course->uuid,
+               'lesson' => $firstLesson->id,
+           ]);
        }
    
        // Jika tidak ada lesson yang ditemukan, beri notifikasi ke pengguna
        return redirect()->back()->with('error', 'No lessons available for this course.');
    }
+   
    
 
    public function showMaterial($filename){

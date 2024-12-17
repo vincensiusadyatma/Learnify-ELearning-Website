@@ -44,16 +44,41 @@ class DashboardController extends Controller
     
     
 
-
-    public function showAdminDashboard(){
-        $user = User::all()->count();
-        $course = Course::all()->count();
-        $lesson = Lesson::all()->count();
-        return view('admin.dashboard',[
-            'user_count' => $user,
-            'course_count'=> $course,
-            'lesson_count' => $lesson
+    public function showAdminDashboard()
+    {
+        // Hitung jumlah user, course, dan lesson
+        $user_count = User::count();
+        $course_count = Course::count();
+        $lesson_count = Lesson::count();
+    
+        // Ambil data jumlah pengguna per bulan
+        $users_by_month = User::selectRaw('EXTRACT(MONTH FROM created_at) as month, COUNT(*) as count')
+            ->groupByRaw('EXTRACT(MONTH FROM created_at)')
+            ->get()
+            ->pluck('count', 'month')
+            ->toArray();
+    
+        // Hitung jumlah pengguna aktif dan tidak aktif
+        $active_users = User::where('status', 'active')->count();
+        $inactive_users = User::where('status', 'inactive')->count();
+    
+        // Ambil 10 pengguna terbaru
+        $users = User::latest()->take(10)->get();
+    
+        // Kirim data ke view
+        return view('admin.dashboard', [
+            'user_count' => $user_count,
+            'course_count' => $course_count,
+            'lesson_count' => $lesson_count,
+            'users_by_month' => $users_by_month,
+            'active_users' => $active_users,
+            'inactive_users' => $inactive_users,
+            'users' => $users
         ]);
     }
+    
+    
+    
+    
 
 }

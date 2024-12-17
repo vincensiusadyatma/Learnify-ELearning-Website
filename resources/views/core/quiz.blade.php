@@ -15,7 +15,7 @@
     </div>
 
     <!-- Courses List -->
-    <div class="flex flex-wrap">
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach ($quiz as $qz)
             @include('core.layouts.quizCard', [
                 'quiz' => $qz

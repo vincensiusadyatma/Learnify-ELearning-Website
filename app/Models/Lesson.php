@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Quiz;
+use App\Models\Course;
+use App\Models\LessonProgress;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Lesson extends Model
 {
@@ -23,4 +27,10 @@ class Lesson extends Model
     {
         return $this->hasMany(Quiz::class);
     }
+
+    public function progress()
+{
+    return $this->hasOne(LessonProgress::class, 'lesson_id')
+        ->where('user_id', Auth::user()->id); // Ambil progress hanya untuk user yang login
+}
 }

@@ -31,6 +31,7 @@ class AuthController extends Controller
             $user = User::create([
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
+                'status' => 'active'
             ]);
 
 
@@ -40,7 +41,7 @@ class AuthController extends Controller
             ]);
 
             DB::commit();
-
+            notify()->success('You have successfully register', 'Success');
             return redirect()->route('main')->with('success', 'Registration successful. You can now log in.');
         } catch (\Throwable $th) {
             DB::rollback();
@@ -76,7 +77,7 @@ class AuthController extends Controller
     
                 // Redirect berdasarkan role
                 if ($role === 'admin') {
-                    return redirect()->route('show-dashboard-admin')->with('success', 'Welcome, Admin!');
+                    return redirect()->route('show-dashboard-admin');
                 } elseif ($role === 'user') {
                     return redirect()->route('show-dashboard')->with('success', 'Welcome, User!');
                 }

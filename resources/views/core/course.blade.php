@@ -1,7 +1,7 @@
 @extends('core.layouts.index')
 
 @section('core-content')
-    <div class="flex justify-between items-center p-6 bg-white text-gray-900 dark:bg-[#1f2937]">
+    <div class="flex justify-between items-center p-6 bg-white text-gray-900 dark:bg-[#1f2937] rounded-lg">
         <!-- Search Bar and Course Count -->
         <div class="flex items-center space-x-4">
             <div class="relative w-64">
@@ -40,9 +40,7 @@
     </div>
 
     <!-- Courses List -->
-    <div class="flex flex-wrap">
-      
-
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach ($courses as $dt)
             @php
             // Cek apakah kursus sudah diambil oleh pengguna
@@ -58,10 +56,8 @@
                 // 'link' => route('list-lesson', ['id' => $dt['id']]),
                 'icons' => $dt['img'],
                 'isTaken' => $isTaken
-                
             ])
         @endforeach
-        
     </div>
 @endsection
 

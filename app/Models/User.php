@@ -16,6 +16,7 @@ class User extends  Authenticatable
         'address',
         'password',
         'status',
+        'photo_path',
         'points'
     ];
 

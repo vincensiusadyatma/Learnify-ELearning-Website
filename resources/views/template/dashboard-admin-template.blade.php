@@ -14,7 +14,7 @@
 	<script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-	<link rel="shortcut icon" href="{{ asset('img/logo/snapcheck logo.png') }}">
+	<link rel="shortcut icon" href="{{ asset('img/logo/learnify-logo.png') }}">
 	<!-- My CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard.css') }}">
 	@notifyCss
