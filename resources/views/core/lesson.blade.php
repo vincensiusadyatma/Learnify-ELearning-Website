@@ -52,15 +52,37 @@
         </div>
 
         <!-- Tombol untuk menandai selesai -->
-        <div class="flex justify-between">
+        <div class="flex justify-between mt-6">
+         <!-- Tombol Mark as Complete -->
+            @if ($selectedLesson->progress && $selectedLesson->progress->is_completed)
+            <button class="bg-gray-400 text-white px-4 py-2 rounded-lg cursor-not-allowed" disabled>
+                Completed
+            </button>
+            @else
             <button id="mark-complete-button" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
                 Mark as Complete
             </button>
-            <a href="{{ route('continue-lesson', ['course' => $course->uuid]) }}">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-                    Continue Lesson
-                </button>
-            </a>
+            @endif
+
+
+            <!-- Tombol Previous dan Next -->
+            <div class="flex space-x-4">
+                @if ($previousLesson)
+                    <a href="{{ route('show-lesson', ['course' => $course->uuid, 'lesson' => $previousLesson->id]) }}">
+                        <button class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+                            Previous Lesson
+                        </button>
+                    </a>
+                @endif
+
+                @if ($nextLesson)
+                    <a href="{{ route('show-lesson', ['course' => $course->uuid, 'lesson' => $nextLesson->id]) }}">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                            Next Lesson
+                        </button>
+                    </a>
+                @endif
+            </div>
         </div>
     </div>
 </div>

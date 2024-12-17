@@ -14,11 +14,20 @@ class QuizController extends Controller
 {
 
     public function showQuiz() {
-        $quiz = DB::table('quizzes')->get();
-        //dd($quiz->toArray());
+        // Ambil ID user yang sedang login
+        $userId = Auth::id();
+    
+        // Query untuk mendapatkan kuis dari course yang diambil user
+        $quiz = DB::table('quizzes')
+            ->join('courses', 'quizzes.course_id', '=', 'courses.id') // Join ke tabel courses
+            ->join('user_take_courses', 'courses.id', '=', 'user_take_courses.course_id') // Join ke pivot table user_take_courses
+            ->where('user_take_courses.user_id', $userId) // Filter berdasarkan user yang login
+            ->select('quizzes.*', 'courses.title as course_title') // Pilih data yang diperlukan
+            ->get();
+    
+        // Return ke view
         return view('core.quiz', ['quiz' => $quiz]);
     }
-
 
     public function showQuizDetail(Quiz $quizId) {
         $questions = DB::table(('questions'))->where('quiz_id', $quizId->id)->get();
