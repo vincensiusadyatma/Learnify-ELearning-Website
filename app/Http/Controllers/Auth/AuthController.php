@@ -31,6 +31,7 @@ class AuthController extends Controller
             $user = User::create([
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
+                'status' => 'active'
             ]);
 
 
