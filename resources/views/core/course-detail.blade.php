@@ -15,7 +15,7 @@
     </div>
 
     <!-- Course Info -->
-    <div class="flex space-x-6 mb-8">
+    {{-- <div class="flex space-x-6 mb-8">
         <div class="flex items-center text-gray-600">
             <span class="material-icons text-blue-500">access_time</span>
             <span class="ml-2">{{ $course['duration'] }} Hours</span>
@@ -24,7 +24,7 @@
             <span class="material-icons text-blue-500">school</span>
             <span class="ml-2">{{ $course['level'] }} Level</span>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Continue Lesson Button -->
     <div class="flex justify-center mb-6">

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
+    <link rel="shortcut icon" href="{{ asset('img/logo/learnify-logo.png') }}">
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
