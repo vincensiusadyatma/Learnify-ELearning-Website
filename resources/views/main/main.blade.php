@@ -15,79 +15,91 @@
 
 
 {{-- first landing section jumbotron --}}
-<div class="relative h-screen bg-cover bg-center" style="background-image: url('img/assets/jumbotron.png');">
-    <div class="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-    <div class="relative z-10 flex items-center justify-center h-full">
-        <div class="text-center text-white">
-            <h1 class="text-4xl font-bold mb-4 drop-shadow-lg">Welcome to Learnify</h1>
-            <p class="text-lg mb-8 drop-shadow-lg">Bangun Masa Depanmu Dengan Layanan Kami</p>
-            <a href="#about" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 drop-shadow-lg">Learn More</a>
-        </div>
+<div class="relative h-screen bg-cover bg-center px-4 sm:px-6 md:px-8" style="background-image: url('img/assets/jumbotron.png');">
+  <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+  <div class="relative z-10 flex items-center justify-center h-full">
+    <div class="text-center text-white">
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 drop-shadow-lg leading-tight">
+        Welcome to Learnify
+      </h1>
+      <p class="text-sm sm:text-base md:text-lg mb-6 drop-shadow-lg leading-relaxed">
+        Bangun Masa Depanmu Dengan Layanan Kami
+      </p>
+      <a href="#about" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 drop-shadow-lg text-sm sm:text-base">
+        Learn More
+      </a>
     </div>
+  </div>
 </div>
 
   
   
 {{-- end landing section jumbotron --}}
 
-{{-- 3 point advantage card --}}
-<div class=" workspace container mx-auto mt-[-50px] relative z-20" data-aos="fade-up" data-aos-duration="500">
-  <div class="flex justify-center ">
-    <div class="w-full xs:w-[80%] ss:w-4/5 md:w-[90%] lg:w-auto flex justify-center">
-      <div class="flex flex-col md:flex-row text-white rounded-2xl shadow-lg bg-blur p-4 space-y-4 md:space-y-0 md:space-x-4">
-        <div class="flex-1 text-center p-4 flex flex-col items-center justify-center">
-          <img src="img/assets/icons/time-icon2.png" class="icon mb-2 w-10 h-10">
-          <div class="text-left">
-            <h5 class="text-lg font-bold text-center">Fleksibel</h5>
-            <p class="text-sm text-center">Diakses Dimana Saja</p>
-          </div>
-        </div>
-        <div class="flex-1 text-center p-4 flex flex-col items-center justify-center">
-          <img src="img/assets/icons/handshake-icon.png" class="icon mb-2 w-10 h-10">
-          <div class="text-left">
-            <h5 class="text-lg font-bold text-center">Terpercaya</h5>
-            <p class="text-sm text-center">Dapat Diandalkan</p>
-          </div>
-        </div>
-        <div class="flex-1 text-center p-4 flex flex-col items-center justify-center">
-          <img src="img/assets/icons/free.png" class="icon mb-2 w-7 h-7">
-          <div class="text-left">
-            <h5 class="text-lg font-bold text-center">Gratis</h5>
-            <p class="text-sm md:text-center">Data anda aman disimpan pada kami</p>
-          </div>
-        </div>
-      </div>
-      
+{{-- 3 Point Advantage Card --}}
+<div class="container mx-auto mt-[-50px] relative z-20 px-4" data-aos="fade-up" data-aos-duration="500">
+  <div class="flex flex-col md:flex-row justify-center gap-4">
+    <div class="flex-1 bg-gray-700 text-white rounded-xl shadow-lg p-6 flex flex-col items-center">
+      <img src="img/assets/icons/time-icon2.png" alt="Fleksibel" class="w-12 h-12 mb-4">
+      <h5 class="text-lg font-bold">Fleksibel</h5>
+      <p class="text-sm text-center">Diakses Dimana Saja</p>
+    </div>
+    <div class="flex-1 bg-gray-700 text-white rounded-xl shadow-lg p-6 flex flex-col items-center">
+      <img src="img/assets/icons/handshake-icon.png" alt="Terpercaya" class="w-12 h-12 mb-4">
+      <h5 class="text-lg font-bold">Terpercaya</h5>
+      <p class="text-sm text-center">Dapat Diandalkan</p>
+    </div>
+    <div class="flex-1 bg-gray-700 text-white rounded-xl shadow-lg p-6 flex flex-col items-center">
+      <img src="img/assets/icons/free.png" alt="Gratis" class="w-12 h-12 mb-4">
+      <h5 class="text-lg font-bold">Gratis</h5>
+      <p class="text-sm text-center">Data Anda Aman Disimpan Pada Kami</p>
     </div>
   </div>
 </div>
+{{-- End 3 Point Advantage Card --}}
 
+{{-- About Section --}}
+<section class="bg-gray-800 py-8 sm:py-12 lg:py-16" id="tentang">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+    <!-- Text Content -->
+    <div data-aos="fade-right">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight">
+        Tentang Kami
+      </h2>
+      <p class="text-sm sm:text-base text-gray-300 mb-4 leading-relaxed">
+        Learnify menyediakan akses pendidikan berkualitas tinggi bagi semua orang, di mana saja. Dengan berbagai kursus yang dirancang oleh para ahli di bidangnya, kami menawarkan pengalaman belajar yang interaktif dan komprehensif.
+      </p>
+      <p class="text-sm sm:text-base text-gray-300 leading-relaxed">
+        Misi kami adalah memberdayakan individu melalui pengetahuan dan keterampilan yang dapat meningkatkan karir dan kehidupan pribadi mereka. Kami percaya bahwa belajar adalah hak semua orang dan kami berkomitmen untuk menciptakan lingkungan belajar yang inklusif dan mendukung.
+      </p>
+    </div>
 
-
-
-{{-- end 3 point advantage card --}}
-
-{{-- about section --}}
-<section class="bg-gray-800" id="tentang">
-  <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6" data-aos="fade-right">
-      <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold  text-white">Tentang Kami</h2>
-          <p class="mb-4 text-white">Learnify menyediakan akses pendidikan berkualitas tinggi bagi semua orang, di mana saja. Dengan berbagai kursus yang dirancang oleh para ahli di bidangnya, kami menawarkan pengalaman belajar yang interaktif dan komprehensif. </p>
-          <p class="mb-4 text-white">Misi kami adalah memberdayakan individu melalui pengetahuan dan keterampilan yang dapat meningkatkan karir dan kehidupan pribadi mereka. Kami percaya bahwa belajar adalah hak semua orang dan kami berkomitmen untuk menciptakan lingkungan belajar yang inklusif dan mendukung.</p>
+    <!-- Image Content -->
+    <div class="grid grid-cols-2 gap-4">
+      <div data-aos="fade-down">
+        <img 
+          src="/img/assets/foto-about-landing2.jpg" 
+          alt="Office Content 1" 
+          class="w-full h-auto rounded-lg grayscale hover:grayscale-0 transition duration-300"
+        >
       </div>
-      <div class="grid grid-cols-2 gap-4 mt-8">
-          <img style=" filter: grayscale(100%)" class="w-full rounded-lg" src="/img/assets/foto-about-landing2.jpg" alt="office content 1"data-aos="fade-down">
-          <img class="mt-4 w-full lg:mt-10 rounded-lg" src="/img/assets/foto-about-landing1.jpg" alt="office content 2" data-aos="fade-up">
+      <div data-aos="fade-up" class="mt-4 lg:mt-8">
+        <img 
+          src="/img/assets/foto-about-landing1.jpg" 
+          alt="Office Content 2" 
+          class="w-full h-auto rounded-lg"
+        >
       </div>
+    </div>
   </div>
 </section>
-{{-- end of about section --}}
+{{-- End of About Section --}}
 
 
 {{-- why choose us section --}}
 <div class="bg-black">
   <section id="manfaat" class="relative block px-6 py-10 md:py-20 md:px-10 border-t border-b border-neutral-900 bg-neutral-900/30">
-    <div class="relative mx-auto max-w-5xl text-center" data-aos="zoom-out-up">
+    <div class="relative mx-auto max-w-5xl text-center" data-aos="zoom-in">
       <span class="text-gray-400 my-3 flex items-center justify-center font-medium uppercase tracking-wider">
         Mengapa Memilih Kami
       </span>
@@ -286,13 +298,33 @@
 </div>
 {{-- End FAQ Section --}}
 
-  {{-- closing section --}}
-  <section  id="closing" class=" text-white bg-gray-700 py-44">
-    <div class="container mx-auto text-center" data-aos="zoom-in-up">
-        <h2 class="text-3xl font-bold mb-4">Mari Mulai Langkahmu Demi Karirmu</h2>
-        <p class="text-lg mb-8">Mulailah belajar di learnify demi masa depanmu yang lebih cerah untuk kedepanya</p>
-        <a href="" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Get Started</a>
-    </div>
-  </section>
-  {{-- end closing section --}}
+ {{-- Closing Section --}}
+<section id="closing" class="text-white bg-gray-700 py-44">
+  <div class="container mx-auto text-center" data-aos="zoom-in-up">
+      <h2 class="text-3xl font-bold mb-4">Mari Mulai Langkahmu Demi Karirmu</h2>
+      <p class="text-lg mb-8">Mulailah belajar di Learnify demi masa depanmu yang lebih cerah untuk kedepannya</p>
+      @guest
+         <!-- Tombol di Closing Section -->
+        <button id="openModalButton2" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
+          Get Started
+        </button>
+
+      @else
+          <a href="{{ route('show-dashboard') }}" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
+              Get Started
+          </a>
+      @endguest
+  </div>
+</section>
+
+<script>
+      const openModalButtonClosing = document.getElementById('openModalButton2');
+
+      if (openModalButtonClosing) {
+          openModalButtonClosing.addEventListener('click', () => {
+              loginModal.classList.remove('hidden');
+          });
+      }
+</script>
+
 @endsection

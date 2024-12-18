@@ -28,7 +28,7 @@ Key Features:
 - **LARAGON**
 - **Tailwind CSS**
 - **Vanila Javascript**
-- - **Jquery AJAX**
+- **Jquery AJAX**
 
 ## How To Use
 
