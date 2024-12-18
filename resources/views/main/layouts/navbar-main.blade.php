@@ -92,7 +92,7 @@
         <div class="mt-auto">
             <div class="pt-6">
                 @guest
-                <a href="" class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl shadow-sm">Sign in</a>
+                <a  href="{{ route('show-login-mobile') }}" class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl shadow-sm">Sign in</a>
                 <a href="{{ route('show-register') }}" class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm">Sign Up</a>
                 @else
                 {{-- <a href="{{ route('show-dashboard')}}" class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm">Dashboard</a> --}}

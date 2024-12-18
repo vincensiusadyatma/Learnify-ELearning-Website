@@ -17,6 +17,12 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+    
+    public function showLoginMobile()
+    {
+        return view('auth.login-mobile');
+    }
+
 
     public function handleRegister(Request $request)
     {

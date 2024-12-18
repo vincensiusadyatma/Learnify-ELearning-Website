@@ -18,6 +18,7 @@ Route::get('/', function () {
 
 Route::prefix('auth')->middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('show-register');
+    Route::get('/login', [AuthController::class, 'showLoginMobile'])->name('show-login-mobile');
     Route::post('/register/handle', [AuthController::class, 'handleRegister'])->name('handle-register');
     Route::post('/login/handle', [AuthController::class, 'handleLogin'])->name('handle-login');
     Route::get('/redirect', [AuthController::class, 'googleRedirect'])->name('google-redirect');
