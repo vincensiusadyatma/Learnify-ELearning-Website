@@ -298,13 +298,33 @@
 </div>
 {{-- End FAQ Section --}}
 
-  {{-- closing section --}}
-  <section  id="closing" class=" text-white bg-gray-700 py-44">
-    <div class="container mx-auto text-center" data-aos="zoom-in-up">
-        <h2 class="text-3xl font-bold mb-4">Mari Mulai Langkahmu Demi Karirmu</h2>
-        <p class="text-lg mb-8">Mulailah belajar di learnify demi masa depanmu yang lebih cerah untuk kedepanya</p>
-        <a href="" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Get Started</a>
-    </div>
-  </section>
-  {{-- end closing section --}}
+ {{-- Closing Section --}}
+<section id="closing" class="text-white bg-gray-700 py-44">
+  <div class="container mx-auto text-center" data-aos="zoom-in-up">
+      <h2 class="text-3xl font-bold mb-4">Mari Mulai Langkahmu Demi Karirmu</h2>
+      <p class="text-lg mb-8">Mulailah belajar di Learnify demi masa depanmu yang lebih cerah untuk kedepannya</p>
+      @guest
+         <!-- Tombol di Closing Section -->
+        <button id="openModalButton2" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
+          Get Started
+        </button>
+
+      @else
+          <a href="{{ route('show-dashboard') }}" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
+              Get Started
+          </a>
+      @endguest
+  </div>
+</section>
+
+<script>
+      const openModalButtonClosing = document.getElementById('openModalButton2');
+
+      if (openModalButtonClosing) {
+          openModalButtonClosing.addEventListener('click', () => {
+              loginModal.classList.remove('hidden');
+          });
+      }
+</script>
+
 @endsection
