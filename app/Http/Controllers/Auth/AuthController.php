@@ -17,40 +17,52 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+    
+    public function showLoginMobile()
+    {
+        return view('auth.login-mobile');
+    }
+
 
     public function handleRegister(Request $request)
     {
         $credentials = $request->validate([
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed'
+        ], [
+            'email.required' => 'Email tidak boleh kosong.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'password.required' => 'Password tidak boleh kosong.',
+            'password.min' => 'Password harus memiliki minimal 8 karakter.',
+            'password.confirmed' => 'Password konfirmasi tidak sesuai.',
         ]);
-
+    
         DB::beginTransaction();
-
+    
         try {
             $user = User::create([
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'status' => 'active'
             ]);
-
-
+    
+            // Assign default role
             DB::table('role_ownerships')->insert([
                 'user_id' => $user->id,
                 'role_id' => 2,
             ]);
-
+    
             DB::commit();
-            notify()->success('You have successfully register', 'Success');
+            notify()->success('You have successfully registered', 'Success');
             return redirect()->route('main')->with('success', 'Registration successful. You can now log in.');
         } catch (\Throwable $th) {
             DB::rollback();
-            dd($th->getMessage());
             Log::error('Registration Error: ' . $th->getMessage());
             return redirect()->route('show-register')->withErrors(['error' => 'Registration failed. Please try again.']);
         }
     }
-
+    
     public function handleLogin(Request $request)
     {
         try {
@@ -79,7 +91,7 @@ class AuthController extends Controller
                 if ($role === 'admin') {
                     return redirect()->route('show-dashboard-admin');
                 } elseif ($role === 'user') {
-                    return redirect()->route('show-dashboard')->with('success', 'Welcome, User!');
+                    return redirect()->route('show-dashboard');
                 }
     
                 // Logout jika role tidak valid
