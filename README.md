@@ -29,30 +29,60 @@ Key Features:
 - **Tailwind CSS**
 - **Vanila Javascript**
 - **Jquery AJAX**
+- **SummerNote API ( text editor feature)**
 
 ## How To Use
 
-1. **Kloning Repositori**
+1. **Clone this repository**
    ```bash
-   git clone https://github.com/vincensiusadyatma/Learnify-Elearning-Website-App
-   cd Learnify-Elearning-Website-App
-2. **Instalasi Dependencies**
+   git clone https://github.com/vincensiusadyatma/Learnify-Elearning-Website.git
+   cd Learnify-Elearning-Website
+2. **Install PHP Dependencies**
    ```bash
    composer install
+
+3. **Install Javascript Dependencies**
+   ```bash
    npm install
 
-3. **Konfigurasi Environment**
+3. **Copy .env.example file to .env file**
    ```bash
    cp .env.example .env
+
+4. **Generate App Key**
+   ```bash
    php artisan key:generate
 
-   
-4. **Membuat symbolic link**
+4. **Prepare The Database ( If you haven't created "learnify_db" database in PostgreSQL )**
+   - Open your PostgreSQL client or terminal
+   - Run the following SQL command to create a new database:
+       ```bash
+       CREATE DATABASE learnify_db;
+   - Ensure you have a PostgreSQL user (DB_USERNAME) with the necessary permissions for the database
+      ```bash
+       CREATE USER postgres WITH PASSWORD 'yourpassword';
+       GRANT ALL PRIVILEGES ON DATABASE learnify_db TO postgres;
+
+4. **Configure environment**
+   - Open the .env file
+   - Update the following database-related lines to match your PostgreSQL configuration
+       ```bash
+        DB_CONNECTION=pgsql
+        DB_HOST=127.0.0.1
+        DB_PORT=5432
+        DB_DATABASE=learnify_db
+        DB_USERNAME=postgres
+        DB_PASSWORD=<your password>
+
+4. **Create a symbolic link**
    ```bash
    php artisan storage:link
-   
 
-5. **Menjalankan Aplikasi**
+4. **Run the migrations to database**
+   ```bash
+   php artisan migrate --seed
+   
+5. **Run the app**
    ```bash
    npm run project
 
