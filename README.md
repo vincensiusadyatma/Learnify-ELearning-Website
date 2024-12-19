@@ -91,7 +91,7 @@ Key Features:
 <img src="./public/img/showcase/quiz-list-showcase.jpg" alt="Culture Connect Logo">
 
 ## UI/UX Design (figma)
-figma : https://www.figma.com/team_invite/redeem/cdMz6QXi35NMbHfVT4IDZ6
+figma : https://www.figma.com/design/tI71werl1Lp1yYDRl4QSbQ/UI%2FUX-Learnify?node-id=0-1&t=ZNIKHmSb2PpdMv5E-1
 ## Install and Configure PostgreSQL
 
 - Visit the [PostgreSQL Downloads Page](https://www.postgresql.org/download/) and download the installer for your
