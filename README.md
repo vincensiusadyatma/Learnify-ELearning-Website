@@ -85,7 +85,13 @@ Key Features:
 5. **Run the app**
    ```bash
    npm run project
+## App Showcase
+<img src="./public/img/showcase/dashboard-user-showcase.jpg" alt="Culture Connect Logo">
+<img src="./public/img/showcase/course-list-showcase.jpg" alt="Culture Connect Logo">
+<img src="./public/img/showcase/quiz-list-showcase.jpg" alt="Culture Connect Logo">
 
+## UI/UX Design (figma)
+figma : https://www.figma.com/team_invite/redeem/cdMz6QXi35NMbHfVT4IDZ6
 ## Install and Configure PostgreSQL
 
 - Visit the [PostgreSQL Downloads Page](https://www.postgresql.org/download/) and download the installer for your
